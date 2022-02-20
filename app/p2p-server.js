@@ -99,7 +99,10 @@ class P2pserver {
   }
 
   closeConnectionHandler(socket) {
-    socket.on("close", () => (socket.isAlive = false));
+  socket.on("close", () => {
+    this.sockets = this.sockets.filter(s => s.readyState === WebSocket.OPEN);
+    console.log("Socket disconnected");
+  });
   }
 
   sendChain(socket) {
