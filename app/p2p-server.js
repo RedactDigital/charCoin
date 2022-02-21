@@ -65,10 +65,9 @@ class P2pserver {
           break;
 
         case MESSAGE_TYPE.transaction:
-          let thresholdReached = null;
           if(!data.transaction) break;
           if (!this.transactionPool.transactionExists(data.transaction)) {
-            thresholdReached = this.transactionPool.addTransaction(
+            this.transactionPool.addTransaction(
               data.transaction
             );
             this.broadcastTransaction(data.transaction);
@@ -89,7 +88,9 @@ class P2pserver {
         case MESSAGE_TYPE.block:
           if (this.blockchain.isValidBlock(data.block)) {
             // this.blockchain.addBlock(data.block);
-            // this.blockchain.executeTransactions(data.block);
+            this.blockchain.executeTransactions(data.block);
+          console.log("here");
+
             this.broadcastBlock(data.block);
             this.transactionPool.clear();
           }

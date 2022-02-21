@@ -112,6 +112,7 @@ class Blockchain {
   }
 
   executeTransactions(block) {
+    if(!block.data.transactions) return;
     block.data.forEach(transaction => {
       switch (transaction.type) {
         case TRANSACTION_TYPE.transaction:
