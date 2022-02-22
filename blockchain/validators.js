@@ -25,7 +25,7 @@ module.exports = {
     return { validators, count: validators.length };
   },
 
-  getValidatorsWithMostStake: validatorAddresses => {
+  getValidatorWithMostStake: validatorAddresses => {
     const balance = -1;
     let leader = undefined;
     for (let i = 0; i < validatorAddresses.length; i++) {
