@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 const P2pserver = require('./p2p-server');
 const Wallet = require('../wallet/wallet');
 const TransactionPool = require('../wallet/transaction-pool');
+const { getValidators } = require('../blockchain/validators');
 
 const HTTP_PORT = process.env.HTTP_PORT || 3000;
 
@@ -45,6 +46,11 @@ app.post('/trade', (req, res) => {
 app.get('/bootstrap', (req, res) => {
   p2pserver.bootstrapSystem();
   res.json({ message: 'System bootstraped' });
+});
+
+app.get('/validators', (req, res) => {
+  const validators = getValidators();
+  res.json(validators);
 });
 
 app.get('/address', (req, res) => {

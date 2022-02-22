@@ -1,5 +1,5 @@
-const SHA256 = require("crypto-js/sha256");
-const ChainUtil = require("../chain-util");
+const SHA256 = require('crypto-js/sha256');
+const ChainUtil = require('../chain-util');
 
 class Block {
   constructor(timestamp, lastHash, hash, data, validator, signature) {
@@ -8,7 +8,7 @@ class Block {
     this.hash = hash;
     this.data = data;
     this.validator = validator;
-    this.signature = signature;
+    this.signatures = [signature];
   }
 
   toString() {
@@ -22,7 +22,7 @@ class Block {
   }
 
   static genesis() {
-    return new this(`genesis time`, "----", "genesis-hash", []);
+    return new this(`genesis time`, '----', 'genesis-hash', []);
   }
 
   static createBlock(lastBlock, data, wallet) {
@@ -31,7 +31,9 @@ class Block {
     const hash = Block.hash(timestamp, lastHash, data);
     const validator = wallet.getPublicKey();
     const signature = Block.signBlockHash(hash, wallet);
-    return new this(timestamp, lastHash, hash, data, validator, signature);
+
+    const signatures = this.signatures.push(signature);
+    return new this(timestamp, lastHash, hash, data, validator, signatures);
   }
 
   static hash(timestamp, lastHash, data) {
