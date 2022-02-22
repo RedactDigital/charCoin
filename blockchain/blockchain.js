@@ -98,16 +98,8 @@ class Blockchain {
       this.addBlock(block);
       this.executeTransactions(block);
       return true;
-    } else {
-      // console.log(
-      //   block.lastHash !== lastBlock.hash,
-      //   block.hash !== Block.blockHash(block),
-      //   Block.verifyBlock(block),
-      //   Block.verifyLeader(block, this.getLeader())
-      // );
-
-      return false;
     }
+    return false;
   }
 
   executeTransactions(block) {

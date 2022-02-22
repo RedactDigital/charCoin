@@ -1,18 +1,18 @@
 require('dotenv').config({ silent: true });
 
-const WebSocket = require("ws");
+const WebSocket = require('ws');
 
 const P2P_PORT = process.env.P2P_PORT || 5000;
 
-const peers = process.env.PEERS ? process.env.PEERS.split(",") : [];
+const peers = process.env.PEERS ? process.env.PEERS.split(',') : [];
 
-const { TRANSACTION_THRESHOLD } = require("../config");
+const { TRANSACTION_THRESHOLD } = require('../config');
 
 const MESSAGE_TYPE = {
-  chain: "CHAIN",
-  block: "BLOCK",
-  transaction: "TRANSACTION",
-  clear_transactions: "CLEAR_TRANSACTIONS"
+  chain: 'CHAIN',
+  block: 'BLOCK',
+  transaction: 'TRANSACTION',
+  clear_transactions: 'CLEAR_TRANSACTIONS',
 };
 
 class P2pserver {
@@ -28,8 +28,8 @@ class P2pserver {
     const server = new WebSocket.Server({ port: P2P_PORT });
 
     // Connection listener
-    server.on("connection", socket => {
-      socket.isAlive = true; 
+    server.on('connection', socket => {
+      socket.isAlive = true;
       this.connectSocket(socket);
     });
 
@@ -40,7 +40,7 @@ class P2pserver {
 
   connectSocket(socket) {
     this.sockets.push(socket);
-    console.log("Socket connected");
+    console.log('Socket connected');
     this.messageHandler(socket);
     this.closeConnectionHandler(socket);
     this.sendChain(socket);
@@ -49,36 +49,29 @@ class P2pserver {
   connectToPeers() {
     peers.forEach(peer => {
       const socket = new WebSocket(peer);
-      socket.on("open", () => this.connectSocket(socket));
+      socket.on('open', () => this.connectSocket(socket));
     });
   }
 
   messageHandler(socket) {
-    socket.on("message", message => {
+    socket.on('message', message => {
       const data = JSON.parse(message);
-      console.log("Received data from peer:", data.type);
-
-
+      console.log('Received data from peer:', data.type);
       switch (data.type) {
         case MESSAGE_TYPE.chain:
           this.blockchain.replaceChain(data.chain);
           break;
 
         case MESSAGE_TYPE.transaction:
-          if(!data.transaction) break;
+          if (!data.transaction) break;
           if (!this.transactionPool.transactionExists(data.transaction)) {
-            this.transactionPool.addTransaction(
-              data.transaction
-            );
+            this.transactionPool.addTransaction(data.transaction);
             this.broadcastTransaction(data.transaction);
           }
           if (this.transactionPool.thresholdReached()) {
-            if (this.blockchain.getLeader() == this.Wallet.getPublicKey()) {
-              console.log("Creating block");
-              const block = this.blockchain.createBlock(
-                this.transactionPool.transactions,
-                this.Wallet
-              );
+            if (this.blockchain.findValidator() == this.Wallet.getPublicKey()) {
+              console.log('Creating block');
+              const block = this.blockchain.createBlock(this.transactionPool.transactions, this.Wallet);
               this.broadcastBlock(block);
             }
           }
@@ -89,7 +82,7 @@ class P2pserver {
           if (this.blockchain.isValidBlock(data.block)) {
             // this.blockchain.addBlock(data.block);
             this.blockchain.executeTransactions(data.block);
-          console.log("here");
+            console.log('here');
 
             this.broadcastBlock(data.block);
             this.transactionPool.clear();
@@ -100,17 +93,17 @@ class P2pserver {
   }
 
   closeConnectionHandler(socket) {
-  socket.on("close", () => {
-    this.sockets = this.sockets.filter(s => s.readyState === WebSocket.OPEN);
-    console.log("Socket disconnected");
-  });
+    socket.on('close', () => {
+      this.sockets = this.sockets.filter(s => s.readyState === WebSocket.OPEN);
+      console.log('Socket disconnected');
+    });
   }
 
   sendChain(socket) {
     socket.send(
       JSON.stringify({
         type: MESSAGE_TYPE.chain,
-        chain: this.blockchain.chain
+        chain: this.blockchain.chain,
       })
     );
   }
@@ -131,7 +124,7 @@ class P2pserver {
     socket.send(
       JSON.stringify({
         type: MESSAGE_TYPE.transaction,
-        transaction: transaction
+        transaction: transaction,
       })
     );
   }
@@ -146,7 +139,7 @@ class P2pserver {
     socket.send(
       JSON.stringify({
         type: MESSAGE_TYPE.block,
-        block: block
+        block: block,
       })
     );
   }
