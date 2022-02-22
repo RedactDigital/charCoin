@@ -8,7 +8,7 @@ class Block {
     this.hash = hash;
     this.data = data;
     this.validators = [validators];
-    this.authorityValidationSignature = [signatures];
+    this.authorityValidationSignature = signatures || [];
   }
 
   toString() {
