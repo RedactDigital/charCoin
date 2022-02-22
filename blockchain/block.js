@@ -2,13 +2,13 @@ const SHA256 = require('crypto-js/sha256');
 const ChainUtil = require('../chain-util');
 
 class Block {
-  constructor(timestamp, lastHash, hash, data, validator, signature) {
+  constructor(timestamp, lastHash, hash, data, validators, signatures) {
     this.timestamp = timestamp;
     this.lastHash = lastHash;
     this.hash = hash;
     this.data = data;
-    this.validator = validator;
-    this.signatures = [signature];
+    this.validators = [validators];
+    this.signatures = [signatures];
   }
 
   toString() {

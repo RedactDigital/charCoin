@@ -74,9 +74,11 @@ class Blockchain {
     // Tier 2 - Validator with x amount of blocks validated
     // Tier 3 - All other validators
     let validators = null;
-    if (block.validator.length === 0) validators = getTierThreeValidators();
-    if (block.validator.length === 1) validators = getTierTwoValidators();
-    if (block.validator.length === 2) validators = getTierOneValidators();
+    // if (block.validators.length === 0) validators = getTierThreeValidators();
+    // if (block.validators.length === 1) validators = getTierTwoValidators();
+    // if (block.validators.length === 2) validators = getTierOneValidators();
+
+    console.log(block);
 
     return getValidatorWithMostStakes(validators);
   }
