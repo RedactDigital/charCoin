@@ -1,4 +1,4 @@
-const Block = require('./block');
+const { createBlock, blockHash, verifyBlock, verifyLeader } = require('./block');
 const Stake = require('./stake');
 const Account = require('./account');
 const {
@@ -18,15 +18,24 @@ const TRANSACTION_TYPE = {
   validator_fee: 'VALIDATOR_FEE',
 };
 
+const genesisBlock = {
+  timestamp: 0,
+  lastHash: '-----',
+  hash: 'genesis',
+  data: [],
+  validators: [],
+  authoritySignatures: [],
+};
+
 class Blockchain {
   constructor() {
-    this.chain = [Block.genesis()];
+    this.chain = [genesisBlock];
     this.stakes = new Stake();
     this.accounts = new Account();
   }
 
   addBlock(data) {
-    const block = Block.createBlock(this.chain[this.chain.length - 1], data, new Wallet(secret));
+    const block = createBlock(this.chain[this.chain.length - 1], data, new Wallet(secret));
 
     this.chain.push(block);
     console.log('NEW BLOCK ADDED');
@@ -34,18 +43,18 @@ class Blockchain {
   }
 
   createBlock(transactions, wallet) {
-    const block = Block.createBlock(this.chain[this.chain.length - 1], transactions, wallet);
+    const block = createBlock(this.chain[this.chain.length - 1], transactions, wallet);
     return block;
   }
 
   isValidChain(chain) {
-    if (JSON.stringify(chain[0]) !== JSON.stringify(Block.genesis())) return false;
+    if (JSON.stringify(chain[0]) !== JSON.stringify(genesisBlock)) return false;
 
     for (let i = 1; i < chain.length; i++) {
       const block = chain[i];
       const lastBlock = chain[i - 1];
 
-      if (block.lastHash !== lastBlock.hash || block.hash !== Block.blockHash(block)) return false;
+      if (block.lastHash !== lastBlock.hash || block.hash !== blockHash(block)) return false;
     }
 
     return true;
@@ -91,9 +100,9 @@ class Blockchain {
     const lastBlock = this.chain[this.chain.length - 1];
     if (
       block.lastHash === lastBlock.hash &&
-      block.hash === Block.blockHash(block) &&
-      Block.verifyBlock(block) &&
-      Block.verifyLeader(block, this.findValidator())
+      block.hash === blockHash(block) &&
+      verifyBlock(block) &&
+      verifyLeader(block, this.findValidator())
     ) {
       console.log('block valid');
       this.addBlock(block);
@@ -134,7 +143,7 @@ class Blockchain {
   }
 
   resetState() {
-    this.chain = [Block.genesis()];
+    this.chain = [genesisBlock];
     this.stakes = new Stake();
     this.accounts = new Account();
   }
