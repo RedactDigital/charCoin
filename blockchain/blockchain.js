@@ -79,8 +79,6 @@ class Blockchain {
     // if (block.validators.length === 1) validators = getTierTwoValidators();
     // if (block.validators.length === 2) validators = getTierOneValidators();
 
-    console.log(validators);
-
     return getValidatorWithMostStake(validators);
   }
 

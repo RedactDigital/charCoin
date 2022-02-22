@@ -8,7 +8,7 @@ class Block {
     this.hash = hash;
     this.data = data;
     this.validators = [validators];
-    this.signatures = [signatures];
+    this.authorityValidationSignature = [signatures];
   }
 
   toString() {
@@ -31,8 +31,10 @@ class Block {
     const hash = Block.hash(timestamp, lastHash, data);
     const validator = wallet.getPublicKey();
     const signature = Block.signBlockHash(hash, wallet);
+    console.log(this.signatures);
+    console.log(signature);
+    const signatures = this.authorityValidationSignature.push(signature);
 
-    const signatures = this.signatures.push(signature);
     return new this(timestamp, lastHash, hash, data, validator, signatures);
   }
 
@@ -52,7 +54,7 @@ class Block {
   static verifyBlock(block) {
     return ChainUtil.verifySignature(
       block.validator,
-      block.signature,
+      block.authorityValidationSignature,
       Block.hash(block.timestamp, block.lastHash, block.data)
     );
   }
