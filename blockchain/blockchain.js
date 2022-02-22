@@ -7,6 +7,7 @@ const {
   getTierThreeValidators,
   getValidatorWithMostStakes,
   commitValidator,
+  getValidators,
 } = require('./validators');
 const Wallet = require('../wallet/wallet');
 const secret = 'i am the first leader';
@@ -73,12 +74,12 @@ class Blockchain {
     // Tier 1 - Validator with x amount of blocks validated
     // Tier 2 - Validator with x amount of blocks validated
     // Tier 3 - All other validators
-    let validators = null;
+    let validators = getValidators();
     // if (block.validators.length === 0) validators = getTierThreeValidators();
     // if (block.validators.length === 1) validators = getTierTwoValidators();
     // if (block.validators.length === 2) validators = getTierOneValidators();
 
-    console.log(block);
+    console.log(validators);
 
     return getValidatorWithMostStakes(validators);
   }
@@ -94,7 +95,7 @@ class Blockchain {
       block.lastHash === lastBlock.hash &&
       block.hash === Block.blockHash(block) &&
       Block.verifyBlock(block) &&
-      Block.verifyLeader(block, this.findValidator(block))
+      Block.verifyLeader(block, this.findValidator())
     ) {
       console.log('block valid');
       this.addBlock(block);
