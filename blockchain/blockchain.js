@@ -5,7 +5,7 @@ const {
   getTierOneValidators,
   getTierTwoValidators,
   getTierThreeValidators,
-  getValidatorWithMostStakes,
+  getValidatorWithMostStake,
   commitValidator,
   getValidators,
 } = require('./validators');
@@ -81,7 +81,7 @@ class Blockchain {
 
     console.log(validators);
 
-    return getValidatorWithMostStakes(validators);
+    return getValidatorWithMostStake(validators);
   }
 
   initialize(address) {
