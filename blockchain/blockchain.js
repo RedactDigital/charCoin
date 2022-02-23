@@ -114,6 +114,7 @@ class Blockchain {
   }
 
   executeTransactions(block) {
+    console.log('block', block);
     if (!block.data.transactions) return;
     block.data.forEach(transaction => {
       console.log(transaction.type);
