@@ -78,6 +78,7 @@ class P2pserver {
               const block = this.blockchain.createBlock(this.transactionPool.transactions, this.Wallet);
               this.broadcastBlock(block);
             }
+            console.log('Clearing transactions');
           }
 
           break;
