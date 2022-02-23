@@ -34,12 +34,12 @@ class P2pserver {
 
     // Creates a new socket connection for each peer
     this.connectToPeers();
-    console.log(`Listening for peer to peer connection on port : ${P2P_PORT}`);
+    log.info(`Listening for peer to peer connection on port : ${P2P_PORT}`);
   }
 
   connectSocket(socket) {
     this.sockets.push(socket);
-    console.log('Socket connected');
+    log.info('Socket connected');
     this.messageHandler(socket);
     this.closeConnectionHandler(socket);
     this.sendChain(socket);
@@ -55,7 +55,7 @@ class P2pserver {
   messageHandler(socket) {
     socket.on('message', message => {
       const data = JSON.parse(message);
-      console.log('Received data from peer:', data.type);
+      log.info(`Received data from peer: ${data.type}`);
       switch (data.type) {
         case 'chain':
           this.blockchain.replaceChain(data.chain);
@@ -74,7 +74,7 @@ class P2pserver {
             const validatorExists = getValidator(this.Wallet.getPublicKey());
 
             if (validatorExists) {
-              console.log('Creating block');
+              log.info('Creating block');
               const block = createBlock(
                 this.blockchain.chain[this.blockchain.chain.length - 1],
                 this.transactionPool.transactions,
@@ -103,7 +103,7 @@ class P2pserver {
   closeConnectionHandler(socket) {
     socket.on('close', () => {
       this.sockets = this.sockets.filter(s => s.readyState === WebSocket.OPEN);
-      console.log('Socket disconnected');
+      log.info('Socket disconnected');
     });
   }
 

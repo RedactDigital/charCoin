@@ -15,8 +15,12 @@
     "no-multiple-empty-lines": ["error", { "max": 1, "maxBOF": 0, "maxEOF": 0 }]
   },
   "globals": {
-    "root": true,
-    "day": true,
-    "log": true
+    "log": true,
+    "TOTAL_COINS": true,
+    "TRANSACTION_THRESHOLD": true,
+    "TRANSACTION_FEE": true,
+    "VALIDATOR_FEE": true,
+    "TIER_TWO_BLOCK_REQUIREMENT": true,
+    "TIER_ONE_BLOCK_REQUIREMENT": true
   }
 }

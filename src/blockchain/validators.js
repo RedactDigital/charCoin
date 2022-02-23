@@ -1,5 +1,3 @@
-const { VALIDATOR_FEE, TIER_TWO_BLOCK_REQUIREMENT, TIER_ONE_BLOCK_REQUIREMENT } = require('../config');
-
 const validators = [
   {
     // TODO - update this address before launch
@@ -14,7 +12,7 @@ module.exports = {
     if (transaction.output.amount >= VALIDATOR_FEE && transaction.output.to == '0') {
       this.list.push(transaction.input.from);
       this.count++;
-      console.log('New Validator:', transaction.input.from);
+      log.info('New Validator:', transaction.input.from);
       return true;
     }
     return false;

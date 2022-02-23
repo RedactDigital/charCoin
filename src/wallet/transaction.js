@@ -1,5 +1,4 @@
-const ChainUtil = require("../chain-util");
-const { TRANSACTION_FEE } = require("../config");
+const ChainUtil = require('../chain-util');
 
 class Transaction {
   constructor() {
@@ -11,7 +10,7 @@ class Transaction {
 
   static newTransaction(senderWallet, to, amount, type) {
     if (Number(amount) + Number(TRANSACTION_FEE) > senderWallet.balance) {
-      console.log(`Amount : ${amount + TRANSACTION_FEE} exceeds the balance of ${senderWallet.balance}`);
+      log.info(`Amount : ${amount + TRANSACTION_FEE} exceeds the balance of ${senderWallet.balance}`);
       return;
     }
 
@@ -24,7 +23,7 @@ class Transaction {
     transaction.output = {
       to: to,
       amount: amount - TRANSACTION_FEE,
-      fee: TRANSACTION_FEE
+      fee: TRANSACTION_FEE,
     };
     Transaction.signTransaction(transaction, senderWallet);
     return transaction;
@@ -34,7 +33,7 @@ class Transaction {
     transaction.input = {
       timestamp: Date.now(),
       from: senderWallet.publicKey,
-      signature: senderWallet.sign(ChainUtil.hash(transaction.output))
+      signature: senderWallet.sign(ChainUtil.hash(transaction.output)),
     };
   }
 

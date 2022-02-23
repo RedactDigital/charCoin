@@ -1,14 +1,13 @@
 require('dotenv').config({ silent: true });
+require('./globals');
 
 const express = require('express');
-const Blockchain = require('../blockchain/blockchain');
+const Blockchain = require('./blockchain/blockchain');
 const bodyParser = require('body-parser');
-const P2pserver = require('./p2p-server');
-const Wallet = require('../wallet/wallet');
-const TransactionPool = require('../wallet/transaction-pool');
-const { getValidators } = require('../blockchain/validators');
-
-const HTTP_PORT = process.env.HTTP_PORT || 3000;
+const P2pserver = require('./app/p2p-server');
+const Wallet = require('./wallet/wallet');
+const TransactionPool = require('./wallet/transaction-pool');
+const { getValidators } = require('./blockchain/validators');
 
 const app = express();
 
@@ -33,11 +32,11 @@ app.get('/transactions', (req, res) => {
 app.post('/transaction', (req, res) => {
   const { to, amount, type } = req.body;
   if (!to || !amount || !type) {
-    console.log('All fields are required');
+    log.info('All fields are required');
     return res.redirect('/transactions');
   }
   if (type !== 'transaction' || type !== 'stake') {
-    console.log('Invalid transaction type');
+    log.info('Invalid transaction type');
     return res.redirect('/transactions');
   }
   const transaction = wallet.createTransaction(to, amount, type, blockchain, transactionPool);
@@ -48,7 +47,7 @@ app.post('/transaction', (req, res) => {
 
 app.get('/bootstrap', (req, res) => {
   p2pserver.bootstrapSystem();
-  res.json({ message: 'System bootstraped' });
+  res.json({ message: 'System bootstrapped' });
 });
 
 app.get('/validators', (req, res) => {
@@ -68,8 +67,6 @@ app.post('/balance', (req, res) => {
   res.json({ balance: blockchain.getBalance(req.body.publicKey) });
 });
 
-app.listen(HTTP_PORT, () => {
-  console.log(`Listening on port ${HTTP_PORT}`);
-});
-
 p2pserver.listen();
+
+module.exports = app;

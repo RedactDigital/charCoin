@@ -46,7 +46,7 @@ class Stake {
         leader = address;
       }
     });
-    console.log('Leader', leader);
+    log.info('Leader', leader);
     return leader;
   }
 

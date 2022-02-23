@@ -1,11 +1,11 @@
-const ChainUtil = require("../chain-util");
-const Transaction = require("./transaction");
+const ChainUtil = require('../chain-util');
+const Transaction = require('./transaction');
 
 class Wallet {
   constructor(secret) {
     this.balance = 0;
     this.keyPair = ChainUtil.genKeyPair(secret);
-    this.publicKey = this.keyPair.getPublic("hex");
+    this.publicKey = this.keyPair.getPublic('hex');
   }
 
   toString() {
@@ -19,10 +19,10 @@ class Wallet {
   }
 
   createTransaction(to, amount, type, blockchain, transactionPool) {
-    this.balance = blockchain.getBalance(this.publicKey)
+    this.balance = blockchain.getBalance(this.publicKey);
 
     if (amount > this.balance) {
-      console.log(`Amount: ${amount} exceeds the current balance: ${this.balance}`);
+      log.info(`Amount: ${amount} exceeds the current balance: ${this.balance}`);
       return;
     }
     const transaction = Transaction.newTransaction(this, to, amount, type);

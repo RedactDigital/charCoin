@@ -1,5 +1,4 @@
 const Transaction = require('./transaction');
-const { TRANSACTION_THRESHOLD } = require('../config');
 
 class TransactionPool {
   constructor() {
@@ -23,7 +22,7 @@ class TransactionPool {
   validTransactions() {
     return this.transactions.filter(transaction => {
       if (!Transaction.verifyTransaction(transaction)) {
-        console.log(`Invalid signature from ${transaction.data.from}`);
+        log.info(`Invalid signature from ${transaction.data.from}`);
         return;
       }
 

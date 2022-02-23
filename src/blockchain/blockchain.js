@@ -1,4 +1,4 @@
-const { createBlock, blockHash, verifyBlock } = require('./block');
+const { blockHash, verifyBlock } = require('./block');
 const Stake = require('./stake');
 const Account = require('./account');
 const {
@@ -6,11 +6,11 @@ const {
   getTierTwoValidators,
   getTierThreeValidators,
   getValidatorWithMostStake,
-  commitValidator,
+  // commitValidator,
   getValidators,
 } = require('./validators');
-const Wallet = require('../wallet/wallet');
-const secret = 'i am the first leader';
+// const Wallet = require('../wallet/wallet');
+// const secret = 'i am the first leader';
 
 const genesisBlock = {
   timestamp: 0,
@@ -29,7 +29,7 @@ class Blockchain {
 
   addBlockToChain(block) {
     this.chain.push(block);
-    console.log('NEW BLOCK ADDED');
+    log.info('NEW BLOCK ADDED');
     return block;
   }
 
@@ -53,14 +53,14 @@ class Blockchain {
 
   replaceChain(newChain) {
     if (newChain.length <= this.chain.length) {
-      console.log('Recieved chain is not longer than the current chain');
+      log.info('Received chain is not longer than the current chain');
       return;
     } else if (!this.isValidChain(newChain)) {
-      console.log('Recieved chain is invalid');
+      log.info('Received chain is invalid');
       return;
     }
 
-    console.log('Replacing the current chain with new chain');
+    log.info('Replacing the current chain with new chain');
     this.resetState();
     this.executeChain(newChain);
     this.chain = newChain;
@@ -95,10 +95,10 @@ class Blockchain {
         if (block.validators[i].address != this.findValidator([i]).address) return false;
       }
 
-      console.log('Block valid');
+      log.info('Block valid');
       return true;
     }
-    console.log('Block invalid');
+    log.info('Block invalid');
     return false;
   }
 
@@ -120,7 +120,7 @@ class Blockchain {
       }
     }
     // block.data.forEach(transaction => {
-    //   console.log(transaction.type);
+    //   log.info(transaction.type);
     //   switch (transaction.type) {
     //     case 'transaction':
     //       this.accounts.update(transaction);
