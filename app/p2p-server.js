@@ -1,6 +1,7 @@
 require('dotenv').config({ silent: true });
 
 const WebSocket = require('ws');
+const { getValidator } = require('../blockchain/validators');
 
 const P2P_PORT = process.env.P2P_PORT || 5000;
 
@@ -70,7 +71,7 @@ class P2pserver {
           }
           if (this.transactionPool.thresholdReached()) {
             // Verify the wallet exists on the blockchain as a validator
-            const { validator: address } = this.blockchain.getValidator();
+            const { validator: address } = getValidator();
             if (address == this.Wallet.getPublicKey()) {
               console.log('Creating block');
               const block = this.blockchain.createBlock(this.transactionPool.transactions, this.Wallet);
