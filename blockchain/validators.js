@@ -40,20 +40,20 @@ module.exports = {
     return validators.filter(validator => validator.blocks.length < TIER_TWO_BLOCK_REQUIREMENT);
   },
 
-  getValidatorWithMostStake: validatorAddresses => {
+  getValidatorWithMostStake: validators => {
     // const balance = -1;
     // let chosenValidator = undefined;
-    // for (let i = 0; i < validatorAddresses.length; i++) {
-    //   if (this.accounts.getBalance(validatorAddresses[i]) > balance) {
-    //     chosenValidator = validatorAddresses[i];
+    // for (let i = 0; i < validators.length; i++) {
+    //   if (this.accounts.getBalance(validators[i]) > balance) {
+    //     chosenValidator = validators[i];
     //   }
     // }
     // return chosenValidator;
     let chosenValidator = validators[0];
-    console.log(validatorAddresses);
-    for (let i = 0; i < validatorAddresses.length; i++) {
-      if (this.accounts.getBalance(validatorAddresses[i]) > this.accounts.getBalance(chosenValidator.address)) {
-        chosenValidator = validatorAddresses[i];
+    console.log(validators);
+    for (let i = 0; i < validators.length; i++) {
+      if (this.accounts.getBalance(validators[i].address) > this.accounts.getBalance(chosenValidator.address)) {
+        chosenValidator = validators[i];
       }
     }
     return chosenValidator;
