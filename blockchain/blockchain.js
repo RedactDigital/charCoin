@@ -24,7 +24,6 @@ const genesisBlock = {
   hash: 'genesis',
   data: [],
   validators: [],
-  authoritySignatures: [],
 };
 
 class Blockchain {
@@ -79,7 +78,7 @@ class Blockchain {
     return this.accounts.getBalance(publicKey);
   }
 
-  findValidator(block) {
+  findValidator() {
     // Tier 1 - Validator with x amount of blocks validated
     // Tier 2 - Validator with x amount of blocks validated
     // Tier 3 - All other validators
@@ -102,11 +101,11 @@ class Blockchain {
       block.lastHash === lastBlock.hash &&
       block.hash === blockHash(block) &&
       verifyBlock(block) &&
-      verifyLeader(block, this.findValidator())
+      block.validator == this.findValidator()
     ) {
-      console.log('block valid');
       this.addBlock(block);
       this.executeTransactions(block);
+      console.log('Block validated');
       return true;
     }
     return false;

@@ -19,10 +19,6 @@ class ChainUtil {
   }
 
   static verifySignature(publicKey, signature, dataHash) {
-    console.log(publicKey);
-    console.log(signature);
-    console.log(dataHash);
-
     return eddsa.keyFromPublic(publicKey).verify(dataHash, signature);
   }
 }
