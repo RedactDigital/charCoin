@@ -76,7 +76,7 @@ class P2pserver {
             if (validatorExists) {
               console.log('Creating block');
               const block = createBlock(
-                this.blockchain[this.blockchain.length - 1],
+                this.blockchain.chain[this.blockchain.chain.length - 1],
                 this.transactionPool.transactions,
                 this.Wallet
               );
