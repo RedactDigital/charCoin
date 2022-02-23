@@ -104,6 +104,7 @@ class Blockchain {
   executeTransactions(block) {
     if (!block.data) return;
 
+    // TODO - verify each transaction in the block (make sure the sender has enough funds, etc)
     for (let i = 0; i < block.data.length; i++) {
       switch (block.data[i].type) {
         case 'transaction':

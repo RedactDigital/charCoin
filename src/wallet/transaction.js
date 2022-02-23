@@ -29,6 +29,8 @@ class Transaction {
     return transaction;
   }
 
+  // TODO -- validate transactions method
+
   static signTransaction(transaction, senderWallet) {
     transaction.input = {
       timestamp: Date.now(),
