@@ -1,4 +1,5 @@
 require('dotenv').config({ silent: true });
+require('../globals');
 
 const WebSocket = require('ws');
 const { getValidator } = require('../blockchain/validators');
