@@ -33,10 +33,10 @@ class Blockchain {
     return block;
   }
 
-  createBlock(transactions, wallet) {
-    const block = createBlock(this.chain[this.chain.length - 1], transactions, wallet);
-    return block;
-  }
+  // createBlock(transactions, wallet) {
+  //   const block = createBlock(this.chain[this.chain.length - 1], transactions, wallet);
+  //   return block;
+  // }
 
   isValidChain(chain) {
     if (JSON.stringify(chain[0]) !== JSON.stringify(genesisBlock)) return false;
