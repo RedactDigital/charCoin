@@ -58,13 +58,13 @@ class P2pserver {
     socket.on('message', message => {
       const data = JSON.parse(message);
       console.log('Received data from peer:', data.type);
+      console.log(data);
       switch (data.type) {
         case 'chain':
           this.blockchain.replaceChain(data.chain);
           break;
 
         case 'transaction':
-          console.log(data);
           if (!data.transaction) break;
           if (!this.transactionPool.transactionExists(data.transaction)) {
             this.transactionPool.addTransaction(data.transaction);
