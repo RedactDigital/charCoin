@@ -1,5 +1,5 @@
-const Transaction = require("./transaction");
-const { TRANSACTION_THRESHOLD } = require("../config");
+const Transaction = require('./transaction');
+const { TRANSACTION_THRESHOLD } = require('../config');
 
 class TransactionPool {
   constructor() {
@@ -7,11 +7,8 @@ class TransactionPool {
   }
 
   thresholdReached() {
-    if (this.transactions.length >= TRANSACTION_THRESHOLD) {
-      return true;
-    } else {
-      return false;
-    }
+    if (this.transactions.length >= TRANSACTION_THRESHOLD) return true;
+    return false;
   }
 
   addTransaction(transaction) {
@@ -34,7 +31,7 @@ class TransactionPool {
     });
   }
 
-  transactionExists(transaction) {    
+  transactionExists(transaction) {
     const exists = this.transactions.find(t => t.id === transaction.id);
     return exists;
   }
