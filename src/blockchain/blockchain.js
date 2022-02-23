@@ -94,11 +94,10 @@ class Blockchain {
       for (let i = 0; i < block.validators.length; i++) {
         if (block.validators[i].address != this.findValidator([i]).address) return false;
       }
-
       log.info('Block valid');
       return true;
     }
-    log.info('Block invalid');
+    log.warn('Block invalid', block);
     return false;
   }
 
