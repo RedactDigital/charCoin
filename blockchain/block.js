@@ -18,10 +18,6 @@ module.exports = {
     return block;
   },
 
-  hash: (timestamp, lastHash, data) => {
-    return SHA256(JSON.stringify(`${timestamp}${lastHash}${data}`)).toString();
-  },
-
   blockHash: block => {
     const { timestamp, lastHash, data } = block;
     return hash(`${timestamp}${lastHash}${data}`);
