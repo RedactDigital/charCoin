@@ -2,13 +2,13 @@ const ChainUtil = require('../chain-util');
 
 module.exports = {
   createBlock: (lastBlock, data, wallet) => {
-    const timestamp = Date.now();
-    const lastHash = lastBlock.hash;
-    const hash = ChainUtil.hash(`${timestamp}${lastHash}${data}`);
+    // const timestamp = Date.now();
+    // const lastHash = lastBlock.hash;
+    // const hash = ChainUtil.hash(`${timestamp}${lastHash}${data}`);
     const block = {
-      timestamp,
-      lastHash,
-      hash,
+      // timestamp,
+      // lastHash,
+      // hash,
       data,
       validators: [{ address: wallet.getPublicKey(), signature: wallet.sign(hash) }],
     };
