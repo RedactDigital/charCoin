@@ -84,8 +84,8 @@ class P2pserver {
           break;
 
         case 'block':
-          console.log(data);
           if (this.blockchain.isValidBlock(data.block)) {
+            console.log(data);
             // this.blockchain.addBlock(data.block);
             this.blockchain.executeTransactions(data.block);
 
