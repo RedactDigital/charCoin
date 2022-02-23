@@ -88,7 +88,7 @@ class Blockchain {
     if (index == 1) validators = getTierTwoValidators();
     if (index == 2) validators = getTierOneValidators();
 
-    return getValidatorWithMostStake(validators);
+    return getValidatorWithMostStake(validators, this.accounts);
   }
 
   initialize(address) {

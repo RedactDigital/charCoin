@@ -1,4 +1,4 @@
-const { VALIDATOR_FEE, TIER_TWO_BLOCK_REQUIREMENT, TIER_ONE_BLOCK_REQUIREMENT, TOTAL_COINS } = require('../config');
+const { VALIDATOR_FEE, TIER_TWO_BLOCK_REQUIREMENT, TIER_ONE_BLOCK_REQUIREMENT } = require('../config');
 
 const validators = [
   {
@@ -40,7 +40,7 @@ module.exports = {
     return validators.filter(validator => validator.blocks.length < TIER_TWO_BLOCK_REQUIREMENT);
   },
 
-  getValidatorWithMostStake: validators => {
+  getValidatorWithMostStake: (validators, accounts) => {
     // const balance = -1;
     // let chosenValidator = undefined;
     // for (let i = 0; i < validators.length; i++) {
@@ -52,7 +52,7 @@ module.exports = {
     let chosenValidator = validators[0];
     console.log(validators);
     for (let i = 0; i < validators.length; i++) {
-      if (this.accounts.getBalance(validators[i].address) > this.accounts.getBalance(chosenValidator.address)) {
+      if (accounts.getBalance(validators[i].address) > accounts.getBalance(chosenValidator.address)) {
         chosenValidator = validators[i];
       }
     }
