@@ -21,6 +21,10 @@ module.exports = {
     return false;
   },
 
+  getValidator: address => {
+    return validators.find(validator => validator.address == address);
+  },
+
   getValidators: () => {
     return { validators, count: validators.length };
   },
