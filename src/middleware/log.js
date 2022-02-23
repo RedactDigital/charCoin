@@ -22,6 +22,7 @@ const consoleFormatter = format.combine(
   format.splat(),
   format.printf(info => {
     const { timestamp, level, message, ...meta } = info;
+    console.log('TIMESTAMP', timestamp);
 
     return `${timestamp} [${level}]: ${message} \n${Object.keys(meta).length ? JSON.stringify(meta, null, 2) : ''}`;
   })
