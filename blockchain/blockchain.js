@@ -84,9 +84,9 @@ class Blockchain {
     // Tier 3 - All other validators
     let validators = getValidators();
 
-    if (index === 0) validators = getTierThreeValidators();
-    if (index === 1) validators = getTierTwoValidators();
-    if (index === 2) validators = getTierOneValidators();
+    if (index == 0) validators = getTierThreeValidators();
+    if (index == 1) validators = getTierTwoValidators();
+    if (index == 2) validators = getTierOneValidators();
 
     return getValidatorWithMostStake(validators);
   }
@@ -99,7 +99,6 @@ class Blockchain {
   isValidBlock(block) {
     const lastBlock = this.chain[this.chain.length - 1];
     if (block.lastHash === lastBlock.hash && block.hash === blockHash(block) && verifyBlock(block)) {
-      console.log(block);
       for (let i = 0; i < block.validators.length; i++) {
         if (block.validators[i] != this.findValidator([i])) return false;
       }
