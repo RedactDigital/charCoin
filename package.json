@@ -8,7 +8,7 @@
   },
   "scripts": {
     "start": "nodemon ./bin/www",
-    "ico": "nodemon ./ico",
+    "ico": "nodemon ./bin/ico",
     "test": "jest --watchAll"
   },
   "keywords": [],
