@@ -102,7 +102,6 @@ class Blockchain {
     if (block.lastHash === lastBlock.hash && block.hash === blockHash(block) && verifyBlock(block)) {
       console.log(block);
       for (let i = 0; i < block.validators.length; i++) {
-        console.log(this.findValidator([i]));
         if (block.validators[i] != this.findValidator([i])) return false;
       }
       this.addBlock(block);
