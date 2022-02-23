@@ -91,8 +91,7 @@ class P2pserver {
         case 'block':
           if (!data.block) break;
           if (!data.block.validators) break;
-          log.info('', data.block.validators);
-          data.block.validators.foreach(validator => {
+          data.block.validators.forEach(validator => {
             if (validator.address == this.Wallet.getPublicKey() && this.blockchain.isValidBlock(data.block)) {
               this.blockchain.addBlockToChain(data.block);
               this.blockchain.executeTransactions(data.block);
