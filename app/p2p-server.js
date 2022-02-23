@@ -83,15 +83,15 @@ class P2pserver {
 
           break;
 
-        case 'block':
-          if (this.blockchain.isValidBlock(data.block)) {
-            // this.blockchain.addBlock(data.block);
-            // this.blockchain.executeTransactions(data.block);
+        // case 'block':
+        //   if (this.blockchain.isValidBlock(data.block)) {
+        //     // this.blockchain.addBlock(data.block);
+        //     // this.blockchain.executeTransactions(data.block);
 
-            // this.broadcastBlock(data.block);
-            this.transactionPool.clear();
-          }
-          break;
+        //     // this.broadcastBlock(data.block);
+        //     this.transactionPool.clear();
+        //   }
+        //   break;
       }
     });
   }
