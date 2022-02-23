@@ -1,11 +1,10 @@
-const { VALIDATOR_FEE, TIER_TWO_BLOCK_REQUIREMENT, TIER_ONE_BLOCK_REQUIREMENT } = require('../config');
+const { VALIDATOR_FEE, TIER_TWO_BLOCK_REQUIREMENT, TIER_ONE_BLOCK_REQUIREMENT, TOTAL_COINS } = require('../config');
 
 const validators = [
   {
     // TODO - update this address before launch
     address: '5aad9b5e21f63955e8840e8b954926c60e0e2d906fdbc0ce1e3afe249a67f614',
     blocks: [],
-    stake: 0,
   },
 ];
 
@@ -42,13 +41,20 @@ module.exports = {
   },
 
   getValidatorWithMostStake: validatorAddresses => {
-    const balance = -1;
-    let leader = undefined;
+    // const balance = -1;
+    // let chosenValidator = undefined;
+    // for (let i = 0; i < validatorAddresses.length; i++) {
+    //   if (this.accounts.getBalance(validatorAddresses[i]) > balance) {
+    //     chosenValidator = validatorAddresses[i];
+    //   }
+    // }
+    // return chosenValidator;
+    let chosenValidator = validators[0];
     for (let i = 0; i < validatorAddresses.length; i++) {
-      if (this.getBalance(validatorAddresses[i]) > balance) {
-        leader = validatorAddresses[i];
+      if (this.accounts.getBalance(validatorAddresses[i] > this.accounts.getBalance(chosenValidator))) {
+        chosenValidator = validatorAddresses[i];
       }
     }
-    return leader;
+    return chosenValidator;
   },
 };

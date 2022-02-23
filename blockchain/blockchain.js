@@ -1,4 +1,4 @@
-const { createBlock, blockHash, verifyBlock, verifyLeader } = require('./block');
+const { createBlock, blockHash, verifyBlock } = require('./block');
 const Stake = require('./stake');
 const Account = require('./account');
 const {
