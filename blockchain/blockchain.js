@@ -98,12 +98,10 @@ class Blockchain {
   isValidBlock(block) {
     const lastBlock = this.chain[this.chain.length - 1];
     block.validators[0] = 'none';
-    if (
-      block.lastHash === lastBlock.hash &&
-      block.hash === blockHash(block) &&
-      verifyBlock(block) &&
-      block.validators[0] == this.findValidator()
-    ) {
+    if (block.lastHash === lastBlock.hash && block.hash === blockHash(block) && verifyBlock(block)) {
+      for (let i = 0; i < block.validators.length; i++) {
+        if (block.validators[i] != this.findValidator()) return false;
+      }
       this.addBlock(block);
       this.executeTransactions(block);
       console.log('Block validated');
