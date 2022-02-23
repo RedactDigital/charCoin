@@ -22,7 +22,7 @@ class ChainUtil {
     console.log(publicKey);
     console.log(signature);
     console.log(dataHash);
-    console.log('here');
+
     return eddsa.keyFromPublic(publicKey).verify(dataHash, signature);
   }
 }

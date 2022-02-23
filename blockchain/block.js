@@ -21,11 +21,16 @@ module.exports = {
   },
 
   verifyBlock: block => {
-    return ChainUtil.verifySignature(
-      block.validator,
-      block.authorityValidationSignature,
-      ChainUtil.hash(`${block.timestamp}, ${block.lastHash}, ${block.data}`)
-    );
+    const { timestamp, lastHash, data, validators } = block;
+
+    for (let i = 0; i < validators.length; i++) {
+      const validator = validators[i];
+      const { address, signature } = validator;
+      const valid = ChainUtil.verifySignature(address, signature, ChainUtil.hash(`${timestamp}${lastHash}${data}`));
+      if (!valid) return false;
+    }
+
+    return true;
   },
 
   verifyLeader: (block, leader) => {
