@@ -12,12 +12,6 @@ const {
 const Wallet = require('../wallet/wallet');
 const secret = 'i am the first leader';
 
-const TRANSACTION_TYPE = {
-  transaction: 'TRANSACTION',
-  stake: 'STAKE',
-  validator_fee: 'VALIDATOR_FEE',
-};
-
 const genesisBlock = {
   timestamp: 0,
   lastHash: '-----',
@@ -114,29 +108,42 @@ class Blockchain {
   }
 
   executeTransactions(block) {
-    console.log('block', block);
-    if (!block.data.transactions) return;
-    block.data.forEach(transaction => {
-      console.log(transaction.type);
-      switch (transaction.type) {
+    if (!block.data) return;
+    for (let i = 0; i < block.data.length; i++) {
+      switch (block.data[i].type) {
         case 'transaction':
-          this.accounts.update(transaction);
-          this.accounts.transferFee(block, transaction);
+          this.accounts.transfer(block.data[i].from, block.data[i].to, block.data[i].amount);
           break;
         case 'stake':
-          this.stakes.update(transaction);
-          this.accounts.decrement(transaction.input.from, transaction.output.amount);
-          this.accounts.transferFee(block, transaction);
-
+          this.stakes.addStake(block.data[i]);
+          this.accounts.addValidatorFee(block.data[i]);
           break;
-        case 'validator_fee':
-          if (commitValidator(transaction)) {
-            this.accounts.decrement(transaction.input.from, transaction.output.amount);
-            this.accounts.transferFee(block, transaction);
-          }
-          break;
+        // case 'validator_fee':
+        //   this.accounts.addValidatorFee(block.data[i]);
+        //   break;
       }
-    });
+    }
+    // block.data.forEach(transaction => {
+    //   console.log(transaction.type);
+    //   switch (transaction.type) {
+    //     case 'transaction':
+    //       this.accounts.update(transaction);
+    //       this.accounts.transferFee(block, transaction);
+    //       break;
+    //     case 'stake':
+    //       this.stakes.update(transaction);
+    //       this.accounts.decrement(transaction.input.from, transaction.output.amount);
+    //       this.accounts.transferFee(block, transaction);
+
+    //       break;
+    //     case 'validator_fee':
+    //       if (commitValidator(transaction)) {
+    //         this.accounts.decrement(transaction.input.from, transaction.output.amount);
+    //         this.accounts.transferFee(block, transaction);
+    //       }
+    //       break;
+    //   }
+    // });
   }
 
   executeChain(chain) {

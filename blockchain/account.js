@@ -35,12 +35,12 @@ class Account {
     return this.balance[address];
   }
 
-  update(transaction) {
-    const amount = transaction.output.amount;
-    const from = transaction.input.from;
-    const to = transaction.output.to;
-    this.transfer(from, to, amount);
-  }
+  // update(transaction) {
+  //   const amount = transaction.output.amount;
+  //   const from = transaction.input.from;
+  //   const to = transaction.output.to;
+  //   this.transfer(from, to, amount);
+  // }
 
   transferFee(block, transaction) {
     const amount = transaction.output.fee;
