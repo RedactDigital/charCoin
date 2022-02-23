@@ -57,49 +57,51 @@ class P2pserver {
     socket.on('message', message => {
       const data = JSON.parse(message);
 
-      if (data.type == 'block' && data.block.validators[0].address != this.Wallet.getPublicKey()) return;
+      if (data.type == 'block') {
+        data.block.validators.foreach(validator => {
+          if (validator.address != this.Wallet.getPublicKey()) log.info(`Received data from peer: ${data.type}`);
+          switch (data.type) {
+            case 'chain':
+              this.blockchain.replaceChain(data.chain);
+              break;
 
-      log.info(`Received data from peer: ${data.type}`);
-      switch (data.type) {
-        case 'chain':
-          this.blockchain.replaceChain(data.chain);
-          break;
+            case 'transaction':
+              if (!data.transaction) break;
+              if (!this.transactionPool.transactionExists(data.transaction)) {
+                this.transactionPool.addTransaction(data.transaction);
+                this.broadcastTransaction(data.transaction);
+              }
+              if (this.transactionPool.thresholdReached()) {
+                // Verify the wallet exists on the blockchain as a validator
+                // If the validator doesn't exist, the next validator will be the next in line
 
-        case 'transaction':
-          if (!data.transaction) break;
-          if (!this.transactionPool.transactionExists(data.transaction)) {
-            this.transactionPool.addTransaction(data.transaction);
-            this.broadcastTransaction(data.transaction);
+                const validatorExists = getValidator(this.Wallet.getPublicKey());
+
+                if (validatorExists) {
+                  log.info('Creating block');
+                  const block = createBlock(
+                    this.blockchain.chain[this.blockchain.chain.length - 1],
+                    this.transactionPool.transactions,
+                    this.Wallet
+                  );
+                  this.broadcastBlock(block);
+                }
+              }
+
+              break;
+
+            case 'block':
+              if (!data.block) break;
+
+              if (this.blockchain.isValidBlock(data.block)) {
+                this.blockchain.addBlockToChain(data.block);
+                this.blockchain.executeTransactions(data.block);
+
+                this.transactionPool.clear();
+              }
+              break;
           }
-          if (this.transactionPool.thresholdReached()) {
-            // Verify the wallet exists on the blockchain as a validator
-            // If the validator doesn't exist, the next validator will be the next in line
-
-            const validatorExists = getValidator(this.Wallet.getPublicKey());
-
-            if (validatorExists) {
-              log.info('Creating block');
-              const block = createBlock(
-                this.blockchain.chain[this.blockchain.chain.length - 1],
-                this.transactionPool.transactions,
-                this.Wallet
-              );
-              this.broadcastBlock(block);
-            }
-          }
-
-          break;
-
-        case 'block':
-          if (!data.block) break;
-
-          if (this.blockchain.isValidBlock(data.block)) {
-            this.blockchain.addBlockToChain(data.block);
-            this.blockchain.executeTransactions(data.block);
-
-            this.transactionPool.clear();
-          }
-          break;
+        });
       }
     });
   }
