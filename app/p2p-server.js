@@ -71,7 +71,7 @@ class P2pserver {
           }
           if (this.transactionPool.thresholdReached()) {
             // Verify the wallet exists on the blockchain as a validator
-            const validatorExists = getValidator(this.Wallet.getPublicKey());
+            const validatorExists = getValidator('wallet');
             console.log('Validator exists:', validatorExists);
             if (validatorExists) {
               console.log('Creating block');
