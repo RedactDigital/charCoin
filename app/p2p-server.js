@@ -87,7 +87,7 @@ class P2pserver {
           if (!data.block) break;
 
           if (this.blockchain.isValidBlock(data.block)) {
-            this.blockchain.addBlock(data.block);
+            this.blockchain.addBlockToChain(data.block);
             this.blockchain.executeTransactions(data.block);
 
             this.transactionPool.clear();
