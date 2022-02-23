@@ -1,17 +1,19 @@
 const SHA256 = require('crypto-js/sha256');
 const ChainUtil = require('../chain-util');
 
+const hash = data => ChainUtil.hash(data);
+
 module.exports = {
   createBlock: (lastBlock, data, wallet) => {
     const timestamp = Date.now();
     const lastHash = lastBlock.hash;
-    const hash = this.hash(lastHash, timestamp, data);
+    const hash = hash(`${timestamp}${lastHash}${data}`);
     const block = {
       timestamp,
       lastHash,
       hash,
       data,
-      validators: [{ address: wallet.getPublicKey(), signature: this.signBlockHash(hash, wallet) }],
+      validators: [{ address: wallet.getPublicKey(), signature: wallet.sign(hash) }],
     };
     return block;
   },
@@ -22,18 +24,14 @@ module.exports = {
 
   blockHash: block => {
     const { timestamp, lastHash, data } = block;
-    return Block.hash(timestamp, lastHash, data);
-  },
-
-  signBlockHash: (hash, wallet) => {
-    return wallet.sign(hash);
+    return hash(`${timestamp}${lastHash}${data}`);
   },
 
   verifyBlock: block => {
     return ChainUtil.verifySignature(
       block.validator,
       block.authorityValidationSignature,
-      Block.hash(block.timestamp, block.lastHash, block.data)
+      hash(`${block.timestamp}, ${block.lastHash}, ${block.data}`)
     );
   },
 
