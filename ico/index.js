@@ -30,10 +30,10 @@ app.post('/ico/transaction', (req, res) => {
   const { to, amount, type } = req.body;
   const transaction = wallet.createTransaction(to, amount, type, blockchain, transactionPool);
   p2pserver.broadcastTransaction(transaction);
-  if (transactionPool.transactions.length >= TRANSACTION_THRESHOLD) {
-    const block = blockchain.createBlock(transactionPool.transactions, wallet);
-    p2pserver.broadcastBlock(block);
-  }
+  // if (transactionPool.transactions.length >= TRANSACTION_THRESHOLD) {
+  //   const block = blockchain.createBlock(transactionPool.transactions, wallet);
+  //   p2pserver.broadcastBlock(block);
+  // }
   res.redirect('/ico/transactions');
 });
 
