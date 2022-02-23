@@ -4,10 +4,10 @@ const ChainUtil = require('../chain-util');
 const hash = data => ChainUtil.hash(data);
 
 module.exports = {
-  createBlock: async (lastBlock, data, wallet) => {
+  createBlock: (lastBlock, data, wallet) => {
     const timestamp = Date.now();
     const lastHash = lastBlock.hash;
-    const hash = await hash(`${timestamp}${lastHash}${data}`);
+    const hash = hash(`${timestamp}${lastHash}${data}`);
     const block = {
       timestamp,
       lastHash,
