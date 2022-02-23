@@ -57,7 +57,6 @@ class P2pserver {
     socket.on('message', message => {
       const data = JSON.parse(message);
       console.log('Received data from peer:', data.type);
-      console.log(data);
       switch (data.type) {
         case 'chain':
           this.blockchain.replaceChain(data.chain);
@@ -73,6 +72,7 @@ class P2pserver {
             // Verify the wallet exists on the blockchain as a validator
             // If the validator doesn't exist, the next validator will be the next in line
 
+            console.log(data);
             const validatorExists = getValidator(this.Wallet.getPublicKey());
 
             if (validatorExists) {
