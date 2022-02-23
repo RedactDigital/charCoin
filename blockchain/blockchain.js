@@ -78,14 +78,14 @@ class Blockchain {
     return this.accounts.getBalance(publicKey);
   }
 
-  findValidator() {
+  findValidator(index) {
     // Tier 1 - Validator with x amount of blocks validated
     // Tier 2 - Validator with x amount of blocks validated
     // Tier 3 - All other validators
     let validators = getValidators();
-    // if (block.validators.length === 0) validators = getTierThreeValidators();
-    // if (block.validators.length === 1) validators = getTierTwoValidators();
-    // if (block.validators.length === 2) validators = getTierOneValidators();
+    if (index === 0) validators = getTierThreeValidators();
+    if (index === 1) validators = getTierTwoValidators();
+    if (index === 2) validators = getTierOneValidators();
 
     return getValidatorWithMostStake(validators);
   }
@@ -99,8 +99,8 @@ class Blockchain {
     const lastBlock = this.chain[this.chain.length - 1];
     if (block.lastHash === lastBlock.hash && block.hash === blockHash(block) && verifyBlock(block)) {
       for (let i = 0; i < block.validators.length; i++) {
-        console.log(this.findValidator());
-        if (block.validators[i] != this.findValidator()) return false;
+        console.log(this.findValidator([i]));
+        if (block.validators[i] != this.findValidator([i])) return false;
       }
       this.addBlock(block);
       this.executeTransactions(block);
