@@ -1,4 +1,4 @@
-const { VALIDATOR_FEE } = require('../config');
+const { VALIDATOR_FEE, TIER_TWO_BLOCK_REQUIREMENT, TIER_ONE_BLOCK_REQUIREMENT } = require('../config');
 
 const validators = [
   {
@@ -23,6 +23,18 @@ module.exports = {
 
   getValidators: () => {
     return { validators, count: validators.length };
+  },
+
+  getTierOneValidators: () => {
+    return validators.filter(validator => validator.blocks.length >= TIER_ONE_BLOCK_REQUIREMENT);
+  },
+
+  getTierTwoValidators: () => {
+    return validators.filter(validator => validator.blocks.length >= TIER_TWO_BLOCK_REQUIREMENT);
+  },
+
+  getTierThreeValidators: () => {
+    return validators.filter(validator => validator.blocks.length < TIER_TWO_BLOCK_REQUIREMENT);
   },
 
   getValidatorWithMostStake: validatorAddresses => {
