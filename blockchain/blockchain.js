@@ -87,6 +87,7 @@ class Blockchain {
     if (index === 0) validators = getTierThreeValidators();
     if (index === 1) validators = getTierTwoValidators();
     if (index === 2) validators = getTierOneValidators();
+    console.log(index);
 
     return getValidatorWithMostStake(validators);
   }
