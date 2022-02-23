@@ -109,6 +109,7 @@ class Blockchain {
       console.log('Block validated');
       return true;
     }
+    console.log('Block invalid');
     return false;
   }
 
