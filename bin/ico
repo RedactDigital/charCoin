@@ -31,6 +31,7 @@ app.post('/ico/transaction', (req, res) => {
     log.info('All fields are required');
     return res.redirect('/ico/transactions');
   }
+  log.critical('type: ' + type);
   if (type !== 'transaction' || type !== 'stake') {
     log.info('Invalid transaction type');
     return res.redirect('/ico/transactions');
