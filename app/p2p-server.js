@@ -86,6 +86,7 @@ class P2pserver {
 
         case MESSAGE_TYPE.block:
           if (this.blockchain.isValidBlock(data.block)) {
+            console.log('HERERRER');
             // this.blockchain.addBlock(data.block);
             this.blockchain.executeTransactions(data.block);
 
