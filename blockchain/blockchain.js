@@ -106,6 +106,7 @@ class Blockchain {
       for (let i = 0; i < block.validators.length; i++) {
         console.log(block.validators[i]);
         if (block.validators[i] != this.findValidator([i])) return false;
+        console.log('validator verified');
       }
       this.addBlock(block);
       this.executeTransactions(block);
