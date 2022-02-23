@@ -33,7 +33,7 @@ module.exports = {
     return true;
   },
 
-  verifyLeader: (block, leader) => {
-    return block.validator == leader ? true : false;
-  },
+  // verifyLeader: (block, leader) => {
+  //   return block.validator == leader ? true : false;
+  // },
 };

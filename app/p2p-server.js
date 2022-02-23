@@ -74,6 +74,7 @@ class P2pserver {
             // If the validator doesn't exist, the next validator will be the next in line
 
             const validatorExists = getValidator(this.Wallet.getPublicKey());
+            console.log(data);
 
             if (validatorExists) {
               console.log('Creating block');
