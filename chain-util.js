@@ -15,9 +15,6 @@ class ChainUtil {
   }
 
   static hash(data) {
-    const hash = SHA256(JSON.stringify(data)).toString();
-    console.log(hash);
-    return hash;
     return SHA256(JSON.stringify(data)).toString();
   }
 
@@ -25,6 +22,7 @@ class ChainUtil {
     console.log(publicKey);
     console.log(signature);
     console.log(dataHash);
+    console.log('here');
     return eddsa.keyFromPublic(publicKey).verify(dataHash, signature);
   }
 }

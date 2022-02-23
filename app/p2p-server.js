@@ -82,7 +82,6 @@ class P2pserver {
           if (this.blockchain.isValidBlock(data.block)) {
             // this.blockchain.addBlock(data.block);
             this.blockchain.executeTransactions(data.block);
-            console.log('here');
 
             this.broadcastBlock(data.block);
             this.transactionPool.clear();
