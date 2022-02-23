@@ -110,7 +110,6 @@ class Blockchain {
     for (let i = 0; i < block.data.length; i++) {
       switch (block.data[i].type) {
         case 'transaction':
-          console.log(block.data[i]);
           this.accounts.transfer(block.data[i].input.from, block.data[i].output.to, block.data[i].output.amount);
           break;
         case 'stake':
