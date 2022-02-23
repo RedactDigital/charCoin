@@ -106,6 +106,7 @@ class Blockchain {
 
   executeTransactions(block) {
     if (!block.data) return;
+    console.log(block.data);
     for (let i = 0; i < block.data.length; i++) {
       switch (block.data[i].type) {
         case 'transaction':
