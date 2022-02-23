@@ -30,17 +30,14 @@ module.exports = {
   },
 
   getTierOneValidators: () => {
-    console.log('Tier1');
     return validators.filter(validator => validator.blocks.length >= TIER_ONE_BLOCK_REQUIREMENT);
   },
 
   getTierTwoValidators: () => {
-    console.log('Tier2');
     return validators.filter(validator => validator.blocks.length >= TIER_TWO_BLOCK_REQUIREMENT);
   },
 
   getTierThreeValidators: () => {
-    console.log('Tier3');
     return validators.filter(validator => validator.blocks.length < TIER_TWO_BLOCK_REQUIREMENT);
   },
 
