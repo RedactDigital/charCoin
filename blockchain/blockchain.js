@@ -102,9 +102,11 @@ class Blockchain {
       for (let i = 0; i < block.validators.length; i++) {
         if (block.validators[i].address != this.findValidator([i]).address) return false;
       }
-      this.addBlock(block);
-      this.executeTransactions(block);
       console.log('Block valid');
+      this.addBlock(block);
+
+      // Execute transactions in the block
+      this.executeTransactions(block);
       return true;
     }
     console.log('Block invalid');
