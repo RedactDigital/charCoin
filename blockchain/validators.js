@@ -50,8 +50,9 @@ module.exports = {
     // }
     // return chosenValidator;
     let chosenValidator = validators[0];
+    console.log(validatorAddresses);
     for (let i = 0; i < validatorAddresses.length; i++) {
-      if (this.accounts.getBalance(validatorAddresses[i] > this.accounts.getBalance(chosenValidator))) {
+      if (this.accounts.getBalance(validatorAddresses[i]) > this.accounts.getBalance(chosenValidator.address)) {
         chosenValidator = validatorAddresses[i];
       }
     }
