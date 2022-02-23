@@ -32,9 +32,12 @@ app.get('/transactions', (req, res) => {
 
 app.post('/transaction', (req, res) => {
   const { to, amount, type } = req.body;
-  // TODO - add validation to ensure transaction is valid and not empty
   if (!to || !amount || !type) {
-    console.log('Transaction invalid');
+    console.log('All fields are required');
+    return res.redirect('/transactions');
+  }
+  if (type !== 'transaction' || type !== 'stake') {
+    console.log('Invalid transaction type');
     return res.redirect('/transactions');
   }
   const transaction = wallet.createTransaction(to, amount, type, blockchain, transactionPool);

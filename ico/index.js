@@ -28,12 +28,17 @@ app.get('/ico/blocks', (req, res) => {
 
 app.post('/ico/transaction', (req, res) => {
   const { to, amount, type } = req.body;
+  if (!to || !amount || !type) {
+    console.log('All fields are required');
+    return res.redirect('/ico/transactions');
+  }
+  if (type !== 'transaction' || type !== 'stake') {
+    console.log('Invalid transaction type');
+    return res.redirect('/ico/transactions');
+  }
   const transaction = wallet.createTransaction(to, amount, type, blockchain, transactionPool);
   p2pserver.broadcastTransaction(transaction);
-  // if (transactionPool.transactions.length >= TRANSACTION_THRESHOLD) {
-  //   const block = blockchain.createBlock(transactionPool.transactions, wallet);
-  //   p2pserver.broadcastBlock(block);
-  // }
+
   res.redirect('/ico/transactions');
 });
 
