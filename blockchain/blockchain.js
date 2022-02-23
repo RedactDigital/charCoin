@@ -116,18 +116,19 @@ class Blockchain {
   executeTransactions(block) {
     if (!block.data.transactions) return;
     block.data.forEach(transaction => {
+      console.log(transaction.type);
       switch (transaction.type) {
-        case TRANSACTION_TYPE.transaction:
+        case 'transaction':
           this.accounts.update(transaction);
           this.accounts.transferFee(block, transaction);
           break;
-        case TRANSACTION_TYPE.stake:
+        case 'stake':
           this.stakes.update(transaction);
           this.accounts.decrement(transaction.input.from, transaction.output.amount);
           this.accounts.transferFee(block, transaction);
 
           break;
-        case TRANSACTION_TYPE.validator_fee:
+        case 'validator_fee':
           if (commitValidator(transaction)) {
             this.accounts.decrement(transaction.input.from, transaction.output.amount);
             this.accounts.transferFee(block, transaction);
