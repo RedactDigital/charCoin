@@ -75,7 +75,6 @@ class P2pserver {
             const validatorExists = getValidator(this.Wallet.getPublicKey());
 
             if (validatorExists) {
-              console.log(data);
               console.log('Creating block');
               const block = this.blockchain.createBlock(this.transactionPool.transactions, this.Wallet);
               this.broadcastBlock(block);
