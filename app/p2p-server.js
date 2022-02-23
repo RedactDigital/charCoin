@@ -64,11 +64,11 @@ class P2pserver {
           break;
 
         case 'transaction':
+          console.log(data);
           if (!data.transaction) break;
           if (!this.transactionPool.transactionExists(data.transaction)) {
             this.transactionPool.addTransaction(data.transaction);
             this.broadcastTransaction(data.transaction);
-            console.log(data);
           }
           if (this.transactionPool.thresholdReached()) {
             // Verify the wallet exists on the blockchain as a validator
