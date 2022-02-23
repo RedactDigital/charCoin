@@ -28,8 +28,6 @@ class Blockchain {
   }
 
   addBlockToChain(block) {
-    // const block = createBlock(this.chain[this.chain.length - 1], block.data, new Wallet(secret));
-
     this.chain.push(block);
     console.log('NEW BLOCK ADDED');
     return block;

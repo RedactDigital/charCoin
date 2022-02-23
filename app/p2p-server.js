@@ -2,12 +2,11 @@ require('dotenv').config({ silent: true });
 
 const WebSocket = require('ws');
 const { getValidator } = require('../blockchain/validators');
+const { createBlock } = require('../blockchain/block');
 
 const P2P_PORT = process.env.P2P_PORT || 5000;
 
 const peers = process.env.PEERS ? process.env.PEERS.split(',') : [];
-
-const { TRANSACTION_THRESHOLD } = require('../config');
 
 const MESSAGE_TYPE = {
   chain: 'chain',
@@ -76,7 +75,11 @@ class P2pserver {
 
             if (validatorExists) {
               console.log('Creating block');
-              const block = this.blockchain.createBlock(this.transactionPool.transactions, this.Wallet);
+              const block = createBlock(
+                this.blockchain[this.blockchain.length - 1],
+                this.transactionPool.transactions,
+                this.Wallet
+              );
               this.broadcastBlock(block);
             }
           }
