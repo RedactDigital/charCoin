@@ -57,9 +57,9 @@ class P2pserver {
     socket.on('message', message => {
       const data = JSON.parse(message);
 
-      // if (data.type == 'block' && data.validators[0].address != this.Wallet.getPublicKey()) return;
+      if (data.type == 'block' && data.block.validators[0].address != this.Wallet.getPublicKey()) return;
 
-      log.info(`Received data from peer: ${data.type}`, data);
+      log.info(`Received data from peer: ${data.type}`);
       switch (data.type) {
         case 'chain':
           this.blockchain.replaceChain(data.chain);
