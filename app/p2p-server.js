@@ -59,11 +59,11 @@ class P2pserver {
       const data = JSON.parse(message);
       console.log('Received data from peer:', data.type);
       switch (data.type) {
-        case MESSAGE_TYPE.chain:
+        case 'chain':
           this.blockchain.replaceChain(data.chain);
           break;
 
-        case MESSAGE_TYPE.transaction:
+        case 'transaction':
           if (!data.transaction) break;
           if (!this.transactionPool.transactionExists(data.transaction)) {
             this.transactionPool.addTransaction(data.transaction);
@@ -84,7 +84,7 @@ class P2pserver {
 
           break;
 
-        case MESSAGE_TYPE.block:
+        case 'block':
           if (this.blockchain.isValidBlock(data.block)) {
             // this.blockchain.addBlock(data.block);
             this.blockchain.executeTransactions(data.block);
