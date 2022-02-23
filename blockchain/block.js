@@ -5,14 +5,15 @@ module.exports = {
   createBlock: (lastBlock, data, wallet) => {
     const timestamp = Date.now();
     const lastHash = lastBlock.hash;
-    const hash = Block.hash(timestamp, lastHash, data);
-    const validator = wallet.getPublicKey();
-    const signature = Block.signBlockHash(hash, wallet);
-    console.log(this.authorityValidationSignature);
-    console.log(signature);
-    const signatures = this.authorityValidationSignature.push(signature);
-
-    return new this(timestamp, lastHash, hash, data, validator, signatures);
+    const hash = this.hash(lastHash, timestamp, data);
+    const block = {
+      timestamp,
+      lastHash,
+      hash,
+      data,
+      validators: [{ address: wallet.getPublicKey(), signature: this.signBlockHash(hash, wallet) }],
+    };
+    return block;
   },
 
   hash: (timestamp, lastHash, data) => {
