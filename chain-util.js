@@ -15,7 +15,9 @@ class ChainUtil {
   }
 
   static hash(data) {
-    console.log('DATA', data);
+    const hash = SHA256(JSON.stringify(data)).toString();
+    console.log(hash);
+    return hash;
     return SHA256(JSON.stringify(data)).toString();
   }
 
