@@ -10,10 +10,9 @@ const peers = process.env.PEERS ? process.env.PEERS.split(',') : [];
 const { TRANSACTION_THRESHOLD } = require('../config');
 
 const MESSAGE_TYPE = {
-  chain: 'CHAIN',
-  block: 'BLOCK',
-  transaction: 'TRANSACTION',
-  clear_transactions: 'CLEAR_TRANSACTIONS',
+  chain: 'chain',
+  block: 'block',
+  transaction: 'transaction',
 };
 
 class P2pserver {

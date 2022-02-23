@@ -18,7 +18,7 @@ const wallet = new Wallet('i am the first leader');
 const transactionPool = new TransactionPool();
 const p2pserver = new P2pserver(blockchain, transactionPool, wallet);
 
-app.get('/ico/trades', (req, res) => {
+app.get('/ico/transactions', (req, res) => {
   res.json(transactionPool.transactions);
 });
 
@@ -26,7 +26,7 @@ app.get('/ico/blocks', (req, res) => {
   res.json(blockchain.chain);
 });
 
-app.post('/ico/trade', (req, res) => {
+app.post('/ico/transaction', (req, res) => {
   const { to, amount, type } = req.body;
   const transaction = wallet.createTransaction(to, amount, type, blockchain, transactionPool);
   p2pserver.broadcastTransaction(transaction);
@@ -34,7 +34,7 @@ app.post('/ico/trade', (req, res) => {
     const block = blockchain.createBlock(transactionPool.transactions, wallet);
     p2pserver.broadcastBlock(block);
   }
-  res.redirect('/ico/trades');
+  res.redirect('/ico/transactions');
 });
 
 app.get('/ico/address', (req, res) => {

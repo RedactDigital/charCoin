@@ -26,11 +26,11 @@ app.get('/blocks', (req, res) => {
   res.json(blockchain.chain);
 });
 
-app.get('/trades', (req, res) => {
+app.get('/transactions', (req, res) => {
   res.json(transactionPool.transactions);
 });
 
-app.post('/trade', (req, res) => {
+app.post('/transaction', (req, res) => {
   const { to, amount, type } = req.body;
   // TODO - add validation to ensure transaction is valid and not empty
   if (!to || !amount || !type) {
@@ -40,7 +40,7 @@ app.post('/trade', (req, res) => {
   const transaction = wallet.createTransaction(to, amount, type, blockchain, transactionPool);
   p2pserver.broadcastTransaction(transaction);
 
-  res.redirect('/trades');
+  res.redirect('/transactions');
 });
 
 app.get('/bootstrap', (req, res) => {
