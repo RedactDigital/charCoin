@@ -119,9 +119,10 @@ class Server {
       const peers = process.env.PEERS ? process.env.PEERS.split(',') : [];
       peers.forEach(peer => {
         const socket = io.connect(peer);
-        socket.on('connect', () => {
-            log.info('Connected to peer');
+        socket.on('open', () => {
+          log.info('Connected to peer');
         });
+      });
 
       // Add Socket.io disconnect handler.
       socket.on('disconnect', () => {
