@@ -178,10 +178,10 @@ class Server {
 
       // Add Socket.io disconnect handler.
       socket.on('disconnect', () => {
+        const clients = io.engine.clientsCount;
         // Log remaining clients online
-        log.info(`${numOfUsersOnline - 1} users online)`);
-        // Remove peer from the list of peers.
-        this.sockets.splice(this.sockets.indexOf(socket), 1);
+        log.info(`${clients - 1} users online)`);
+        // On disconnect remove client
       });
 
       // Add Socket.io error handler.

@@ -6,7 +6,7 @@ const sockets = [];
 
 const connectToPeers = async blockchain => {
   peers.forEach(peer => {
-    const socket = io(peer);
+    const socket = io(peer, { forceNew: true });
     socket.on('connect', () => connectSocket(socket, blockchain));
   });
   // create a promise that resolves when all sockets are connected
@@ -34,8 +34,7 @@ const syncPeers = (p, blockchain) => {
 
   if (newPeers.length > 0) {
     newPeers.forEach(peer => {
-      console.log(peer);
-      const socket = io(peer);
+      const socket = io(peer, { forceNew: true });
       socket.on('connect', () => connectSocket(socket, blockchain));
     });
   }
