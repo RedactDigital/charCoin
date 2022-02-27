@@ -53,21 +53,25 @@ class Blockchain {
   }
 
   replaceChain(newChain) {
-    if (newChain.length == this.chain.length) return;
-    if (newChain.length <= this.chain.length) {
-      log.info('Received chain is not longer than the current chain');
+    if (this.isValidChain(newChain) && newChain.length > this.chain.length) {
+      log.info('Chain replaced');
+      this.chain = newChain;
       broadcastChain(this.chain);
-      return;
-    } else if (!this.isValidChain(newChain)) {
-      log.info('Received chain is invalid');
-      return;
+    } else {
+      log.info('Received chain is not valid');
     }
-
-    log.error('Replacing the current chain with new chain');
-    // this.resetState();
-    // this.executeChain(this.chain);
-    // this.chain = newChain;
   }
+  //   if (newChain.length <= this.chain.length) {
+  //     log.info('Received chain is not longer than the current chain');
+  //   } else if (!this.isValidChain(newChain)) {
+  //     log.info('Received chain is invalid');
+  //   }
+
+  //   log.error('Replacing the current chain with new chain');
+  //   // this.resetState();
+  //   // this.executeChain(this.chain);
+  //   // this.chain = newChain;
+  // }
 
   getBalance(publicKey) {
     return this.accounts.getBalance(publicKey);
