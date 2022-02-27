@@ -16,19 +16,16 @@ const connectSocket = (socket, blockchain) => {
   sockets.push(socket);
   log.info('Socket connected');
   syncChain(blockchain);
-  broadcastPeers();
 };
 
 const syncPeers = (p, blockchain) => {
   let newPeers = p.filter(peer => !peers.includes(peer));
-  console.log(p);
+
   if (newPeers.length > 0) {
-    peers.push(newPeers);
-    console.log(newPeers);
-    //     newPeers.forEach(peer => {
-    //       const socket = io(peer);
-    //       socket.on('connect', () => connectSocket(socket, blockchain));
-    //     });
+    newPeers.forEach(peer => {
+      const socket = io(peer);
+      socket.on('connect', () => connectSocket(socket, blockchain));
+    });
   }
 };
 
