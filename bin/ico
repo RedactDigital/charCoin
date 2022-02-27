@@ -3,7 +3,7 @@ require('../src/globals');
 const express = require('express');
 const bodyParser = require('body-parser');
 const Blockchain = require('../src/blockchain/blockchain');
-const { connectToPeers, broadcastTransaction, broadcastPeers } = require('../src/middleware/socket');
+const { connectToPeers, broadcastTransaction } = require('../src/middleware/socket');
 const Server = require('./socket');
 const Wallet = require('../src/wallet/wallet');
 const TransactionPool = require('../src/wallet/transaction-pool');
@@ -20,7 +20,6 @@ const wallet = new Wallet('i am the first leader');
 const transactionPool = new TransactionPool();
 
 connectToPeers(blockchain);
-broadcastPeers();
 
 app.get('/ico/transactions', (req, res) => {
   res.json(transactionPool.transactions);
