@@ -1,6 +1,3 @@
-require('dotenv').config({ silent: true });
-require('../globals');
-
 const { io } = require('socket.io-client');
 
 const peers = process.env.PEERS ? process.env.PEERS.split(',') : [];
@@ -19,61 +16,49 @@ const connectSocket = socket => {
   log.info('Socket connected');
 };
 
-const sendChain = socket => {
-  socket.emit(
-    'message',
-    JSON.stringify({
-      type: 'chain',
-      chain: blockchain.chain,
-    })
-  );
-};
+// const sendChain = socket => {
+//   socket.emit(
+//     'message',
+//     JSON.stringify({
+//       type: 'chain',
+//       chain: blockchain.chain,
+//     })
+//   );
+// };
 
-const syncChain = () => {
-  sockets.forEach(socket => {
-    sendChain(socket);
-  });
-};
+// const syncChain = () => {
+//   sockets.forEach(socket => {
+//     sendChain(socket);
+//   });
+// };
 
 const broadcastTransaction = transaction => {
   sockets.forEach(socket => {
-    sendTransaction(socket, transaction);
+    socket.emit(
+      'message',
+      JSON.stringify({
+        type: 'transaction',
+        transaction: transaction,
+      })
+    );
   });
-};
-
-const sendTransaction = (socket, transaction) => {
-  socket.emit(
-    'message',
-    JSON.stringify({
-      type: 'transaction',
-      transaction: transaction,
-    })
-  );
 };
 
 const broadcastBlock = block => {
   sockets.forEach(socket => {
-    sendBlock(socket, block);
+    socket.emit(
+      'message',
+      JSON.stringify({
+        type: 'block',
+        block: block,
+      })
+    );
   });
-};
-
-const sendBlock = (socket, block) => {
-  socket.emit(
-    'message',
-    JSON.stringify({
-      type: 'block',
-      block: block,
-    })
-  );
 };
 
 module.exports = {
   connectToPeers,
   connectSocket,
-  sendChain,
-  syncChain,
   broadcastTransaction,
-  sendTransaction,
   broadcastBlock,
-  sendBlock,
 };

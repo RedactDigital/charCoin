@@ -45,11 +45,6 @@ app.post('/transaction', (req, res) => {
   res.redirect('/transactions');
 });
 
-app.get('/bootstrap', (req, res) => {
-  p2pserver.bootstrapSystem();
-  res.json({ message: 'System bootstrapped' });
-});
-
 app.get('/validators', (req, res) => {
   const validators = getValidators();
   res.json(validators);
