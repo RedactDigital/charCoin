@@ -1,4 +1,5 @@
 const { blockHash, verifyBlock } = require('./block');
+const { syncChain } = require('../middleware/socket');
 const Stake = require('./stake');
 const Account = require('./account');
 const {
@@ -62,8 +63,8 @@ class Blockchain {
 
     log.info('Replacing the current chain with new chain');
     this.resetState();
-    this.executeChain(newChain);
-    this.chain = newChain;
+    this.executeChain(this.chain);
+    // this.chain = newChain;
   }
 
   getBalance(publicKey) {
