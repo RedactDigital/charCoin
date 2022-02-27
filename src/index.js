@@ -68,3 +68,6 @@ app.post('/balance', (req, res) => {
 });
 
 module.exports = app;
+
+// Initialize WebSocket server
+new Server(blockchain, transactionPool, wallet);
