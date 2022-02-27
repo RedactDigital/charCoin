@@ -180,6 +180,8 @@ class Server {
       socket.on('disconnect', () => {
         // Log remaining clients online
         log.info(`${numOfUsersOnline - 1} users online)`);
+        // Remove peer from the list of peers.
+        this.sockets.splice(this.sockets.indexOf(socket), 1);
       });
 
       // Add Socket.io error handler.
