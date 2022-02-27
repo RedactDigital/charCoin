@@ -4,7 +4,7 @@ require('./globals');
 const express = require('express');
 const Blockchain = require('./blockchain/blockchain');
 const bodyParser = require('body-parser');
-const { connectToPeers, broadcastTransaction, broadcastPeers } = require('../src/middleware/socket');
+const { connectToPeers, broadcastTransaction } = require('../src/middleware/socket');
 const Server = require('../bin/socket');
 const Wallet = require('./wallet/wallet');
 const TransactionPool = require('./wallet/transaction-pool');
@@ -20,7 +20,6 @@ const wallet = new Wallet(Date.now().toString());
 const transactionPool = new TransactionPool();
 
 connectToPeers(blockchain);
-broadcastPeers();
 
 app.get('/blocks', (req, res) => {
   res.json(blockchain.chain);
