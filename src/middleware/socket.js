@@ -33,6 +33,7 @@ const syncPeers = (p, blockchain) => {
 
   if (newPeers.length > 0) {
     newPeers.forEach(peer => {
+      console.log(peer);
       const socket = io(peer);
       socket.on('connect', () => connectSocket(socket, blockchain));
     });
@@ -40,7 +41,6 @@ const syncPeers = (p, blockchain) => {
 };
 
 const broadcastPeers = () => {
-  console.log(peers);
   sockets.forEach(socket => {
     socket.emit('message', JSON.stringify({ type: 'peers', peers }));
   });
