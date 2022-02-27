@@ -31,6 +31,7 @@ class Blockchain {
   addBlockToChain(block) {
     this.chain.push(block);
     log.info('NEW BLOCK ADDED');
+    broadcastChain(this.chain);
     return block;
   }
 
@@ -93,7 +94,6 @@ class Blockchain {
   }
 
   isValidBlock(block) {
-    console.log(this.chain);
     const lastBlock = this.chain[this.chain.length - 1];
 
     if (block.lastHash === lastBlock.hash && block.hash === blockHash(block) && verifyBlock(block)) {
