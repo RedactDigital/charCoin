@@ -129,9 +129,10 @@ class Server {
         log.info(`Received data from peer: ${data.type}`);
         switch (data.type) {
           case 'peers':
-            // Send list of peers to the peer.
-            syncPeers(socket, data.peers);
+            // Add peers to the list of peers.
+            syncPeers(data.peers);
             break;
+
           case 'chain':
             this.blockchain.replaceChain(data.chain);
             break;
