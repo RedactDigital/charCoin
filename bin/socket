@@ -130,7 +130,7 @@ class Server {
         switch (data.type) {
           case 'peers':
             // Add peers to the list of peers.
-            syncPeers(data.peers);
+            syncPeers(data.peers, this.blockchain);
             break;
 
           case 'chain':
