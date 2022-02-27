@@ -22,13 +22,14 @@ const connectSocket = (socket, blockchain) => {
 const syncPeers = (p, blockchain) => {
   let newPeers = p.filter(peer => !peers.includes(peer));
   console.log(p);
-  //   if (newPeers.length > 0) {
-  //     peers.push(newPeers);
-  //     newPeers.forEach(peer => {
-  //       const socket = io(peer);
-  //       socket.on('connect', () => connectSocket(socket, blockchain));
-  //     });
-  //   }
+  if (newPeers.length > 0) {
+    peers.push(newPeers);
+    console.log(newPeers);
+    //     newPeers.forEach(peer => {
+    //       const socket = io(peer);
+    //       socket.on('connect', () => connectSocket(socket, blockchain));
+    //     });
+  }
 };
 
 const broadcastPeers = () => {
