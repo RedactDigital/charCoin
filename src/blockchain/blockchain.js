@@ -53,13 +53,12 @@ class Blockchain {
   }
 
   replaceChain(newChain) {
-    if (this.isValidChain(newChain) && newChain.length > this.chain.length) {
-      log.info('Chain replaced');
-      this.chain = newChain;
-      broadcastChain(this.chain);
-    } else {
-      log.info('Received chain is not valid');
-    }
+    if (!this.isValidChain(newChain)) return;
+
+    if (newChain.length <= this.chain.length) return;
+
+    this.chain = newChain;
+    broadcastChain(this.chain);
   }
   //   if (newChain.length <= this.chain.length) {
   //     log.info('Received chain is not longer than the current chain');
