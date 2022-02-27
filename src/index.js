@@ -19,7 +19,8 @@ const wallet = new Wallet(Date.now().toString());
 
 const transactionPool = new TransactionPool();
 
-connectToPeers(blockchain);
+const newChain = connectToPeers(blockchain);
+blockchain.chain = newChain;
 
 app.get('/blocks', (req, res) => {
   res.json(blockchain.chain);
