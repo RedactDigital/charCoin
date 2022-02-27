@@ -24,6 +24,7 @@ const connectToPeers = async blockchain => {
 
 const connectSocket = (socket, blockchain) => {
   sockets.push(socket);
+  log.error(`${sockets.length} sockets connected`);
   log.info('Socket connected');
   syncChain(blockchain);
 };
