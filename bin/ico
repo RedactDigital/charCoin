@@ -1,3 +1,4 @@
+require('dotenv').config({ silent: true });
 require('../src/globals');
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -18,7 +19,7 @@ const wallet = new Wallet('i am the first leader');
 
 const transactionPool = new TransactionPool();
 
-connectToPeers();
+connectToPeers(blockchain);
 
 app.get('/ico/transactions', (req, res) => {
   res.json(transactionPool.transactions);

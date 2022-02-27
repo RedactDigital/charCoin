@@ -4,33 +4,31 @@ const peers = process.env.PEERS ? process.env.PEERS.split(',') : [];
 
 const sockets = [];
 
-const connectToPeers = () => {
+const connectToPeers = blockchain => {
+  log.info(peers);
   peers.forEach(peer => {
     const socket = io(peer);
-    socket.on('connect', () => connectSocket(socket));
+    socket.on('connect', () => connectSocket(socket, blockchain));
   });
 };
 
-const connectSocket = socket => {
+const connectSocket = (socket, blockchain) => {
   sockets.push(socket);
   log.info('Socket connected');
+  syncChain(blockchain);
 };
 
-// const sendChain = socket => {
-//   socket.emit(
-//     'message',
-//     JSON.stringify({
-//       type: 'chain',
-//       chain: blockchain.chain,
-//     })
-//   );
-// };
-
-// const syncChain = () => {
-//   sockets.forEach(socket => {
-//     sendChain(socket);
-//   });
-// };
+const syncChain = blockchain => {
+  sockets.forEach(socket => {
+    socket.emit(
+      'message',
+      JSON.stringify({
+        type: 'chain',
+        chain: blockchain.chain,
+      })
+    );
+  });
+};
 
 const broadcastTransaction = transaction => {
   sockets.forEach(socket => {
