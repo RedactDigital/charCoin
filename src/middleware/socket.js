@@ -59,4 +59,5 @@ module.exports = {
   connectSocket,
   broadcastTransaction,
   broadcastBlock,
+  syncChain,
 };
