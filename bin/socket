@@ -129,6 +129,7 @@ class Server {
         log.info(`Received data from peer: ${data.type}`);
         switch (data.type) {
           case 'chain':
+            log.info('chain', data.chain);
             this.blockchain.replaceChain(data.chain);
             break;
 
