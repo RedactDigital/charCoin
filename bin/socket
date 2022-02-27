@@ -12,6 +12,7 @@ const appName = 'CharCoin | Sync';
 const debug = require('debug')(appName);
 const http = require('http');
 const { instrument } = require('@socket.io/admin-ui');
+const { io: client } = require('socket.io-client');
 
 class Server {
   constructor() {
@@ -112,26 +113,13 @@ class Server {
 
   _events(socket, io) {
     try {
-      // Log number of connected clients (includes servers)
+      // Log number of connected clients
       const numOfUsersOnline = io.engine.clientsCount;
       log.info(`${numOfUsersOnline} users online)`);
 
-      const peers = process.env.PEERS ? process.env.PEERS.split(',') : [];
-      peers.forEach(peer => {
-        const socket = io.connect(peer);
-        socket.on('open', () => {
-          log.info('Connected to peer');
-        });
-      });
-
       // Add Socket.io disconnect handler.
       socket.on('disconnect', () => {
-        // Leave users default room
-        socket.leave(user.id);
-        // Remove user from all rooms
-        socket.leaveAll();
-
-        // Log remaining users online
+        // Log remaining clients online
         log.info(`${numOfUsersOnline - 1} users online)`);
       });
 
