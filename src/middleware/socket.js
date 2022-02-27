@@ -16,6 +16,14 @@ const connectSocket = (socket, blockchain) => {
   sockets.push(socket);
   log.info('Socket connected');
   syncChain(blockchain);
+  syncPeers();
+};
+
+const syncPeers = (socket, peers) => {
+  console.log(socket, peers);
+  //   sockets.forEach(socket => {
+  //     socket.emit('message', JSON.stringify({ type: 'peers', peers }));
+  //   });
 };
 
 const syncChain = blockchain => {
@@ -75,4 +83,5 @@ module.exports = {
   broadcastBlock,
   syncChain,
   broadcastChain,
+  syncPeers,
 };
