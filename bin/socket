@@ -15,6 +15,9 @@ const { instrument } = require('@socket.io/admin-ui');
 
 class Server {
   constructor() {
+    // An array of all the peers in the network.
+    this.sockets = [];
+
     // Get port from environment and normalize it into a number, string, or false.
     this.port = this._normalizePort(process.env.WEBSOCKET_PORT);
 
@@ -113,24 +116,12 @@ class Server {
       const numOfUsersOnline = io.engine.clientsCount;
       log.info(`${numOfUsersOnline} users online)`);
 
-      let user = {};
-
-      // Join user to a unique room based on their own user id
-      // ! Frontend needs to emit to this event on connection and anytime user reconnects
-      socket.on('login', userId => {
-        socket.join(userId);
-        user.id = userId;
-      });
-
-      // Add Socket.io notification handler.
-      socket.on('notification', (room, notification) => {
-        socket.to(room).emit('notification', notification);
-      });
-
-      // Add Socket.io message handler.
-      socket.on('send-message', (room, userId, message) => {
-        socket.to(room).emit('receive-message', userId, message);
-      });
+      const peers = process.env.PEERS ? process.env.PEERS.split(',') : [];
+      peers.forEach(peer => {
+        const socket = io.connect(peer);
+        socket.on('connect', () => {
+            log.info('Connected to peer');
+        });
 
       // Add Socket.io disconnect handler.
       socket.on('disconnect', () => {
@@ -140,7 +131,7 @@ class Server {
         socket.leaveAll();
 
         // Log remaining users online
-        log.info(`${numOfUsersOnline} users online)`);
+        log.info(`${numOfUsersOnline - 1} users online)`);
       });
 
       // Add Socket.io error handler.
