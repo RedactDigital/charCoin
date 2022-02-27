@@ -90,6 +90,8 @@ class Blockchain {
 
   isValidBlock(block) {
     const lastBlock = this.chain[this.chain.length - 1];
+    console.log('block', block);
+    console.log('lastBlock', lastBlock);
     if (block.lastHash === lastBlock.hash && block.hash === blockHash(block) && verifyBlock(block)) {
       for (let i = 0; i < block.validators.length; i++) {
         if (block.validators[i].address != this.findValidator([i]).address) return false;
@@ -97,7 +99,7 @@ class Blockchain {
       log.info('Block valid');
       return true;
     }
-    log.warn('Block invalid', block);
+    log.warn('Block invalid');
     return false;
   }
 
