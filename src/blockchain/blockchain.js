@@ -100,7 +100,7 @@ class Blockchain {
       log.info('Block valid');
       return true;
     }
-    console.log(block.lastHash, lastBlock.hash, block.hash, blockHash(block), verifyBlock(block));
+    console.log(block.lastHash, lastBlock.hash);
     log.warn('Block invalid');
     return false;
   }
