@@ -15,7 +15,7 @@ const { instrument } = require('@socket.io/admin-ui');
 
 const { getValidator } = require('../src/blockchain/validators');
 const { createBlock } = require('../src/blockchain/block');
-const { broadcastBlock, broadcastTransaction } = require('../src/middleware/socket');
+const { broadcastBlock, broadcastTransaction, syncPeers } = require('../src/middleware/socket');
 
 class Server {
   constructor(blockchain, transactionPool, wallet) {
@@ -128,6 +128,10 @@ class Server {
 
         log.info(`Received data from peer: ${data.type}`);
         switch (data.type) {
+          case 'peers':
+            // Send list of peers to the peer.
+            syncPeers(socket, data.peers);
+            break;
           case 'chain':
             this.blockchain.replaceChain(data.chain);
             break;
