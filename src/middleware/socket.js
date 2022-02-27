@@ -22,7 +22,7 @@ const connectSocket = (socket, blockchain) => {
 const syncPeers = p => {
   let newPeers = p.filter(peer => !peers.includes(peer));
   console.log(newPeers);
-  peers.push(newPeers);
+  if (newPeers.length > 0) peers.push(newPeers);
 };
 
 const broadcastPeers = () => {
