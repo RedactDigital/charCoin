@@ -1,6 +1,7 @@
 const ChainUtil = require('../chain-util');
 
 module.exports = {
+  genesisBlock: { timestamp: 0, lastHash: '-----', hash: 'genesis', data: [], validators: [] },
   createBlock: (lastBlock, data, wallet) => {
     const timestamp = Date.now();
     const lastHash = lastBlock.hash;

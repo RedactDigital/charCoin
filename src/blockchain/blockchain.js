@@ -1,4 +1,4 @@
-const { blockHash, verifyBlock } = require('./block');
+const { blockHash, verifyBlock, genesisBlock } = require('./block');
 const { broadcastChain } = require('../middleware/socket');
 const Stake = require('./stake');
 const Account = require('./account');
@@ -10,16 +10,6 @@ const {
   // commitValidator,
   getValidators,
 } = require('./validators');
-// const Wallet = require('../wallet/wallet');
-// const secret = 'i am the first leader';
-
-const genesisBlock = {
-  timestamp: 0,
-  lastHash: '-----',
-  hash: 'genesis',
-  data: [],
-  validators: [],
-};
 
 class Blockchain {
   constructor() {
@@ -34,11 +24,6 @@ class Blockchain {
     broadcastChain(this.chain);
     return block;
   }
-
-  // createBlock(transactions, wallet) {
-  //   const block = createBlock(this.chain[this.chain.length - 1], transactions, wallet);
-  //   return block;
-  // }
 
   isValidChain(chain) {
     // Check if the genesis block is valid
@@ -103,7 +88,6 @@ class Blockchain {
       log.info('Block valid');
       return true;
     }
-    console.log(block.lastHash, lastBlock.hash);
     log.warn('Block invalid');
     return false;
   }
@@ -148,18 +132,6 @@ class Blockchain {
     //   }
     // });
   }
-
-  // executeChain(chain) {
-  //   chain.forEach(block => {
-  //     this.executeTransactions(block);
-  //   });
-  // }
-
-  // resetState() {
-  //   this.chain = [genesisBlock];
-  //   this.stakes = new Stake();
-  //   this.accounts = new Account();
-  // }
 }
 
 module.exports = Blockchain;

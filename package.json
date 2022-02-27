@@ -10,7 +10,8 @@
     "start": "nodemon ./bin/www",
     "ico": "nodemon ./bin/ico",
     "test": "jest --watchAll",
-    "socket": "nodemon ./bin/socket"
+    "socket": "nodemon ./bin/socket",
+    "lint": "eslint . --fix"
   },
   "keywords": [],
   "author": "",
