@@ -30,6 +30,18 @@ const syncChain = blockchain => {
   });
 };
 
+const broadcastChain = chain => {
+  sockets.forEach(socket => {
+    socket.emit(
+      'message',
+      JSON.stringify({
+        type: 'chain',
+        chain,
+      })
+    );
+  });
+};
+
 const broadcastTransaction = transaction => {
   sockets.forEach(socket => {
     socket.emit(
@@ -60,4 +72,5 @@ module.exports = {
   broadcastTransaction,
   broadcastBlock,
   syncChain,
+  broadcastChain,
 };

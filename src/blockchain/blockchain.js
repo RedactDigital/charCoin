@@ -1,5 +1,5 @@
 const { blockHash, verifyBlock } = require('./block');
-const { syncChain } = require('../middleware/socket');
+const { broadcastChain } = require('../middleware/socket');
 const Stake = require('./stake');
 const Account = require('./account');
 const {
@@ -53,8 +53,11 @@ class Blockchain {
   }
 
   replaceChain(newChain) {
+    if (newChain.length == this.chain.length) return;
     if (newChain.length <= this.chain.length) {
       log.info('Received chain is not longer than the current chain');
+      console.log(this.chain);
+      broadcastChain(this.chain);
       return;
     } else if (!this.isValidChain(newChain)) {
       log.info('Received chain is invalid');
@@ -62,8 +65,8 @@ class Blockchain {
     }
 
     log.info('Replacing the current chain with new chain');
-    this.resetState();
-    this.executeChain(this.chain);
+    // this.resetState();
+    // this.executeChain(this.chain);
     // this.chain = newChain;
   }
 
@@ -144,17 +147,17 @@ class Blockchain {
     // });
   }
 
-  executeChain(chain) {
-    chain.forEach(block => {
-      this.executeTransactions(block);
-    });
-  }
+  // executeChain(chain) {
+  //   chain.forEach(block => {
+  //     this.executeTransactions(block);
+  //   });
+  // }
 
-  resetState() {
-    this.chain = [genesisBlock];
-    this.stakes = new Stake();
-    this.accounts = new Account();
-  }
+  // resetState() {
+  //   this.chain = [genesisBlock];
+  //   this.stakes = new Stake();
+  //   this.accounts = new Account();
+  // }
 }
 
 module.exports = Blockchain;
