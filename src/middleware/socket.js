@@ -33,6 +33,7 @@ const syncPeers = (p, blockchain) => {
   let newPeers = p.filter(peer => !peers.includes(peer));
 
   if (newPeers.length > 0) {
+    console.log(newPeers);
     newPeers.forEach(peer => {
       const socket = io(peer, { forceNew: true });
       socket.on('connect', () => connectSocket(socket, blockchain));
