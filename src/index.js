@@ -4,7 +4,8 @@ require('./globals');
 const express = require('express');
 const Blockchain = require('./blockchain/blockchain');
 const bodyParser = require('body-parser');
-const P2pserver = require('./middleware/socket');
+const { connectToPeers, broadcastTransaction } = require('../src/middleware/socket');
+const Server = require('../bin/socket');
 const Wallet = require('./wallet/wallet');
 const TransactionPool = require('./wallet/transaction-pool');
 const { getValidators } = require('./blockchain/validators');
@@ -16,10 +17,9 @@ app.use(bodyParser.json());
 const blockchain = new Blockchain();
 const wallet = new Wallet(Date.now().toString());
 
-// blockchain.initialize(Wallet.getPublicKey());
-
 const transactionPool = new TransactionPool();
-const p2pserver = new P2pserver(blockchain, transactionPool, wallet);
+
+connectToPeers();
 
 app.get('/blocks', (req, res) => {
   res.json(blockchain.chain);
@@ -40,7 +40,7 @@ app.post('/transaction', (req, res) => {
     return res.redirect('/transactions');
   }
   const transaction = wallet.createTransaction(to, amount, type, blockchain, transactionPool);
-  p2pserver.broadcastTransaction(transaction);
+  broadcastTransaction(transaction);
 
   res.redirect('/transactions');
 });
