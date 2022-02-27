@@ -66,6 +66,8 @@ class Blockchain {
 
     // Broadcast the new chain to all the nodes
     broadcastChain(this.chain);
+
+    return this.chain;
   }
 
   getBalance(publicKey) {

@@ -134,7 +134,8 @@ class Server {
             break;
 
           case 'chain':
-            this.blockchain.replaceChain(data.chain);
+            const newChain = this.blockchain.replaceChain(data.chain);
+            if (newChain) this.blockchain = newChain;
             break;
 
           case 'transaction':
