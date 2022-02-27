@@ -5,17 +5,15 @@ const peers = process.env.PEERS ? process.env.PEERS.split(',') : [];
 const sockets = [];
 
 const connectToPeers = async blockchain => {
-  log.info(peers);
-
   // create a promise that resolves when all sockets are connected
-  const socketsConnected = new Promise(() => {
+  await new Promise(resolve => {
     peers.forEach(peer => {
       const socket = io(peer);
       socket.on('connect', () => connectSocket(socket, blockchain));
     });
-  });
-  await socketsConnected;
-  await broadcastPeers();
+    resolve();
+  }).then(broadcastPeers());
+  //   await broadcastPeers();
 };
 
 const connectSocket = (socket, blockchain) => {
@@ -36,6 +34,7 @@ const syncPeers = (p, blockchain) => {
 };
 
 const broadcastPeers = () => {
+  console.log(peers);
   sockets.forEach(socket => {
     socket.emit('message', JSON.stringify({ type: 'peers', peers }));
   });
