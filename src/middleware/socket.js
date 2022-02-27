@@ -21,6 +21,7 @@ const connectToPeers = async blockchain => {
   await socketsConnected;
   await broadcastPeers();
   const newChain = await broadcastChain(blockchain.chain);
+  console.log(newChain);
   return newChain;
 };
 
