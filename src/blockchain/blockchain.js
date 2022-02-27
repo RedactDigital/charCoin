@@ -67,8 +67,6 @@ class Blockchain {
     // Broadcast the new chain to all the nodes
     broadcastChain(this.chain);
 
-    console.log(this.chain);
-
     return this.chain;
   }
 
@@ -95,6 +93,7 @@ class Blockchain {
   }
 
   isValidBlock(block) {
+    console.log(this.chain);
     const lastBlock = this.chain[this.chain.length - 1];
 
     if (block.lastHash === lastBlock.hash && block.hash === blockHash(block) && verifyBlock(block)) {
