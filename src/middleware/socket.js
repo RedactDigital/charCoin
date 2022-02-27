@@ -19,6 +19,7 @@ const connectToPeers = async blockchain => {
     }, 1000);
   });
   await socketsConnected;
+  await broadcastPeers();
 };
 
 const connectSocket = (socket, blockchain) => {
