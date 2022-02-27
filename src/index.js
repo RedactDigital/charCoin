@@ -4,7 +4,7 @@ require('./globals');
 const express = require('express');
 const Blockchain = require('./blockchain/blockchain');
 const bodyParser = require('body-parser');
-const P2pserver = require('./app/p2p-server');
+const P2pserver = require('../bin/socket');
 const Wallet = require('./wallet/wallet');
 const TransactionPool = require('./wallet/transaction-pool');
 const { getValidators } = require('./blockchain/validators');

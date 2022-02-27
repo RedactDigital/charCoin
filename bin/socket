@@ -1,0 +1,197 @@
+#!/usr/bin/env node
+
+/**
+ * Module dependencies.
+ */
+
+require('dotenv').config({ silent: true });
+require('../src/globals');
+const express = require('express');
+const app = express();
+const appName = 'CharCoin | Sync';
+const debug = require('debug')(appName);
+const http = require('http');
+const { instrument } = require('@socket.io/admin-ui');
+
+class Server {
+  constructor() {
+    // Get port from environment and normalize it into a number, string, or false.
+    this.port = this._normalizePort(process.env.WEBSOCKET_PORT);
+
+    //  Store port in Express.
+    app.set('port', this.port);
+
+    // Create HTTP server.
+    this.server = http.createServer(app);
+
+    //  Listen on provided port, on all network interfaces.
+    this.server.listen(this.port);
+
+    // Add Socket.io server to Express server
+    this._initializeSocket(this.server);
+
+    // Event listener for HTTP server "error" event.
+    this.server.on('error', this._onError);
+
+    // Event listener for HTTP server "listening" event.
+    this.server.on('listening', () => this._onListening());
+  }
+
+  _normalizePort(val) {
+    const port = parseInt(val, 10);
+
+    if (isNaN(port)) {
+      // named pipe
+      return val;
+    }
+
+    if (port >= 0) {
+      // port number
+      return port;
+    }
+
+    return false;
+  }
+
+  _onError(error) {
+    if (error.syscall !== 'listen') {
+      throw error;
+    }
+
+    const bind = typeof port === 'string' ? 'Pipe ' + this.port : 'Port ' + this.port;
+
+    // handle specific listen errors with friendly messages
+    switch (error.code) {
+      case 'EACCES':
+        log.error(bind + ' requires elevated privileges');
+        process.exit(1);
+        break;
+      case 'EADDRINUSE':
+        log.error(bind + ' is already in use');
+        process.exit(1);
+        break;
+      default:
+        throw error;
+    }
+  }
+
+  _onListening() {
+    const addr = this.server.address();
+    const bind = typeof addr === 'string' ? 'pipe ' + addr : 'port ' + addr.port;
+    debug('Listening on ' + bind);
+    log.info(`${appName} Server |  listening on ${bind}`);
+  }
+
+  _initializeSocket(server) {
+    const io = require('socket.io')({
+      serveClient: true,
+    });
+
+    //  Attach Socket.io server to Express server.
+    io.attach(server, {
+      pingInterval: 10000,
+      pingTimeout: 5000,
+      cookie: false,
+      cors: {
+        allowedOrigins: ['*'],
+        methods: ['GET', 'POST'],
+        transports: ['websocket', 'polling'],
+      },
+    });
+
+    // Add Socket.io connection handler.
+    io.on('connection', socket => this._events(socket, io));
+
+    // Add Socket.io admin dashboard hosted at https://admin.socket.io/
+    // Credentials EX http://localhost:5003/admin
+    this._adminDashboard(io);
+  }
+
+  _events(socket, io) {
+    try {
+      // Log number of connected clients (includes servers)
+      const numOfUsersOnline = io.engine.clientsCount;
+      log.info(`${numOfUsersOnline} users online)`);
+
+      let user = {};
+
+      // Join user to a unique room based on their own user id
+      // ! Frontend needs to emit to this event on connection and anytime user reconnects
+      socket.on('login', userId => {
+        socket.join(userId);
+        user.id = userId;
+      });
+
+      // Add Socket.io notification handler.
+      socket.on('notification', (room, notification) => {
+        socket.to(room).emit('notification', notification);
+      });
+
+      // Add Socket.io message handler.
+      socket.on('send-message', (room, userId, message) => {
+        socket.to(room).emit('receive-message', userId, message);
+      });
+
+      // Add Socket.io disconnect handler.
+      socket.on('disconnect', () => {
+        // Leave users default room
+        socket.leave(user.id);
+        // Remove user from all rooms
+        socket.leaveAll();
+
+        // Log remaining users online
+        log.info(`${numOfUsersOnline} users online)`);
+      });
+
+      // Add Socket.io error handler.
+      socket.on('connect_error', error => log.error(error));
+    } catch (e) {
+      log.error('Socket: ', e);
+    }
+
+    /*
+     ? ---------------Socket io notes----------------
+      * sending to sender-client only
+      * socket.emit('message', "this is a test");
+      *
+      * sending to all clients, include sender
+      * io.emit('message', "this is a test");
+      *
+      * sending to all clients except sender
+      * socket.broadcast.emit('message', "this is a test");
+      *
+      * sending to all clients in 'game' room(channel) except sender
+      * socket.broadcast.to('game').emit('message', 'nice game');
+      *
+      * sending to all clients in 'game' room(channel), include sender
+      * io.in('game').emit('message', 'cool game');
+      *
+      * sending to sender client, only if they are in 'game' room(channel)
+      * socket.to('game').emit('message', 'enjoy the game');
+      *
+      * sending to all clients in namespace 'myNamespace', include sender
+      * io.of('myNamespace').emit('message', 'gg');
+      *
+      * sending to individual socketid (server-side)
+      * socket.broadcast.to(socketid).emit('message', 'for your eyes only');
+      *
+      * join to subscribe the socket to a given channel (server-side):
+      * socket.join('some room');
+      *
+      * then simply use to or in (they are the same) when broadcasting or emitting (server-side)
+      * io.to('some room').emit('some event'):
+      *
+      * leave to unsubscribe the socket to a given channel (server-side)
+      * socket.leave('some room');
+      */
+  }
+
+  _adminDashboard(io) {
+    instrument(io, { auth: false });
+  }
+}
+
+module.exports = Server;
+
+// Initialize Server
+new Server();

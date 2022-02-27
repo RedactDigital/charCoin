@@ -9,7 +9,8 @@
   "scripts": {
     "start": "nodemon ./bin/www",
     "ico": "nodemon ./bin/ico",
-    "test": "jest --watchAll"
+    "test": "jest --watchAll",
+    "socket": "nodemon ./bin/socket"
   },
   "keywords": [],
   "author": "",
@@ -25,13 +26,15 @@
     "prettier": "^2.5.1"
   },
   "dependencies": {
+    "@socket.io/admin-ui": "^0.2.0",
     "body-parser": "^1.18.3",
     "crypto-js": "^4.0.0",
     "dotenv": "^16.0.0",
     "elliptic": "^6.4.1",
     "express": "^4.16.4",
+    "socket.io": "^4.3.1",
+    "socket.io-client": "^4.3.2",
     "uuid": "^3.3.2",
-    "winston": "^3.6.0",
-    "ws": "^6.1.2"
+    "winston": "^3.6.0"
   }
 }

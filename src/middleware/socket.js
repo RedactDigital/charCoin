@@ -1,7 +1,7 @@
 require('dotenv').config({ silent: true });
 require('../globals');
 
-const WebSocket = require('ws');
+const { io } = require('socket.io-client');
 const { getValidator } = require('../blockchain/validators');
 const { createBlock } = require('../blockchain/block');
 
@@ -21,12 +21,11 @@ class P2pserver {
     this.sockets = [];
     this.transactionPool = transactionPool;
     this.Wallet = Wallet;
+
+    this.connectToPeers();
   }
 
   listen() {
-    // Create a new websocket server
-    const server = new WebSocket.Server({ port: P2P_PORT });
-
     // Connection listener
     server.on('connection', socket => {
       socket.isAlive = true;
@@ -34,7 +33,7 @@ class P2pserver {
     });
 
     // Creates a new socket connection for each peer
-    this.connectToPeers();
+    // this.connectToPeers();
     log.info(`Listening for peer to peer connection on port : ${P2P_PORT}`);
   }
 
@@ -48,7 +47,7 @@ class P2pserver {
 
   connectToPeers() {
     peers.forEach(peer => {
-      const socket = new WebSocket(peer);
+      const socket = io(peer);
       socket.on('open', () => this.connectSocket(socket));
     });
   }

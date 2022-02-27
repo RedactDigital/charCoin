@@ -1,7 +1,8 @@
+require('../src/globals');
 const express = require('express');
 const bodyParser = require('body-parser');
 const Blockchain = require('../src/blockchain/blockchain');
-const P2pserver = require('../src/app/p2p-server');
+const P2pserver = require('../src/middleware/socket');
 const Wallet = require('../src/wallet/wallet');
 const TransactionPool = require('../src/wallet/transaction-pool');
 
@@ -59,5 +60,3 @@ app.post('/ico/balance-of', (req, res) => {
 app.listen(HTTP_PORT, () => {
   log.info(`Listening on port ${HTTP_PORT}`);
 });
-
-p2pserver.listen();
