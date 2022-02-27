@@ -40,8 +40,10 @@ class Blockchain {
   // }
 
   isValidChain(chain) {
+    // Check if the genesis block is valid
     if (JSON.stringify(chain[0]) !== JSON.stringify(genesisBlock)) return false;
 
+    // Check if the chain is valid
     for (let i = 1; i < chain.length; i++) {
       const block = chain[i];
       const lastBlock = chain[i - 1];
@@ -53,24 +55,18 @@ class Blockchain {
   }
 
   replaceChain(newChain) {
+    // Check if the chain is valid
     if (!this.isValidChain(newChain)) return;
 
+    // Check if the chain is longer than the current chain
     if (newChain.length <= this.chain.length) return;
 
+    // Replace the current chain with the new one
     this.chain = newChain;
-    broadcastChain(this.chain);
-  }
-  //   if (newChain.length <= this.chain.length) {
-  //     log.info('Received chain is not longer than the current chain');
-  //   } else if (!this.isValidChain(newChain)) {
-  //     log.info('Received chain is invalid');
-  //   }
 
-  //   log.error('Replacing the current chain with new chain');
-  //   // this.resetState();
-  //   // this.executeChain(this.chain);
-  //   // this.chain = newChain;
-  // }
+    // Broadcast the new chain to all the nodes
+    // broadcastChain(this.chain);
+  }
 
   getBalance(publicKey) {
     return this.accounts.getBalance(publicKey);
