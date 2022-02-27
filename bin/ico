@@ -2,7 +2,8 @@ require('../src/globals');
 const express = require('express');
 const bodyParser = require('body-parser');
 const Blockchain = require('../src/blockchain/blockchain');
-const P2pserver = require('../src/middleware/socket');
+const { connectToPeers, broadcastTransaction } = require('../src/middleware/socket');
+const Server = require('./socket');
 const Wallet = require('../src/wallet/wallet');
 const TransactionPool = require('../src/wallet/transaction-pool');
 
@@ -16,7 +17,8 @@ const blockchain = new Blockchain();
 const wallet = new Wallet('i am the first leader');
 
 const transactionPool = new TransactionPool();
-const p2pserver = new P2pserver(blockchain, transactionPool, wallet);
+
+connectToPeers();
 
 app.get('/ico/transactions', (req, res) => {
   res.json(transactionPool.transactions);
@@ -40,7 +42,7 @@ app.post('/ico/transaction', (req, res) => {
 
   const transaction = wallet.createTransaction(to, amount, type, blockchain, transactionPool);
 
-  p2pserver.broadcastTransaction(transaction);
+  broadcastTransaction(transaction);
 
   res.redirect('/ico/transactions');
 });
@@ -60,3 +62,6 @@ app.post('/ico/balance-of', (req, res) => {
 app.listen(HTTP_PORT, () => {
   log.info(`Listening on port ${HTTP_PORT}`);
 });
+
+// Initialize Server
+new Server(blockchain, transactionPool, wallet);

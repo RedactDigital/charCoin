@@ -12,12 +12,18 @@ const appName = 'CharCoin | Sync';
 const debug = require('debug')(appName);
 const http = require('http');
 const { instrument } = require('@socket.io/admin-ui');
-const { io: client } = require('socket.io-client');
+
+const { getValidator } = require('../src/blockchain/validators');
+const { createBlock } = require('../src/blockchain/block');
+const { broadcastBlock } = require('../src/middleware/socket');
 
 class Server {
-  constructor() {
+  constructor(blockchain, transactionPool, wallet) {
     // An array of all the peers in the network.
     this.sockets = [];
+    this.blockchain = blockchain;
+    this.transactionPool = transactionPool;
+    this.wallet = wallet;
 
     // Get port from environment and normalize it into a number, string, or false.
     this.port = this._normalizePort(process.env.WEBSOCKET_PORT);
@@ -117,6 +123,54 @@ class Server {
       const numOfUsersOnline = io.engine.clientsCount;
       log.info(`${numOfUsersOnline} users online)`);
 
+      socket.on('message', message => {
+        const data = JSON.parse(message);
+
+        log.info(`Received data from peer: ${data.type}`);
+        switch (data.type) {
+          case 'chain':
+            this.blockchain.replaceChain(data.chain);
+            break;
+
+          case 'transaction':
+            if (!data.transaction) break;
+            if (!this.transactionPool.transactionExists(data.transaction)) {
+              this.transactionPool.addTransaction(data.transaction);
+              this.broadcastTransaction(data.transaction);
+            }
+            if (this.transactionPool.thresholdReached()) {
+              // Verify the wallet exists on the blockchain as a validator
+              // If the validator doesn't exist, the next validator will be the next in line
+
+              const validatorExists = getValidator(this.wallet.getPublicKey());
+
+              if (validatorExists) {
+                log.info('Creating block');
+                const block = createBlock(
+                  this.blockchain.chain[this.blockchain.chain.length - 1],
+                  this.transactionPool.transactions,
+                  this.wallet
+                );
+                broadcastBlock(block);
+              }
+            }
+
+            break;
+
+          case 'block':
+            if (!data.block) break;
+            if (!data.block.validators) break;
+            if (this.blockchain.isValidBlock(data.block)) {
+              this.blockchain.addBlockToChain(data.block);
+              this.blockchain.executeTransactions(data.block);
+
+              this.transactionPool.clear();
+            }
+
+            break;
+        }
+      });
+
       // Add Socket.io disconnect handler.
       socket.on('disconnect', () => {
         // Log remaining clients online
@@ -172,6 +226,3 @@ class Server {
 }
 
 module.exports = Server;
-
-// Initialize Server
-new Server();
