@@ -65,7 +65,7 @@ class Blockchain {
     this.chain = newChain;
 
     // Broadcast the new chain to all the nodes
-    // broadcastChain(this.chain);
+    broadcastChain(this.chain);
   }
 
   getBalance(publicKey) {
@@ -100,6 +100,7 @@ class Blockchain {
       log.info('Block valid');
       return true;
     }
+    log.info(block.lastHash, lastBlock.hash);
     log.warn('Block invalid');
     return false;
   }
