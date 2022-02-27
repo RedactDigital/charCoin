@@ -63,7 +63,7 @@ class Blockchain {
       return;
     }
 
-    log.info('Replacing the current chain with new chain');
+    log.error('Replacing the current chain with new chain');
     // this.resetState();
     // this.executeChain(this.chain);
     // this.chain = newChain;
