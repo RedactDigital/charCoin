@@ -20,7 +20,7 @@ const wallet = new Wallet('i am the first leader');
 const transactionPool = new TransactionPool();
 
 const newChain = connectToPeers(blockchain);
-blockchain.chain = newChain;
+if (newChain) blockchain.chain = newChain;
 
 app.get('/ico/transactions', (req, res) => {
   res.json(transactionPool.transactions);
