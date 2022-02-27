@@ -56,7 +56,6 @@ class Blockchain {
     if (newChain.length == this.chain.length) return;
     if (newChain.length <= this.chain.length) {
       log.info('Received chain is not longer than the current chain');
-      console.log(this.chain);
       broadcastChain(this.chain);
       return;
     } else if (!this.isValidChain(newChain)) {
