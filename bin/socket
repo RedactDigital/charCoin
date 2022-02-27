@@ -15,7 +15,7 @@ const { instrument } = require('@socket.io/admin-ui');
 
 const { getValidator } = require('../src/blockchain/validators');
 const { createBlock } = require('../src/blockchain/block');
-const { broadcastBlock } = require('../src/middleware/socket');
+const { broadcastBlock, broadcastTransaction } = require('../src/middleware/socket');
 
 class Server {
   constructor(blockchain, transactionPool, wallet) {
@@ -136,7 +136,7 @@ class Server {
             if (!data.transaction) break;
             if (!this.transactionPool.transactionExists(data.transaction)) {
               this.transactionPool.addTransaction(data.transaction);
-              this.broadcastTransaction(data.transaction);
+              broadcastTransaction(data.transaction);
             }
             if (this.transactionPool.thresholdReached()) {
               // Verify the wallet exists on the blockchain as a validator

@@ -63,5 +63,5 @@ app.listen(HTTP_PORT, () => {
   log.info(`Listening on port ${HTTP_PORT}`);
 });
 
-// Initialize Server
+// Initialize WebSocket server
 new Server(blockchain, transactionPool, wallet);
