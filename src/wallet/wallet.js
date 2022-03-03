@@ -21,11 +21,13 @@ class Wallet {
   createTransaction(to, amount, type, blockchain, transactionPool) {
     this.balance = blockchain.getBalance(this.publicKey);
 
+    // Ensure sender has enough balance
     if (+amount + +TRANSACTION_FEE > this.balance) {
       log.info(`Amount : ${amount + TRANSACTION_FEE} exceeds the balance of ${this.balance}`);
       return;
     }
 
+    // Create transaction object
     const transaction = {
       id: ChainUtil.id(),
       type,
@@ -41,8 +43,10 @@ class Wallet {
       },
     };
 
+    // Sign the transaction
     transaction.input.signature = this.sign(ChainUtil.hash(transaction.output));
 
+    // Add transaction to the pool
     transactionPool.addTransaction(transaction);
     return transaction;
   }

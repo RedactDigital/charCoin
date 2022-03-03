@@ -1,4 +1,4 @@
-const Transaction = require('./transaction');
+const ChainUtil = require('../chain-util');
 
 class TransactionPool {
   constructor() {
@@ -20,8 +20,14 @@ class TransactionPool {
   }
 
   validTransactions() {
-    return this.transactions.filter(transaction => {
-      if (!Transaction.verifyTransaction(transaction)) {
+    this.transactions.filter(transaction => {
+      const validTransaction = ChainUtil.verifySignature(
+        transaction.input.from,
+        transaction.input.signature,
+        ChainUtil.hash(transaction.output)
+      );
+
+      if (!validTransaction) {
         log.info(`Invalid signature from ${transaction.data.from}`);
         return;
       }
