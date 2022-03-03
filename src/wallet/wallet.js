@@ -21,8 +21,6 @@ class Wallet {
   createTransaction(to, amount, type, blockchain, transactionPool) {
     this.balance = blockchain.getBalance(this.publicKey);
 
-    log.error(amount + TRANSACTION_FEE);
-
     if (+amount + +TRANSACTION_FEE > this.balance) {
       log.info(`Amount : ${amount + TRANSACTION_FEE} exceeds the balance of ${this.balance}`);
       return;
@@ -34,7 +32,7 @@ class Wallet {
       input: {
         timestamp: Date.now(),
         from: this.publicKey,
-        signature: this.sign(ChainUtil.hash(transaction.output)),
+        signature: null,
       },
       output: {
         to: to,
@@ -42,6 +40,8 @@ class Wallet {
         fee: TRANSACTION_FEE,
       },
     };
+
+    transaction.input.signature = this.sign(ChainUtil.hash(transaction.output));
 
     transactionPool.addTransaction(transaction);
     return transaction;
