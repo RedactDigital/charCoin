@@ -46,8 +46,6 @@ class Wallet {
     // Sign the transaction
     transaction.input.signature = this.sign(ChainUtil.hash(transaction.output));
 
-    // Add transaction to the pool
-    transactionPool.addTransaction(transaction);
     return transaction;
   }
 

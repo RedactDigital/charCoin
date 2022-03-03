@@ -39,7 +39,9 @@ app.post('/transaction', (req, res) => {
     log.info('Invalid transaction type');
     return res.redirect('/transactions');
   }
-  const transaction = wallet.createTransaction(to, amount, type, blockchain, transactionPool);
+  const transaction = wallet.createTransaction(to, amount, type, blockchain);
+  // Add transaction to the pool
+  transactionPool.addTransaction(transaction);
   broadcastTransaction(transaction);
 
   res.redirect('/transactions');

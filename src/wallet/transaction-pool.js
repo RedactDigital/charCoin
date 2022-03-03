@@ -19,22 +19,22 @@ class TransactionPool {
     }
   }
 
-  validTransactions() {
-    this.transactions.filter(transaction => {
-      const validTransaction = ChainUtil.verifySignature(
-        transaction.input.from,
-        transaction.input.signature,
-        ChainUtil.hash(transaction.output)
-      );
+  // validTransactions() {
+  //   this.transactions.filter(transaction => {
+  //     const validTransaction = ChainUtil.verifySignature(
+  //       transaction.input.from,
+  //       transaction.input.signature,
+  //       ChainUtil.hash(transaction.output)
+  //     );
 
-      if (!validTransaction) {
-        log.info(`Invalid signature from ${transaction.data.from}`);
-        return;
-      }
+  //     if (!validTransaction) {
+  //       log.info(`Invalid signature from ${transaction.data.from}`);
+  //       return;
+  //     }
 
-      return transaction;
-    });
-  }
+  //     return transaction;
+  //   });
+  // }
 
   transactionExists(transaction) {
     const exists = this.transactions.find(t => t.id === transaction.id);
