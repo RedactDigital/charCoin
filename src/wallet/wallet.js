@@ -41,10 +41,10 @@ class Wallet {
       },
     };
 
-    // transaction.input.signature = this.sign(ChainUtil.hash(transaction.output));
+    transaction.input.signature = this.sign(ChainUtil.hash(transaction.output));
 
-    // transactionPool.addTransaction(transaction);
-    // return transaction;
+    transactionPool.addTransaction(transaction);
+    return transaction;
   }
 
   getPublicKey() {
