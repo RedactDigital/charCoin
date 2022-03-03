@@ -8,22 +8,22 @@ const ChainUtil = require('../chain-util');
 //     this.output = null;
 //   }
 
-//   // static newTransaction(senderWallet, to, amount, type) {
-//   //   if (Number(amount) + Number(TRANSACTION_FEE) > senderWallet.balance) {
-//   //     log.info(`Amount : ${amount + TRANSACTION_FEE} exceeds the balance of ${senderWallet.balance}`);
-//   //     return;
-//   //   }
+// static newTransaction(senderWallet, to, amount, type) {
+//   if (Number(amount) + Number(TRANSACTION_FEE) > senderWallet.balance) {
+//     log.info(`Amount : ${amount + TRANSACTION_FEE} exceeds the balance of ${senderWallet.balance}`);
+//     return;
+//   }
 
-//   //   const transaction = new this();
-//   //   transaction.type = type;
-//   //   transaction.output = {
-//   //     to: to,
-//   //     amount: amount - TRANSACTION_FEE,
-//   //     fee: TRANSACTION_FEE,
-//   //   };
-//   //   Transaction.signTransaction(transaction, senderWallet);
-//   //   return transaction;
-//   // }
+//   const transaction = new this();
+//   transaction.type = type;
+//   transaction.output = {
+//     to: to,
+//     amount: amount - TRANSACTION_FEE,
+//     fee: TRANSACTION_FEE,
+//   };
+//   Transaction.signTransaction(transaction, senderWallet);
+//   return transaction;
+// }
 
 //   // TODO -- validate transactions method
 
