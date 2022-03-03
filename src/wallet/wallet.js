@@ -21,7 +21,7 @@ class Wallet {
   createTransaction(to, amount, type, blockchain, transactionPool) {
     this.balance = blockchain.getBalance(this.publicKey);
 
-    log.error(+amount + +TRANSACTION_FEE);
+    log.error(amount + TRANSACTION_FEE);
 
     if (+amount + +TRANSACTION_FEE > this.balance) {
       log.info(`Amount : ${amount + TRANSACTION_FEE} exceeds the balance of ${this.balance}`);
