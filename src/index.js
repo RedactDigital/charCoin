@@ -7,7 +7,7 @@ const bodyParser = require('body-parser');
 const { connectToPeers, broadcastTransaction } = require('../src/middleware/socket');
 const Server = require('../bin/socket');
 const Wallet = require('./wallet/wallet');
-const TransactionPool = require('./wallet/transaction-pool');
+// const TransactionPool = require('./wallet/transaction-pool');
 const { getValidators } = require('./blockchain/validators');
 
 const app = express();
@@ -17,7 +17,7 @@ app.use(bodyParser.json());
 const blockchain = new Blockchain();
 const wallet = new Wallet(Date.now().toString());
 
-const transactionPool = new TransactionPool();
+const transactionPool = [];
 
 connectToPeers(blockchain);
 
@@ -40,8 +40,9 @@ app.post('/transaction', (req, res) => {
     return res.redirect('/transactions');
   }
   const transaction = wallet.createTransaction(to, amount, type, blockchain);
+
   // Add transaction to the pool
-  transactionPool.addTransaction(transaction);
+  transactionPool.push(transaction);
   broadcastTransaction(transaction);
 
   res.redirect('/transactions');

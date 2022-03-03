@@ -1,4 +1,4 @@
-const ChainUtil = require('../chain-util');
+// const ChainUtil = require('../chain-util');
 
 class TransactionPool {
   constructor() {
@@ -10,14 +10,14 @@ class TransactionPool {
     return false;
   }
 
-  addTransaction(transaction) {
-    this.transactions.push(transaction);
-    if (this.transactions.length >= TRANSACTION_THRESHOLD) {
-      return true;
-    } else {
-      return false;
-    }
-  }
+  // addTransaction(transaction) {
+  // this.transactions.push(transaction);
+  // if (this.transactions.length >= TRANSACTION_THRESHOLD) {
+  //   return true;
+  // } else {
+  //   return false;
+  // }
+  // }
 
   // validTransactions() {
   //   this.transactions.filter(transaction => {

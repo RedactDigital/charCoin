@@ -18,7 +18,8 @@ class Wallet {
     return this.keyPair.sign(dataHash).toHex();
   }
 
-  createTransaction(to, amount, type, blockchain, transactionPool) {
+  // Move to Transactions File
+  createTransaction(to, amount, type, blockchain) {
     this.balance = blockchain.getBalance(this.publicKey);
 
     // Ensure sender has enough balance
