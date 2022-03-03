@@ -35,16 +35,16 @@ class Wallet {
         signature: null,
       },
       output: {
-        to: to,
+        to,
         amount: amount - TRANSACTION_FEE,
         fee: TRANSACTION_FEE,
       },
     };
 
-    transaction.input.signature = this.sign(ChainUtil.hash(transaction.output));
+    // transaction.input.signature = this.sign(ChainUtil.hash(transaction.output));
 
-    transactionPool.addTransaction(transaction);
-    return transaction;
+    // transactionPool.addTransaction(transaction);
+    // return transaction;
   }
 
   getPublicKey() {
