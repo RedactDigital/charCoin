@@ -12,13 +12,6 @@ const getNumOfChars = num => (+num * +oneChar).toFixed(toFixed);
 
 const validatorStakeRequirement = getNumOfChars(10);
 
-// ------------------------------ Fees ------------------------------
-
-const transactionFeeBurn = +0.23; // 23% of the fee
-const transactionFeeStorage = getNumOfAshes(5);
-
-// ------------------------------------------------------------------
-
 TOTAL_COINS = totalCoins;
 TRANSACTION_THRESHOLD = transactionThreshold;
 VALIDATOR_STAKE_REQUIREMENT = validatorStakeRequirement;
@@ -31,4 +24,3 @@ fixed = toFixed;
 module.exports = {
   global,
 };
-250, 000, 000;
