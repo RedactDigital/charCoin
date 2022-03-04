@@ -24,6 +24,8 @@ TRANSACTION_FEE_BURN = transactionFeeBurn;
 TRANSACTION_FEE_DONATION = transactionFeeDonation;
 
 log = logger;
+ashes;
+chars;
 
 module.exports = {
   global,
