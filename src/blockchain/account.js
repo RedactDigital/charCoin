@@ -8,7 +8,7 @@ class Account {
 
   initialize(address) {
     if (this.balance[address] == undefined) {
-      this.balance[address] = num('0').toFixed(FIXED);
+      this.balance[address] = +0;
       this.addresses.push(address);
     }
   }
