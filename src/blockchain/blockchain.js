@@ -62,7 +62,6 @@ class Blockchain {
 
   findValidator() {
     let validators = getValidators();
-    console.log(validators);
     return getValidatorWithMostStake(validators, this.accounts);
   }
 
