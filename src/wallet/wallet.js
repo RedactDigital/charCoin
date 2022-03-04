@@ -68,13 +68,13 @@ class Wallet {
 
     const validatorFee = TRANSACTION_FEE_MIN.toFixed(fixed);
 
-    const donationFee = +amount * +TRANSACTION_FEE_DONATION.toFixed(fixed);
+    const donationFee = (+amount * +TRANSACTION_FEE_DONATION).toFixed(fixed);
 
     // TODO - Calculate storage fee (for arweave.org)
     const storageFee = +TRANSACTION_FEE_STORAGE.toFixed(fixed);
 
     // TODO - Calculate the burn fee
-    const burnFee = +amount * +TRANSACTION_FEE_BURN.toFixed(fixed);
+    const burnFee = (+amount * +TRANSACTION_FEE_BURN).toFixed(fixed);
 
     const fees = {
       validatorFee,
