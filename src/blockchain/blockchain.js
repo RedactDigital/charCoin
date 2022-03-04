@@ -1,4 +1,4 @@
-const { genesisBlock } = require('./block');
+const { genesisBlock, blockHash } = require('./block');
 const { broadcastChain } = require('../middleware/socket');
 const Stake = require('./stake');
 const Account = require('./account');
@@ -21,20 +21,21 @@ module.exports = {
     return block;
   },
 
-  // isValidChain: chain => {
-  //   // Check if the genesis block is valid
-  //   if (JSON.stringify(chain[0]) !== JSON.stringify(genesisBlock)) return false;
+  isValidChain: chain => {
+    // TODO - put better checks in
+    // Check if the genesis block is valid
+    if (JSON.stringify(chain[0]) !== JSON.stringify(genesisBlock)) return false;
 
-  //   // Check if the chain is valid
-  //   for (let i = 1; i < chain.length; i++) {
-  //     const block = chain[i];
-  //     const lastBlock = chain[i - 1];
+    // Check if the chain is valid
+    for (let i = 1; i < chain.length; i++) {
+      const block = chain[i];
+      const lastBlock = chain[i - 1];
 
-  //     if (chain[i].lastHash !== lastBlock.hash || block.hash !== blockHash(block)) return false;
-  //   }
+      if (chain[i].lastHash !== lastBlock.hash || block.hash !== blockHash(block)) return false;
+    }
 
-  //   return true;
-  // },
+    return true;
+  },
 
   replaceChain: newChain => {
     // Check if the chain is valid
