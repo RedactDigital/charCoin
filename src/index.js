@@ -8,6 +8,7 @@ const { connectToPeers, broadcastTransaction } = require('../src/middleware/sock
 const Server = require('../bin/socket');
 const Wallet = require('./wallet/wallet');
 const { getValidators } = require('./blockchain/validators');
+const { transactions, addTransactionToPool } = require('./wallet/transactions');
 
 const app = express();
 
@@ -15,8 +16,6 @@ app.use(bodyParser.json());
 
 const blockchain = new Blockchain();
 const wallet = new Wallet(Date.now().toString());
-
-const { transactions, addTransactionToPool } = require('./wallet/transactions');
 
 connectToPeers(blockchain);
 

@@ -40,15 +40,11 @@ class TransactionPool {
     const exists = this.transactions.find(t => t.id === transaction.id);
     return exists;
   }
-
-  clear() {
-    this.transactions = [];
-  }
 }
 
 // module.exports = TransactionPool;
 
-const transactions = [];
+let transactions = [];
 
 module.exports = {
   transactions,
@@ -57,5 +53,11 @@ module.exports = {
   },
   addTransactionToPool: transaction => {
     transactions.push(transaction);
+  },
+  clear: () => {
+    transactions = [];
+  },
+  transactionExists: transaction => {
+    return transactions.find(t => t.id === transaction.id);
   },
 };
