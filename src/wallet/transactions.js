@@ -8,7 +8,7 @@ module.exports = {
   addTransactionToPool: transaction => {
     transactions.push(transaction);
   },
-  clear: () => {
+  removeTransactionsFromPool: () => {
     transactions = [];
   },
   transactionExists: transaction => {
