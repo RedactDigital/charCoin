@@ -29,7 +29,7 @@ module.exports = {
   verifyBlock: block => {
     const { timestamp, lastHash, transactions, leader } = block;
 
-    console.log(block);
+    console.log(ChainUtil.hash(`${timestamp}${lastHash}${transactions}`) !== block.hash);
 
     // const lastBlock = blockchain.getLastBlock();
 
