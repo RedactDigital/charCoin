@@ -41,7 +41,6 @@ module.exports = {
         chosenValidator = validators[i];
       }
     }
-    console.log(chosenValidator);
     return chosenValidator;
   },
 };
