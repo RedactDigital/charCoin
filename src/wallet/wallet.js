@@ -20,7 +20,10 @@ class Wallet {
 
   // Move to Transactions File
   createTransaction(to, amount, type, blockchain) {
-    if (num(amount).toFixed(FIXED) < ONE_ASH) return;
+    if (num(amount).toFixed(FIXED) < ONE_ASH) {
+      log.error(num(amount).toFixed(FIXED));
+      log.error(ONE_ASH);
+    }
 
     this.balance = blockchain.getBalance(this.publicKey);
 
