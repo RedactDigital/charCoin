@@ -139,8 +139,8 @@ class Server {
 
           case 'transaction':
             if (!data.transaction) break;
-            if (!this.transactionPool.transactionExists(data.transaction)) {
-              this.transactionPool.addTransaction(data.transaction);
+            if (!this.transactionPool.find(t => t.id === transaction.id)) {
+              this.transactionPool.push(data.transaction);
               broadcastTransaction(data.transaction);
             }
             if (this.transactionPool.thresholdReached()) {

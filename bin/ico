@@ -17,7 +17,7 @@ app.use(bodyParser.json());
 const blockchain = new Blockchain();
 const wallet = new Wallet('i am the first leader');
 
-const transactionPool = new TransactionPool();
+const transactionPool = [];
 
 connectToPeers(blockchain);
 
@@ -41,6 +41,8 @@ app.post('/ico/transaction', (req, res) => {
 
   const transaction = wallet.createTransaction(to, amount, type, blockchain, transactionPool);
 
+  // Add transaction to the pool
+  transactionPool.push(transaction);
   broadcastTransaction(transaction);
 
   res.redirect('/ico/transactions');
