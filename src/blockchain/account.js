@@ -8,7 +8,7 @@ class Account {
 
   initialize(address) {
     if (this.balance[address] == undefined) {
-      this.balance[address] = 0;
+      this.balance[address] = num('0').toFixed(FIXED);
       this.addresses.push(address);
     }
   }
@@ -21,16 +21,16 @@ class Account {
   }
 
   increment(to, amount) {
-    this.balance[to] = num(this.balance[to]).plus(amount);
+    this.balance[to] = num(this.balance[to]).plus(amount).toFixed(FIXED);
   }
 
   decrement(from, amount) {
-    this.balance[from] = num(this.balance[from]).minus(amount);
+    this.balance[from] = num(this.balance[from]).minus(amount).toFixed(FIXED);
   }
 
   getBalance(address) {
     this.initialize(address);
-    return num(this.balance[address]).toFormat();
+    return num(this.balance[address]).toFixed(FIXED).toFormat();
   }
 
   // update(transaction) {
