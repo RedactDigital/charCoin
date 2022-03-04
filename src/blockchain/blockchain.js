@@ -1,9 +1,12 @@
-const { blockHash, verifyBlock, genesisBlock } = require('./block');
+const { blockHash, genesisBlock } = require('./block');
 const { broadcastChain } = require('../middleware/socket');
 const Stake = require('./stake');
 const Account = require('./account');
 const { getValidatorWithMostStake, getValidators } = require('./validators');
 
+//https://medium.com/solana-labs/replicators-solanas-solution-to-petabytes-of-blockchain-data-storage-ef79db053fa1#:~:text=At%20full%20capacity%2C%20the%20Solana,that%20kind%20of%20storage%20capacity.
+// TODO - store the blockchain in Arweave https://solana.com/ecosystem/arweave https://www.arweave.org/
+// TODO - refactor after blockchain is stored in Arweave
 class Blockchain {
   constructor() {
     this.chain = [genesisBlock];
@@ -63,23 +66,9 @@ class Blockchain {
     this.stakes.initialize(address);
   }
 
-  // Moved to
-  // isValidBlock(block) {
-  //   const lastBlock = this.chain[this.chain.length - 1];
-
-  //   if (block.lastHash === lastBlock.hash && block.hash === blockHash(block) && verifyBlock(block)) {
-  //     if (block.leader != this.findValidator().address) return false;
-  //     log.info('Block valid');
-  //     return true;
-  //   }
-  //   log.warn('Block invalid');
-  //   return false;
-  // }
-
   executeTransactions(block) {
     if (!block.transactions) return;
 
-    // TODO - verify each transaction in the block has a valid = true and a valid signature
     for (let i = 0; i < block.transactions.length; i++) {
       switch (block.transactions[i].type) {
         case 'transaction':
@@ -93,33 +82,15 @@ class Blockchain {
           this.stakes.addStake(block.transactions[i]);
           this.accounts.addValidatorFee(block.transactions[i]);
           break;
-        // case 'validator_fee':
-        //   this.accounts.addValidatorFee(block.data[i]);
-        //   break;
       }
     }
-    // block.data.forEach(transaction => {
-    //   log.info(transaction.type);
-    //   switch (transaction.type) {
-    //     case 'transaction':
-    //       this.accounts.update(transaction);
-    //       this.accounts.transferFee(block, transaction);
-    //       break;
-    //     case 'stake':
-    //       this.stakes.update(transaction);
-    //       this.accounts.decrement(transaction.input.from, transaction.output.amount);
-    //       this.accounts.transferFee(block, transaction);
+  }
 
-    //       break;
-    //     case 'validator_fee':
-    //       if (commitValidator(transaction)) {
-    //         this.accounts.decrement(transaction.input.from, transaction.output.amount);
-    //         this.accounts.transferFee(block, transaction);
-    //       }
-    //       break;
-    //   }
-    // });
+  getLastBlock() {
+    return this.chain[this.chain.length - 1];
   }
 }
 
-module.exports = Blockchain;
+let blockchain = Object.freeze(new Blockchain());
+
+module.exports = blockchain;

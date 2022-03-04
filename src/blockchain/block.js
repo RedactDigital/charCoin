@@ -1,4 +1,5 @@
 const ChainUtil = require('../chain-util');
+const blockchain = require('./blockchain');
 
 module.exports = {
   genesisBlock: { id: 0, timestamp: 0, lastHash: '-----', hash: 'genesis', data: [], leader: [] },
@@ -28,10 +29,13 @@ module.exports = {
 
   verifyBlock: block => {
     const { timestamp, lastHash, transactions, leader } = block;
+    const lastBlock = blockchain.getLastBlock();
 
     // Ensure hash is valid
+    if (ChainUtil.hash(`${timestamp}${lastHash}${transactions}`) !== block.hash) return false;
 
     // Ensure lastHash matches previous local block's hash
+    if (lastBlock.lastHash !== lastHash) return false;
 
     // Ensure the block is not too old
 

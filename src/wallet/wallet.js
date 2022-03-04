@@ -32,6 +32,8 @@ class Wallet {
 
     // TODO - Calculate the donation fee
 
+    // TODO - Calculate storage fee (for arweave.org)
+
     // TODO - Calculate the burn fee
 
     // TODO - calculate total fee
@@ -44,7 +46,7 @@ class Wallet {
     }
 
     // Create transaction object
-    // TODO - make this look like solona https://solscan.io/block/123348478
+    // TODO - make this look like solana https://solscan.io/block/123348478
     const transaction = {
       id: ChainUtil.id(),
       type,

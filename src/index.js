@@ -2,7 +2,7 @@ require('dotenv').config({ silent: true });
 require('./globals');
 
 const express = require('express');
-const Blockchain = require('./blockchain/blockchain');
+const blockchain = require('./blockchain/blockchain');
 const bodyParser = require('body-parser');
 const { connectToPeers, broadcastTransaction } = require('../src/middleware/socket');
 const Server = require('../bin/socket');
@@ -14,7 +14,6 @@ const app = express();
 
 app.use(bodyParser.json());
 
-const blockchain = new Blockchain();
 const wallet = new Wallet(Date.now().toString());
 
 connectToPeers(blockchain);
