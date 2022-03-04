@@ -40,7 +40,7 @@ class Wallet {
     }
 
     // Ensure sender has enough balance
-    if (num(amount).toFixed(FIXED) + num(fee).toFixed(FIXED) > this.balance) {
+    if (num(amount).toFixed(FIXED) + num(fee).toFixed(FIXED) > num(this.balance).toFixed(FIXED)) {
       log.error(`Insufficient balance: ${this.balance}`);
       return { success: false, message: 'Insufficient funds' };
     }
