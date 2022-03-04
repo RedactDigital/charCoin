@@ -29,18 +29,19 @@ module.exports = {
   verifyBlock: block => {
     const { timestamp, lastHash, transactions, leader } = block;
 
-    console.log(block);
+    // Ensure hash is valid
 
-    for (let i = 0; i < leader.length; i++) {
-      const validator = leader[i];
-      const { address, signature } = validator;
-      const valid = ChainUtil.verifySignature(
-        address,
-        signature,
-        ChainUtil.hash(`${timestamp}${lastHash}${transactions}`)
-      );
-      if (!valid) return false;
-    }
+    // Ensure lastHash matches previous local block's hash
+
+    // Ensure the block is not too old
+
+    // Ensure the block is not too far in the future
+
+    // Ensure the block is signed by the leader
+
+    // Ensure each transaction is valid
+
+    // console.log(block);
 
     return true;
   },

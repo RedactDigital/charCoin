@@ -14,6 +14,10 @@ module.exports = {
   transactionExists: transaction => {
     return transactions.find(t => t.id === transaction.id);
   },
+  validTransactions: () => {
+    // Ensure transactions match local transactions
+    // Ensure each transaction has a valid signature
+  },
 };
 
 // validTransactions() {
