@@ -7,6 +7,12 @@ module.exports = {
     const timestamp = Date.now();
     const lastHash = lastBlock.hash;
     const hash = ChainUtil.hash(`${timestamp}${lastHash}${transactions}`);
+
+    let donation = 0;
+    transactions.forEach(transaction => {
+      donation += transaction.donationFee;
+    });
+
     const block = {
       id: lastBlock.id + 1,
       timestamp,
@@ -15,7 +21,7 @@ module.exports = {
       transactions,
       leader: wallet.getPublicKey(),
       reward: 0, // TODO - calculate reward from adding all data.transactionFee
-      donation: 0, // TODO - calculate donation from adding all data.donationFee
+      donation,
       numOfTransactions: transactions.length,
     };
     return block;
