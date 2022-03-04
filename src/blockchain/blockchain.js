@@ -78,7 +78,10 @@ module.exports = {
           blockchain.accounts.transfer(
             block.transactions[i].input.from,
             block.transactions[i].output.to,
-            block.transactions[i].output.amount
+            block.transactions[i].output.amount,
+            block.transactions[i].output.transactionFee,
+            block.transactions[i].output.donationFee,
+            block.transactions[i].output.burnFee
           );
           break;
         case 'stake':

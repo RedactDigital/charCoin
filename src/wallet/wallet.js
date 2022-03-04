@@ -20,9 +20,9 @@ class Wallet {
   }
 
   // Move to Transactions File
-  createTransaction(to, amount, type, blockchain) {
+  createTransaction(to, amount, type) {
     if (num(amount).toFixed(FIXED) < num(ONE_ASH).toFixed(FIXED)) {
-      log.error(num(amount).toFixed(FIXED));
+      log.error('Amount must be greater than 1 ASH');
       return;
     }
 
