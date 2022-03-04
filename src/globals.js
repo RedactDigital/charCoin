@@ -6,12 +6,12 @@ const transactionThreshold = 5;
 const oneAsh = 1;
 const oneChar = 1000 * 1000;
 const totalCoins = 250000000 * +oneChar;
-const ashes = num => +num * +oneAsh;
-const chars = num => +num * +oneChar;
+const getNumOfAshes = num => +num * +oneAsh;
+const getNumOfChars = num => +num * +oneChar;
 
-const validatorStakeRequirement = chars(10);
-const transactionFeeMin = ashes(10);
-const transactionFeeMax = ashes(100);
+const validatorStakeRequirement = getNumOfChars(10);
+const transactionFeeMin = getNumOfAshes(10);
+const transactionFeeMax = getNumOfAshes(100);
 const transactionFeeBurn = +0.4; // 40%
 const transactionFeeDonation = +0.18; // 18%
 
@@ -24,8 +24,8 @@ TRANSACTION_FEE_BURN = transactionFeeBurn;
 TRANSACTION_FEE_DONATION = transactionFeeDonation;
 
 log = logger;
-ashes;
-chars;
+ashes = getNumOfAshes;
+chars = getNumOfChars;
 
 module.exports = {
   global,
