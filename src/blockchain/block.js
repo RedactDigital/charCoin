@@ -20,11 +20,11 @@ module.exports = {
       timestamp,
       lastHash,
       hash,
-      transactions,
       leader: wallet.getPublicKey(),
       reward,
       donation,
       numOfTransactions: transactions.length,
+      transactions,
     };
 
     // TODO - Create a transaction to pay the validator

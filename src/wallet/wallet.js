@@ -76,8 +76,7 @@ class Wallet {
     if (instruction === 'stake') instructionFee = ashes(300);
     // if(instruction === 'donate' ) instructionFee = ashes(50)
 
-    // const donation = +amount * +0.005;
-    const donation = 0;
+    const donation = +amount * +0.005;
 
     // TODO - Calculate storage fee (for arweave.org)
     const storageFee = ashes(5);
@@ -85,11 +84,11 @@ class Wallet {
     const burnFee = +instructionFee * +0.5;
 
     const fees = {
-      instructionFee,
-      storageFee,
-      donation,
-      feesBurntToAsh: burnFee,
-      total: +instructionFee + +donation + +storageFee + +burnFee,
+      instructionFee: (+instructionFee / chars(1)).toFixed(fixed),
+      storageFee: (+storageFee / chars(1)).toFixed(fixed),
+      donation: (+donation / chars(1)).toFixed(fixed),
+      feesBurntToAsh: (+burnFee / chars(1)).toFixed(fixed),
+      total: ((+instructionFee + +donation + +storageFee + +burnFee) / chars(1)).toFixed(fixed),
     };
 
     return fees;

@@ -72,6 +72,8 @@ module.exports = {
   executeTransactions: block => {
     if (!block.transactions) return;
 
+    console.log('Executing transactions');
+
     for (let i = 0; i < block.transactions.length; i++) {
       switch (block.transactions[i].type) {
         case 'transaction':
