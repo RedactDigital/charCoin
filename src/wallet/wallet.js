@@ -22,6 +22,7 @@ class Wallet {
   // Move to Transactions File
   createTransaction(to, from, totalAmount, type) {
     this.balance = getBalance(from);
+    totalAmount = +totalAmount.toFixed(fixed);
 
     // Calculate the transaction fee
     const fees = this.calculateFee(totalAmount);
