@@ -60,16 +60,8 @@ class Blockchain {
     return this.accounts.getBalance(publicKey);
   }
 
-  findValidator(index) {
-    // Tier 1 - Validator with x amount of blocks validated
-    // Tier 2 - Validator with x amount of blocks validated
-    // Tier 3 - All other validators
+  findValidator() {
     let validators = getValidators();
-
-    if (index == 0) validators = getTierThreeValidators();
-    if (index == 1) validators = getTierTwoValidators();
-    if (index == 2) validators = getTierOneValidators();
-
     return getValidatorWithMostStake(validators, this.accounts);
   }
 
@@ -82,7 +74,7 @@ class Blockchain {
     const lastBlock = this.chain[this.chain.length - 1];
 
     if (block.lastHash === lastBlock.hash && block.hash === blockHash(block) && verifyBlock(block)) {
-      if (block.leader.address != this.findValidator([i]).address) return false;
+      if (block.leader.address != this.findValidator().address) return false;
       log.info('Block valid');
       return true;
     }
