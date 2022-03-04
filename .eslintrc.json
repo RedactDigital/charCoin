@@ -16,11 +16,15 @@
   },
   "globals": {
     "log": true,
+    "num": true,
     "TOTAL_COINS": true,
     "TRANSACTION_THRESHOLD": true,
-    "TRANSACTION_FEE": true,
     "VALIDATOR_FEE": true,
-    "TIER_TWO_BLOCK_REQUIREMENT": true,
-    "TIER_ONE_BLOCK_REQUIREMENT": true
+    "VALIDATOR_STAKE_REQUIREMENT": true,
+    "TRANSACTION_FEE_MIN": true,
+    "TRANSACTION_FEE_MAX": true,
+    "TRANSACTION_FEE_BURN": true,
+    "TRANSACTION_FEE_DONATION": true,
+    "ONE_ASH": true
   }
 }
