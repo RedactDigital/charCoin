@@ -26,7 +26,7 @@ class Wallet {
       return;
     }
 
-    this.balance = getBalance(this.publicKey);
+    this.balance = getBalance(from);
 
     // Calculate the transaction fee
     const transactionFee = this.calculateFee(amount);
