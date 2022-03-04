@@ -31,7 +31,7 @@ class Account {
 
   getBalance(address) {
     this.initialize(address);
-    return num(this.balance[address]).toFixed(FIXED);
+    return +this.balance[address];
   }
 
   // update(transaction) {
