@@ -58,6 +58,7 @@ class Wallet {
       },
       output: {
         to,
+        total: amount,
         amount: amount - fee,
         transactionFee,
         donationFee: 0,
