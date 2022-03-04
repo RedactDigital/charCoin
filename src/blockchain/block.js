@@ -10,9 +10,8 @@ module.exports = {
 
     let donation = 0;
     transactions.forEach(transaction => {
-      donation += transaction.donationFee;
+      donation += transaction.data.fees.donationFee;
     });
-    console.log(transactions);
     const block = {
       id: lastBlock.id + 1,
       timestamp,
