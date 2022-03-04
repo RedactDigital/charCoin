@@ -22,7 +22,6 @@ class Wallet {
   // Move to Transactions File
   createTransaction(to, from, totalAmount, type) {
     this.balance = getBalance(from);
-    totalAmount = +totalAmount.toFixed(fixed);
 
     // Calculate the transaction fee
     const fees = this.calculateFee(totalAmount);
@@ -47,8 +46,8 @@ class Wallet {
           from,
           to,
         },
-        totalAmount: +totalAmount + +fees.total,
-        sentAmount: +totalAmount,
+        totalAmount: (+totalAmount + +fees.total).toFixed(fixed),
+        sentAmount: (+totalAmount).toFixed(fixed),
         fees,
         instructions: [type],
       },
@@ -67,12 +66,12 @@ class Wallet {
     // https://docs.solana.com/transaction_fees
     // https://docs.solana.com/implemented-proposals/transaction-fees#congestion-driven-fees
 
-    const validatorFee = TRANSACTION_FEE_MIN.toFixed(fixed);
+    const validatorFee = (+TRANSACTION_FEE_MIN).toFixed(fixed);
 
     const donationFee = (+amount * +TRANSACTION_FEE_DONATION).toFixed(fixed);
 
     // TODO - Calculate storage fee (for arweave.org)
-    const storageFee = +TRANSACTION_FEE_STORAGE.toFixed(fixed);
+    const storageFee = (+TRANSACTION_FEE_STORAGE).toFixed(fixed);
 
     // TODO - Calculate the burn fee
     const burnFee = (+amount * +TRANSACTION_FEE_BURN).toFixed(fixed);
