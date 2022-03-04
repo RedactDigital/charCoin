@@ -14,21 +14,22 @@ const blockchain = {
   accounts: new Account(),
 };
 
-// const isValidChain = blocks => {
-//   // TODO - put better checks in
-//   // Check if the genesis block is valid
-//   if (JSON.stringify(chain[0]) !== JSON.stringify(genesisBlock)) return false;
+const isValidChain = blocks => {
+  console.log(blocks);
+  // TODO - put better checks in
+  // Check if the genesis block is valid
+  if (JSON.stringify(chain[0]) !== JSON.stringify(genesisBlock)) return false;
 
-//   // Check if the chain is valid
-//   for (let i = 1; i < chain.length; i++) {
-//     const block = chain[i];
-//     const lastBlock = chain[i - 1];
+  // Check if the chain is valid
+  for (let i = 1; i < chain.length; i++) {
+    const block = chain[i];
+    const lastBlock = chain[i - 1];
 
-//     if (chain[i].lastHash !== lastBlock.hash || block.hash !== blockHash(block)) return false;
-//   }
+    if (chain[i].lastHash !== lastBlock.hash || block.hash !== blockHash(block)) return false;
+  }
 
-//   return true;
-// };
+  return true;
+};
 
 module.exports = {
   blockchain,
@@ -42,7 +43,7 @@ module.exports = {
   replaceChain: newChain => {
     if (!newChain) return;
     // Check if the chain is valid
-    // if (!isValidChain(newChain)) return;
+    if (!isValidChain(newChain)) return;
 
     // Check if the chain is longer than the current chain
     if (newChain.length <= blockchain.blocks.length) return;
