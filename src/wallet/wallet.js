@@ -80,7 +80,7 @@ class Wallet {
     // TODO - Calculate the burn fee
     const burnFee = 1;
 
-    const validatorFee = MIN_VALIDATOR_FEE;
+    const validatorFee = TRANSACTION_FEE_MIN;
 
     const fees = {
       validatorFee,
