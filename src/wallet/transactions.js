@@ -49,7 +49,7 @@ let transactions = [];
 module.exports = {
   transactions,
   thresholdReached: () => {
-    return this.transactions.length >= TRANSACTION_THRESHOLD;
+    return transactions.length >= TRANSACTION_THRESHOLD;
   },
   addTransactionToPool: transaction => {
     transactions.push(transaction);
