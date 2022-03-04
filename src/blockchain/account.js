@@ -14,6 +14,7 @@ class Account {
   }
 
   transfer(from, to, amount) {
+    console.log(`Transferring ${amount} from ${from} to ${to}`);
     this.initialize(from);
     this.initialize(to);
     this.increment(to, amount);
