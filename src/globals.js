@@ -14,7 +14,6 @@ const transactionFeeDonation = BigNumber('.18'); // 18%
 
 TOTAL_COINS = totalCoins;
 TRANSACTION_THRESHOLD = transactionThreshold;
-TRANSACTION_FEE = transactionFee;
 VALIDATOR_STAKE_REQUIREMENT = validatorStakeRequirement;
 TRANSACTION_FEE_MIN = transactionFeeMin;
 TRANSACTION_FEE_MAX = transactionFeeMax;
