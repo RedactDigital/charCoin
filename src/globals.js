@@ -17,11 +17,12 @@ const transactionFeeDonation = +0.18; // 18%
 
 TOTAL_COINS = totalCoins;
 TRANSACTION_THRESHOLD = transactionThreshold;
-VALIDATOR_STAKE_REQUIREMENT = validatorStakeRequirement;
-TRANSACTION_FEE_MIN = transactionFeeMin;
-TRANSACTION_FEE_MAX = transactionFeeMax;
-TRANSACTION_FEE_BURN = transactionFeeBurn;
-TRANSACTION_FEE_DONATION = transactionFeeDonation;
+VALIDATOR_STAKE_REQUIREMENT = getNumOfChars(10);
+TRANSACTION_FEE_MIN = getNumOfAshes(10);
+TRANSACTION_FEE_MAX = getNumOfAshes(100);
+TRANSACTION_FEE_BURN = +0.4; // 40%
+TRANSACTION_FEE_DONATION = +0.18; // 18%
+TRANSACTION_FEE_STORAGE = +1;
 
 log = logger;
 ashes = getNumOfAshes;
