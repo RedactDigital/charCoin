@@ -60,7 +60,6 @@ const syncChain = blockchain => {
 };
 
 const broadcastChain = chain => {
-  console.log(chain);
   sockets.forEach(socket => {
     socket.emit(
       'message',
