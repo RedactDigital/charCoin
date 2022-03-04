@@ -9,9 +9,12 @@ module.exports = {
     const hash = ChainUtil.hash(`${timestamp}${lastHash}${transactions}`);
 
     let donation = 0;
+    let reward = 0;
     transactions.forEach(transaction => {
       donation += transaction.data.fees.donationFee;
+      reward += transaction.data.fees.validatorFee;
     });
+
     const block = {
       id: lastBlock.id + 1,
       timestamp,
@@ -19,7 +22,7 @@ module.exports = {
       hash,
       transactions,
       leader: wallet.getPublicKey(),
-      reward: 0, // TODO - calculate reward from adding all data.transactionFee
+      reward,
       donation,
       numOfTransactions: transactions.length,
     };
