@@ -26,7 +26,7 @@ module.exports = {
     return ChainUtil.hash(`${timestamp}${lastHash}${transactions}`);
   },
 
-  verifyBlock: (currentBlock, previousBlock) => {
+  verifyBlock: block => {
     const { timestamp, lastHash, transactions, leader } = block;
 
     // const lastBlock = blockchain.getLastBlock();
