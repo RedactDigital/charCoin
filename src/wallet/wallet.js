@@ -20,14 +20,14 @@ class Wallet {
   }
 
   // Move to Transactions File
-  createTransaction(to, from, amount, instruction) {
+  createTransaction(to, from, amount, instructions) {
     this.balance = getBalance(from);
 
     // Convert CHAR to ASH
     let totalAmount = (+amount * chars(1)).toFixed(fixed);
 
     // Calculate the transaction fee
-    const fees = this.calculateFee(totalAmount, instruction);
+    const fees = this.calculateFee(totalAmount, instructions);
 
     if (+totalAmount + +fees.total < ashes(1)) {
       return { success: false, message: 'Minimum transaction must be 14 ASH or greater' };
@@ -55,7 +55,7 @@ class Wallet {
         totalAmount: +totalAmount + +fees.total,
         sentAmount: +totalAmount,
         fees,
-        instructions: instruction,
+        instructions: instructions,
       },
       signature: '',
     };
@@ -66,29 +66,29 @@ class Wallet {
     return { success: true, transaction };
   }
 
-  calculateFee(amount, instruction) {
+  calculateFee(amount, instructions) {
     // https://docs.solana.com/transaction_fees
     // https://docs.solana.com/implemented-proposals/transaction-fees#congestion-driven-fees
 
-    let instructionFee = 0;
+    let instructionsFee = 0;
 
-    if (instruction === 'transfer') instructionFee = ashes(100);
-    if (instruction === 'stake') instructionFee = ashes(300);
-    // if(instruction === 'donate' ) instructionFee = ashes(50)
+    if (instructions === 'transfer') instructionsFee = ashes(100);
+    if (instructions === 'stake') instructionsFee = ashes(300);
+    // if(instructions === 'donate' ) instructionsFee = ashes(50)
 
     const donation = +amount * +0.005;
 
     // TODO - Calculate storage fee (for arweave.org)
     const storageFee = ashes(5);
 
-    const burnFee = +instructionFee * +0.5;
+    const burnFee = +instructionsFee * +0.5;
 
     const fees = {
-      instructionFee: (+instructionFee / chars(1)).toFixed(fixed),
+      instructionsFee: (+instructionsFee / chars(1)).toFixed(fixed),
       storageFee: (+storageFee / chars(1)).toFixed(fixed),
       donation: (+donation / chars(1)).toFixed(fixed),
       feesBurntToAsh: (+burnFee / chars(1)).toFixed(fixed),
-      total: ((+instructionFee + +donation + +storageFee + +burnFee) / chars(1)).toFixed(fixed),
+      total: ((+instructionsFee + +donation + +storageFee + +burnFee) / chars(1)).toFixed(fixed),
     };
 
     return fees;
