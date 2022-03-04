@@ -63,30 +63,35 @@ class Blockchain {
     this.stakes.initialize(address);
   }
 
-  isValidBlock(block) {
-    const lastBlock = this.chain[this.chain.length - 1];
+  // Moved to
+  // isValidBlock(block) {
+  //   const lastBlock = this.chain[this.chain.length - 1];
 
-    if (block.lastHash === lastBlock.hash && block.hash === blockHash(block) && verifyBlock(block)) {
-      if (block.leader != this.findValidator().address) return false;
-      log.info('Block valid');
-      return true;
-    }
-    log.warn('Block invalid');
-    return false;
-  }
+  //   if (block.lastHash === lastBlock.hash && block.hash === blockHash(block) && verifyBlock(block)) {
+  //     if (block.leader != this.findValidator().address) return false;
+  //     log.info('Block valid');
+  //     return true;
+  //   }
+  //   log.warn('Block invalid');
+  //   return false;
+  // }
 
   executeTransactions(block) {
-    if (!block.data) return;
+    if (!block.transactions) return;
 
     // TODO - verify each transaction in the block has a valid = true and a valid signature
-    for (let i = 0; i < block.data.length; i++) {
-      switch (block.data[i].type) {
+    for (let i = 0; i < block.transactions.length; i++) {
+      switch (block.transactions[i].type) {
         case 'transaction':
-          this.accounts.transfer(block.data[i].input.from, block.data[i].output.to, block.data[i].output.amount);
+          this.accounts.transfer(
+            block.transactions[i].input.from,
+            block.transactions[i].output.to,
+            block.transactions[i].output.amount
+          );
           break;
         case 'stake':
-          this.stakes.addStake(block.data[i]);
-          this.accounts.addValidatorFee(block.data[i]);
+          this.stakes.addStake(block.transactions[i]);
+          this.accounts.addValidatorFee(block.transactions[i]);
           break;
         // case 'validator_fee':
         //   this.accounts.addValidatorFee(block.data[i]);

@@ -43,6 +43,16 @@ module.exports = {
 
     // console.log(block);
 
+    // const lastBlock = this.chain[this.chain.length - 1];
+
+    // if (block.lastHash === lastBlock.hash && block.hash === blockHash(block) && verifyBlock(block)) {
+    //   if (block.leader != this.findValidator().address) return false;
+    //   log.info('Block valid');
+    //   return true;
+    // }
+    // log.warn('Block invalid');
+    // return false;
+
     return true;
   },
 
