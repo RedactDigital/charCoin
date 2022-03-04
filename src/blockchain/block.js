@@ -1,7 +1,7 @@
 const ChainUtil = require('../chain-util');
 
 module.exports = {
-  genesisBlock: { id: 0, timestamp: 0, lastHash: '-----', hash: 'genesis', data: [], validators: [] },
+  genesisBlock: { id: 0, timestamp: 0, lastHash: '-----', hash: 'genesis', data: [], leader: [] },
 
   createBlock: (lastBlock, transactions, wallet) => {
     const timestamp = Date.now();
@@ -27,10 +27,10 @@ module.exports = {
   },
 
   verifyBlock: block => {
-    const { timestamp, lastHash, transactions, validators } = block;
+    const { timestamp, lastHash, transactions, leader } = block;
 
-    for (let i = 0; i < validators.length; i++) {
-      const validator = validators[i];
+    for (let i = 0; i < leader.length; i++) {
+      const validator = leader[i];
       const { address, signature } = validator;
       const valid = ChainUtil.verifySignature(
         address,
