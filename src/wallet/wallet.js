@@ -36,11 +36,11 @@ class Wallet {
     }
 
     // Create transaction object
-    // TODO - make this look like solana https://solscan.io/block/123348478
     const transaction = {
       id: ChainUtil.id(),
       timestamp: Date.now(),
       blockHash: '',
+      status: '',
       data: {
         addresses: {
           from,
@@ -52,7 +52,6 @@ class Wallet {
         instructions: [type],
       },
       signature: '',
-      status: '',
     };
 
     // Sign the transaction
@@ -62,19 +61,18 @@ class Wallet {
   }
 
   calculateFee(amount) {
-    // TODO - Calculate the transaction fee
     // https://docs.solana.com/transaction_fees
     // https://docs.solana.com/implemented-proposals/transaction-fees#congestion-driven-fees
 
-    const validatorFee = (+TRANSACTION_FEE_MIN).toFixed(fixed);
+    // TODO - Figure out validator fees
+    const validatorFee = (+TRANSACTION_FEE_MIN / chars(1)).toFixed(fixed);
 
-    const donationFee = (+amount * +TRANSACTION_FEE_DONATION).toFixed(fixed);
+    const donationFee = ((+amount * +TRANSACTION_FEE_DONATION) / chars(1)).toFixed(fixed);
 
     // TODO - Calculate storage fee (for arweave.org)
-    const storageFee = (+TRANSACTION_FEE_STORAGE).toFixed(fixed);
+    const storageFee = (+TRANSACTION_FEE_STORAGE / chars(1)).toFixed(fixed);
 
-    // TODO - Calculate the burn fee
-    const burnFee = (+amount * +TRANSACTION_FEE_BURN).toFixed(fixed);
+    const burnFee = ((+amount * +TRANSACTION_FEE_BURN) / chars(1)).toFixed(fixed);
 
     const fees = {
       validatorFee,

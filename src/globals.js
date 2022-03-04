@@ -7,7 +7,7 @@ const toFixed = 7;
 const oneAsh = 1;
 const oneChar = 1000 * 1000;
 const totalCoins = 250000000 * +oneChar;
-const getNumOfAshes = num => (+num * +oneAsh).toFixed(toFixed);
+const getNumOfAshes = num => ((+num * +oneAsh) / oneChar).toFixed(toFixed);
 const getNumOfChars = num => (+num * +oneChar).toFixed(toFixed);
 
 const validatorStakeRequirement = getNumOfChars(10);
