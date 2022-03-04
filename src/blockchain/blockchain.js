@@ -71,19 +71,14 @@ module.exports = {
 
   executeTransactions: block => {
     if (!block.transactions) return;
-    console.log(block);
     for (let i = 0; i < block.transactions.length; i++) {
-      switch (block.transactions[i].instructions) {
+      const { senderAmount, recipientAmount, addresses, instructions } = block.transactions[i].data;
+
+      switch (instructions) {
         case 'transfer':
-          blockchain.accounts.transfer(
-            block.transactions[i].input.from,
-            block.transactions[i].output.to,
-            block.transactions[i].output.amount,
-            block.transactions[i].output.transactionFee,
-            block.transactions[i].output.donation,
-            block.transactions[i].output.burnFee
-          );
+          blockchain.accounts.transfer(addresses.from, addresses.to, senderAmount, recipientAmount);
           break;
+
         case 'stake':
           blockchain.stakes.addStake(block.transactions[i]);
           blockchain.accounts.addValidatorFee(block.transactions[i]);

@@ -13,12 +13,11 @@ class Account {
     }
   }
 
-  transfer(from, to, amount, instructionFee, donation) {
-    const total = +amount + +instructionFee + +donation;
+  transfer(from, to, recipientAmount, senderAmount) {
     this.initialize(from);
     this.initialize(to);
-    this.increment(to, amount);
-    this.decrement(from, total);
+    this.increment(to, recipientAmount);
+    this.decrement(from, senderAmount);
   }
 
   increment(to, amount) {
