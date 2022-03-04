@@ -48,12 +48,7 @@ class Wallet {
         },
         totalAmount,
         sentAmount: +totalAmount - +fees.total,
-        fees: {
-          validatorFee,
-          storageFee,
-          donationFee,
-          burnFee,
-        },
+        fees,
         instructions: [type],
       },
       signature: '',
@@ -71,6 +66,8 @@ class Wallet {
     // https://docs.solana.com/transaction_fees
     // https://docs.solana.com/implemented-proposals/transaction-fees#congestion-driven-fees
 
+    const validatorFee = TRANSACTION_FEE_MIN;
+
     // TODO - Calculate the donation fee
     const donationFee = 1;
 
@@ -79,8 +76,6 @@ class Wallet {
 
     // TODO - Calculate the burn fee
     const burnFee = 1;
-
-    const validatorFee = TRANSACTION_FEE_MIN;
 
     const fees = {
       validatorFee,
