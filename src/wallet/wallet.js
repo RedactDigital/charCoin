@@ -35,12 +35,14 @@ class Wallet {
     // TODO - Calculate the burn fee
     const burnFee = 0;
 
-    if (+totalAmount + +fee < +ONE_ASH) {
+    const fees = transactionFee + donationFee + storageFee + burnFee;
+
+    if (+totalAmount + +fees < +ONE_ASH) {
       return { success: false, message: 'Amount must be greater than 1 ASH' };
     }
 
     // Ensure sender has enough balance
-    if (+totalAmount + +fee > +this.balance) {
+    if (+totalAmount + +fees > +this.balance) {
       return { success: false, message: 'Insufficient funds' };
     }
 
@@ -56,7 +58,7 @@ class Wallet {
           to,
         },
         totalAmount,
-        sentAmount: totalAmount - transactionFee - donationFee - storageFee - burnFee,
+        sentAmount: totalAmount - fees,
         fees: {
           transactionFee,
           storageFee,
