@@ -26,18 +26,6 @@ module.exports = {
     return { validators, count: validators.length };
   },
 
-  getTierOneValidators: () => {
-    return validators.filter(validator => validator.blocks.length >= TIER_ONE_BLOCK_REQUIREMENT);
-  },
-
-  getTierTwoValidators: () => {
-    return validators.filter(validator => validator.blocks.length >= TIER_TWO_BLOCK_REQUIREMENT);
-  },
-
-  getTierThreeValidators: () => {
-    return validators.filter(validator => validator.blocks.length < TIER_TWO_BLOCK_REQUIREMENT);
-  },
-
   getValidatorWithMostStake: (validators, accounts) => {
     // const balance = -1;
     // let chosenValidator = undefined;
