@@ -22,7 +22,7 @@ TRANSACTION_FEE_DONATION = transactionFeeDonation;
 ONE_ASH = oneAsh;
 
 log = logger;
-num = value => BigNumber(value);
+num = BigNumber;
 
 module.exports = {
   global,
