@@ -6,7 +6,7 @@ const Blockchain = require('../src/blockchain/blockchain');
 const { connectToPeers, broadcastTransaction } = require('../src/middleware/socket');
 const Server = require('./socket');
 const Wallet = require('../src/wallet/wallet');
-const { transactions } = require('../src/wallet/transactions');
+const { transactions, addTransactionToPool } = require('../src/wallet/transactions');
 
 const HTTP_PORT = 3005;
 
@@ -20,7 +20,7 @@ const wallet = new Wallet('i am the first leader');
 connectToPeers(blockchain);
 
 app.get('/ico/transactions', (req, res) => {
-  res.json(transactionPool.transactions);
+  res.json(transactions);
 });
 
 app.get('/ico/blocks', (req, res) => {
@@ -37,10 +37,10 @@ app.post('/ico/transaction', (req, res) => {
   if (type != 'transaction' && type != 'stake')
     return res.json({ success: false, message: 'Invalid transaction type' }).status(400);
 
-  const transaction = wallet.createTransaction(to, amount, type, blockchain, transactionPool);
+  const transaction = wallet.createTransaction(to, amount, type, blockchain);
 
   // Add transaction to the pool
-  transactionPool.push(transaction);
+  addTransactionToPool(transaction);
   broadcastTransaction(transaction);
 
   res.redirect('/ico/transactions');
@@ -63,4 +63,4 @@ app.listen(HTTP_PORT, () => {
 });
 
 // Initialize WebSocket server
-new Server(blockchain, transactionPool, wallet);
+new Server(blockchain, transactions, wallet);
