@@ -18,7 +18,6 @@ module.exports = {
       donation: 0, // TODO - calculate donation from adding all data.donationFee
       numOfTransactions: transactions.length,
     };
-    console.log(`Created block ${block.id}`);
     return block;
   },
 

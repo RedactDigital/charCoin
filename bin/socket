@@ -171,6 +171,7 @@ class Server {
             break;
 
           case 'block':
+            console.log(data);
             if (!data.block) break;
             if (!data.block.leader) break;
             if (verifyBlock(data.block)) {
