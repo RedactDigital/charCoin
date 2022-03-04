@@ -27,15 +27,16 @@ app.get('/ico/blocks', (req, res) => {
 });
 
 app.post('/ico/transaction', (req, res) => {
-  const { to, amount, type } = req.body;
+  const { to, amount, instructions } = req.body;
   const from = wallet.getPublicKey(wallet);
 
-  if (!to || !amount || !type) return res.json({ success: false, message: 'Missing required fields' }).status(400);
+  if (!to || !amount || !instructions)
+    return res.json({ success: false, message: 'Missing required fields' }).status(400);
 
-  if (type != 'transfer' && type != 'stake')
+  if (instructions != 'transfer' && instructions != 'stake')
     return res.json({ success: false, message: 'Invalid transaction type' }).status(400);
 
-  const { success, message, transaction } = wallet.createTransaction(to, from, amount, type);
+  const { success, message, transaction } = wallet.createTransaction(to, from, amount, instructions);
 
   if (!success) return res.json({ success, message: message }).status(400);
 

@@ -55,7 +55,7 @@ class Wallet {
         totalAmount: +totalAmount + +fees.total,
         sentAmount: +totalAmount,
         fees,
-        instructions: [instruction],
+        instructions: instruction,
       },
       signature: '',
     };
