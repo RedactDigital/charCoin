@@ -11,8 +11,8 @@ module.exports = {
     let donation = 0;
     let reward = 0;
     transactions.forEach(transaction => {
-      donation += +transaction.data.fees.donationFee;
-      reward += +transaction.data.fees.instructionFee;
+      donation += +transaction.data.fees.donation;
+      reward += +transaction.data.fees.instructionFee - +transaction.data.fees.feesBurntToAsh;
     });
 
     const block = {
@@ -26,6 +26,10 @@ module.exports = {
       donation,
       numOfTransactions: transactions.length,
     };
+
+    // TODO - Create a transaction to pay the validator
+    // ! - Don't forget to subtract the burn fee from the reward
+
     return block;
   },
 

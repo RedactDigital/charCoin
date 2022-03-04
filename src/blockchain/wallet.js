@@ -85,7 +85,7 @@ class Wallet {
       instructionFee,
       storageFee,
       donation,
-      feesBurntToAsh: burnFee,
+      donationToAsh: burnFee,
       total: +instructionFee + +donation + +storageFee + +burnFee,
     };
 
