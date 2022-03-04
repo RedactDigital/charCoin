@@ -19,6 +19,7 @@ const wallet = new Wallet('i am the first leader');
 connectToPeers(blockchain);
 
 app.get('/ico/transactions', (req, res) => {
+  console.log(transactions);
   res.json(transactions);
 });
 
@@ -44,7 +45,6 @@ app.post('/ico/transaction', (req, res) => {
   addTransactionToPool(transaction);
   broadcastTransaction(transaction);
 
-  console.log(transaction);
   res.redirect('/ico/transactions');
 });
 
