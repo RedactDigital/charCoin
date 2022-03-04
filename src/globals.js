@@ -9,14 +9,21 @@ const totalCoins = 250000000 * +oneChar;
 const getNumOfAshes = num => +num * +oneAsh;
 const getNumOfChars = num => +num * +oneChar;
 
+const validatorStakeRequirement = getNumOfChars(10);
+const transactionFeeMin = getNumOfAshes(10);
+const transactionFeeMax = getNumOfAshes(100);
+const transactionFeeBurn = +0.4; // 40%
+const transactionFeeDonation = +0.18; // 18%
+const transactionFeeStorage = +1;
+
 TOTAL_COINS = totalCoins;
-TRANSACTION_THRESHOLD = +1;
-VALIDATOR_STAKE_REQUIREMENT = getNumOfChars(10);
-TRANSACTION_FEE_MIN = getNumOfAshes(10);
-TRANSACTION_FEE_MAX = getNumOfAshes(100);
-TRANSACTION_FEE_BURN = +0.4; // 40%
-TRANSACTION_FEE_DONATION = +0.18; // 18%
-TRANSACTION_FEE_STORAGE = +1;
+TRANSACTION_THRESHOLD = transactionThreshold;
+VALIDATOR_STAKE_REQUIREMENT = validatorStakeRequirement;
+TRANSACTION_FEE_MIN = transactionFeeMin;
+TRANSACTION_FEE_MAX = transactionFeeMax;
+TRANSACTION_FEE_BURN = transactionFeeBurn;
+TRANSACTION_FEE_DONATION = transactionFeeDonation;
+TRANSACTION_FEE_STORAGE = transactionFeeStorage;
 
 log = logger;
 ashes = getNumOfAshes;
