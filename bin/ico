@@ -2,7 +2,7 @@ require('dotenv').config({ silent: true });
 require('../src/globals');
 const express = require('express');
 const bodyParser = require('body-parser');
-const { blockchain } = require('../src/blockchain/blockchain');
+const { blockchain, getBalance } = require('../src/blockchain/blockchain');
 const { connectToPeers, broadcastTransaction } = require('../src/middleware/socket');
 const Server = require('./socket');
 const Wallet = require('../src/wallet/wallet');
@@ -50,11 +50,11 @@ app.get('/ico/address', (req, res) => {
 });
 
 app.get('/ico/balance', (req, res) => {
-  res.json({ balance: blockchain.getBalance(wallet.publicKey) });
+  res.json({ balance: getBalance(wallet.publicKey) });
 });
 
 app.post('/ico/balance-of', (req, res) => {
-  res.json({ balance: blockchain.getBalance(req.body.address) });
+  res.json({ balance: getBalance(req.body.address) });
 });
 
 app.listen(HTTP_PORT, () => {

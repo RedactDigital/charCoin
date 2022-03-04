@@ -161,7 +161,7 @@ class Server {
               if (validatorExists) {
                 log.info('Creating block');
                 const block = createBlock(
-                  this.blockchain.chain[this.blockchain.chain.length - 1],
+                  this.blockchain.blocks[this.blockchain.blocks.length - 1],
                   this.transactions,
                   this.wallet
                 );

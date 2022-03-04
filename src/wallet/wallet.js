@@ -1,4 +1,5 @@
 const ChainUtil = require('../chain-util');
+const { getBalance } = require('../blockchain/blockchain');
 // const Transaction = require('./transaction');
 
 class Wallet {
@@ -25,7 +26,7 @@ class Wallet {
       return;
     }
 
-    this.balance = blockchain.getBalance(this.publicKey);
+    this.balance = getBalance(this.publicKey);
 
     // Calculate the transaction fee
     const transactionFee = this.calculateFee(amount);
