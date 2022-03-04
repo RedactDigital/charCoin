@@ -34,33 +34,34 @@ module.exports = {
   blockchain,
 
   addBlock: block => {
-    this.blockchain.blocks.push(block);
-    broadcastChain(this.blockchain);
+    blockchain.blocks.push(block);
+    broadcastChain(blockchain);
     return block;
   },
 
   replaceChain: newChain => {
+    console.log(newChain);
     // Check if the chain is valid
-    if (!isValidChain(newChain)) return;
+    // if (!isValidChain(newChain)) return;
 
-    // Check if the chain is longer than the current chain
-    if (newChain.length <= this.chain.length) return;
+    // // Check if the chain is longer than the current chain
+    // if (newChain.length <= this.chain.length) return;
 
-    // Replace the current chain with the new one
-    this.chain = newChain;
+    // // Replace the current chain with the new one
+    // this.chain = newChain;
 
-    // Broadcast the new chain to all the nodes
-    broadcastChain(this.chain);
+    // // Broadcast the new chain to all the nodes
+    // broadcastChain(this.chain);
 
-    return this.chain;
+    // return this.chain;
   },
 
   getLastBlock: () => {
-    return this.blockchain.blocks[this.blockchain.blocks.length - 1];
+    return blockchain.blocks[this.blockchain.blocks.length - 1];
   },
 
   getBalance(publicKey) {
-    return this.blockchain.accounts.getBalance(publicKey);
+    return blockchain.accounts.getBalance(publicKey);
   },
 
   findValidator: () => {
@@ -74,15 +75,15 @@ module.exports = {
     for (let i = 0; i < block.transactions.length; i++) {
       switch (block.transactions[i].type) {
         case 'transaction':
-          this.accounts.transfer(
+          blockchain.accounts.transfer(
             block.transactions[i].input.from,
             block.transactions[i].output.to,
             block.transactions[i].output.amount
           );
           break;
         case 'stake':
-          this.stakes.addStake(block.transactions[i]);
-          this.accounts.addValidatorFee(block.transactions[i]);
+          blockchain.stakes.addStake(block.transactions[i]);
+          blockchain.accounts.addValidatorFee(block.transactions[i]);
           break;
       }
     }
