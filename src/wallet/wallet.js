@@ -66,7 +66,8 @@ class Wallet {
 
   calculateFee(amount) {
     // TODO - Calculate the transaction fee
-    return num(amount).multiplyBy('.01');
+    // return num(amount).multiplyBy('.01');
+    return num(0);
   }
 
   getPublicKey() {
