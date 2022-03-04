@@ -165,9 +165,8 @@ class Server {
             break;
 
           case 'block':
-            console.log(data);
             if (!data.block) break;
-            if (!data.block.validators) break;
+            if (!data.block.leader) break;
             if (this.blockchain.isValidBlock(data.block)) {
               this.blockchain.addBlockToChain(data.block);
               this.blockchain.executeTransactions(data.block);

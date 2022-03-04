@@ -3,7 +3,7 @@ const ChainUtil = require('../chain-util');
 module.exports = {
   genesisBlock: { id: 0, timestamp: 0, lastHash: '-----', hash: 'genesis', data: [], validators: [] },
 
-  createBlock: (lastBlock, data, wallet) => {
+  createBlock: (lastBlock, transactions, wallet) => {
     const timestamp = Date.now();
     const lastHash = lastBlock.hash;
     const hash = ChainUtil.hash(`${timestamp}${lastHash}${data}`);
@@ -12,11 +12,11 @@ module.exports = {
       timestamp,
       lastHash,
       hash,
-      data,
+      transactions,
       leader: wallet.getPublicKey(),
       reward: 0, // TODO - calculate reward from adding all data.transactionFee
       donation: 0, // TODO - calculate donation from adding all data.donationFee
-      numOfTransactions: data.length,
+      numOfTransactions: transactions.length,
     };
     return block;
   },
