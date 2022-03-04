@@ -59,13 +59,13 @@ const syncChain = blockchain => {
   });
 };
 
-const broadcastChain = blocks => {
+const broadcastChain = chain => {
   sockets.forEach(socket => {
     socket.emit(
       'message',
       JSON.stringify({
         type: 'chain',
-        blocks,
+        chain,
       })
     );
   });
