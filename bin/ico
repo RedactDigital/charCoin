@@ -39,6 +39,8 @@ app.post('/ico/transaction', (req, res) => {
 
   const transaction = wallet.createTransaction(to, amount, type, blockchain, transactionPool);
 
+  console.log(transaction);
+
   broadcastTransaction(transaction);
 
   res.redirect('/ico/transactions');
