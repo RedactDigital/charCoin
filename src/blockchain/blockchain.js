@@ -2,14 +2,7 @@ const { blockHash, verifyBlock, genesisBlock } = require('./block');
 const { broadcastChain } = require('../middleware/socket');
 const Stake = require('./stake');
 const Account = require('./account');
-const {
-  getTierOneValidators,
-  getTierTwoValidators,
-  getTierThreeValidators,
-  getValidatorWithMostStake,
-  // commitValidator,
-  getValidators,
-} = require('./validators');
+const { getValidatorWithMostStake, getValidators } = require('./validators');
 
 class Blockchain {
   constructor() {
@@ -75,7 +68,7 @@ class Blockchain {
 
     if (block.lastHash === lastBlock.hash && block.hash === blockHash(block) && verifyBlock(block)) {
       console.log(this.findValidator());
-      if (block.leader.address != this.findValidator().address) return false;
+      if (block.leader != this.findValidator().address) return false;
       log.info('Block valid');
       return true;
     }
