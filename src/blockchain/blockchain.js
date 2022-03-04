@@ -40,6 +40,7 @@ module.exports = {
   },
 
   replaceChain: newChain => {
+    console.log(newChain);
     // Check if the chain is valid
     // if (!isValidChain(newChain)) return;
 
