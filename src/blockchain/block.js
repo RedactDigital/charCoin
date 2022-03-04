@@ -12,7 +12,7 @@ module.exports = {
     let reward = 0;
     transactions.forEach(transaction => {
       donation += +transaction.data.fees.donation;
-      reward += +transaction.data.fees.instructionFee - +transaction.data.fees.feesBurntToAsh;
+      reward += +transaction.data.fees.instructionsFee - +transaction.data.fees.feesBurntToAsh;
     });
 
     const block = {
