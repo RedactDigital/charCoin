@@ -3,7 +3,7 @@ const BigNumber = require('bignumber.js');
 
 const { log: logger } = require('./middleware');
 const totalCoins = BigNumber('250000000');
-const oneAsh = BigNumber('.0000001');
+const oneAsh = '.0000001';
 const transactionThreshold = 5;
 const validatorStakeRequirement = BigNumber('10');
 
@@ -22,7 +22,7 @@ TRANSACTION_FEE_DONATION = transactionFeeDonation;
 ONE_ASH = oneAsh;
 
 log = logger;
-num = value => BigNumber(value).toFixed(ONE_ASH);
+num = value => BigNumber(value).toFixed(oneAsh);
 
 module.exports = {
   global,
