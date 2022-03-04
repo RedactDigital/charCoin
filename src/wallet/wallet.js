@@ -37,11 +37,8 @@ class Wallet {
 
     const fees = +validatorFee + +donationFee + +storageFee + +burnFee;
 
-    console.log('ashes', +totalAmount + +fees < ashes(1));
-    console.log(+totalAmount + +fees, ashes(1));
-
     if (+totalAmount + +fees < ashes(1)) {
-      return { success: false, message: 'Amount must be greater than 1 ASH' };
+      return { success: false, message: 'Minimum transaction must be 14 ASH or greater' };
     }
 
     // Ensure sender has enough balance
