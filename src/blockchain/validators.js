@@ -26,6 +26,10 @@ module.exports = {
     return { validators, count: validators.length };
   },
 
+  getTierThreeValidators: () => {
+    return validators.filter(validator => validator.blocks.length < 0);
+  },
+
   getValidatorWithMostStake: (validators, accounts) => {
     // const balance = -1;
     // let chosenValidator = undefined;

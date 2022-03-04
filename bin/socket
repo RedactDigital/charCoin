@@ -15,7 +15,7 @@ const { instrument } = require('@socket.io/admin-ui');
 
 const { getValidator } = require('../src/blockchain/validators');
 const { createBlock } = require('../src/blockchain/block');
-const { broadcastBlock, broadcastTransaction, syncPeers } = require('../src/middleware/socket');
+const { broadcastBlock, syncPeers } = require('../src/middleware/socket');
 const { addTransactionToPool, thresholdReached, transactionExists } = require('../src/wallet/transactions');
 
 class Server {
