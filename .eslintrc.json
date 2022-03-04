@@ -17,6 +17,7 @@
   "globals": {
     "log": true,
     "num": true,
+    "FIXED": true,
     "TOTAL_COINS": true,
     "TRANSACTION_THRESHOLD": true,
     "VALIDATOR_FEE": true,

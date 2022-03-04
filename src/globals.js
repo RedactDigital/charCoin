@@ -6,11 +6,12 @@ const totalCoins = BigNumber('250000000');
 const oneAsh = BigNumber('.0000001');
 const transactionThreshold = 5;
 const validatorStakeRequirement = BigNumber('10');
-
 const transactionFeeMin = BigNumber('.00001');
 const transactionFeeMax = BigNumber('.0001');
 const transactionFeeBurn = BigNumber('.4'); // 40%
 const transactionFeeDonation = BigNumber('.18'); // 18%
+
+const fixed = 8;
 
 TOTAL_COINS = totalCoins;
 TRANSACTION_THRESHOLD = transactionThreshold;
@@ -20,9 +21,10 @@ TRANSACTION_FEE_MAX = transactionFeeMax;
 TRANSACTION_FEE_BURN = transactionFeeBurn;
 TRANSACTION_FEE_DONATION = transactionFeeDonation;
 ONE_ASH = oneAsh;
+FIXED = fixed;
 
 log = logger;
-num = value => BigNumber(value).toFixed(7);
+num = BigNumber;
 
 module.exports = {
   global,

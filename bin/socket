@@ -147,6 +147,7 @@ class Server {
               // Verify the wallet exists on the blockchain as a validator
               // If the validator doesn't exist, the next validator will be the next in line
 
+              //https://docs.solana.com/cluster/leader-rotation
               const validatorExists = getValidator(this.wallet.getPublicKey());
 
               if (validatorExists) {

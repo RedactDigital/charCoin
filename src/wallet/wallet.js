@@ -20,7 +20,7 @@ class Wallet {
 
   // Move to Transactions File
   createTransaction(to, amount, type, blockchain) {
-    if (num(amount) < num(ONE_ASH)) return;
+    if (num(amount).toFixed(FIXED) < ONE_ASH) return;
 
     this.balance = blockchain.getBalance(this.publicKey);
 
@@ -35,7 +35,7 @@ class Wallet {
     const fee = transactionFee;
 
     // Ensure sender has enough balance
-    if (num(amount) + num(fee) > this.balance) {
+    if (num(amount).toFixed(FIXED) + num(fee).toFixed(FIXED) > this.balance) {
       log.info(`Amount : ${amount + fee} exceeds the balance of ${this.balance}`);
       return;
     }
@@ -66,7 +66,9 @@ class Wallet {
 
   calculateFee(amount) {
     // TODO - Calculate the transaction fee
-    return num(amount).multiplyBy('.01');
+    // https://docs.solana.com/transaction_fees
+    // https://docs.solana.com/implemented-proposals/transaction-fees#congestion-driven-fees
+    return num(amount).multiplyBy('.01').toFixed(FIXED);
   }
 
   getPublicKey() {
