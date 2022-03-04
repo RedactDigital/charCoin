@@ -24,25 +24,14 @@ class Wallet {
     this.balance = getBalance(from);
 
     // Calculate the transaction fee
-    const validatorFee = this.calculateFee(totalAmount);
+    const fees = this.calculateFee(totalAmount);
 
-    // TODO - Calculate the donation fee
-    const donationFee = -1;
-
-    // TODO - Calculate storage fee (for arweave.org)
-    const storageFee = -1;
-
-    // TODO - Calculate the burn fee
-    const burnFee = -1;
-
-    const fees = +validatorFee + +donationFee + +storageFee + +burnFee;
-
-    if (+totalAmount + +fees < ashes(1)) {
+    if (+totalAmount + +fees.total < ashes(1)) {
       return { success: false, message: 'Minimum transaction must be 14 ASH or greater' };
     }
 
     // Ensure sender has enough balance
-    if (+totalAmount + +fees > +this.balance) {
+    if (+totalAmount + +fees.total > +this.balance) {
       return { success: false, message: 'Insufficient funds' };
     }
 
@@ -58,7 +47,7 @@ class Wallet {
           to,
         },
         totalAmount,
-        sentAmount: +totalAmount - +fees,
+        sentAmount: +totalAmount - +fees.total,
         fees: {
           validatorFee,
           storageFee,
@@ -81,7 +70,27 @@ class Wallet {
     // TODO - Calculate the transaction fee
     // https://docs.solana.com/transaction_fees
     // https://docs.solana.com/implemented-proposals/transaction-fees#congestion-driven-fees
-    return TRANSACTION_FEE_MIN * -1;
+
+    // TODO - Calculate the donation fee
+    const donationFee = 1;
+
+    // TODO - Calculate storage fee (for arweave.org)
+    const storageFee = 1;
+
+    // TODO - Calculate the burn fee
+    const burnFee = 1;
+
+    const validatorFee = MIN_VALIDATOR_FEE;
+
+    const fees = {
+      validatorFee,
+      storageFee,
+      donationFee,
+      burnFee,
+      total: +validatorFee - +donationFee - +storageFee - +burnFee,
+    };
+
+    return fees;
   }
 
   getPublicKey() {
