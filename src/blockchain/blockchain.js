@@ -14,8 +14,8 @@ const blockchain = {
   accounts: new Account(),
 };
 
-const isValidChain = blocks => {
-  console.log(blocks);
+const isValidChain = chain => {
+  console.log(chain);
   // TODO - put better checks in
   // Check if the genesis block is valid
   if (JSON.stringify(chain[0]) !== JSON.stringify(genesisBlock)) return false;
