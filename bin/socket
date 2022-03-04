@@ -144,7 +144,7 @@ class Server {
             replaceChain(data.chain);
             break;
 
-          case 'transaction':
+          case 'transfer':
             if (!data.transaction) break;
             if (!transactionExists(data.transaction)) {
               addTransactionToPool(data.transaction);

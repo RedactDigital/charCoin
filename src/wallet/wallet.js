@@ -20,14 +20,14 @@ class Wallet {
   }
 
   // Move to Transactions File
-  createTransaction(to, from, amount, type) {
+  createTransaction(to, from, amount, instruction) {
     this.balance = getBalance(from);
 
     // Convert CHAR to ASH
     let totalAmount = (+amount * chars(1)).toFixed(fixed);
 
     // Calculate the transaction fee
-    const fees = this.calculateFee(totalAmount);
+    const fees = this.calculateFee(totalAmount, instruction);
 
     if (+totalAmount + +fees.total < ashes(1)) {
       return { success: false, message: 'Minimum transaction must be 14 ASH or greater' };
@@ -52,7 +52,7 @@ class Wallet {
         totalAmount: (+totalAmount + +fees.total).toFixed(fixed),
         sentAmount: (+totalAmount).toFixed(fixed),
         fees,
-        instructions: [type],
+        instructions: [instruction],
       },
       signature: '',
     };
@@ -63,39 +63,30 @@ class Wallet {
     return { success: true, transaction };
   }
 
-  calculateFee(amount, transactions) {
+  calculateFee(amount, instruction) {
     // https://docs.solana.com/transaction_fees
     // https://docs.solana.com/implemented-proposals/transaction-fees#congestion-driven-fees
 
-    // TODO - Figure out validator fees
-    const validatorFee = () => {
-      let fee = +amount * +TRANSACTION_FEE_VALIDATOR;
+    let instructionFee = 0;
 
-      let transactionBonus = transactions.length * +TRANSACTION_FEE_VALIDATOR_BONUS;
+    if (instruction === 'transfer') instructionFee = ashes(100);
+    if (instruction === 'stake') instructionFee = ashes(300);
+    // if(instruction === 'donate' ) instructionFee = ashes(50)
 
-      fee += transactionBonus;
-
-      if (fee > +TRANSACTION_FEE_MAX) fee = +TRANSACTION_FEE_MAX;
-      if (fee < +TRANSACTION_FEE_MIN) fee = +TRANSACTION_FEE_MIN;
-
-      console.log(fee);
-
-      return fee;
-    };
-
-    const donationFee = +validatorFee * +TRANSACTION_FEE_DONATION;
+    // const donationFee = +amount * +0.005;
+    const donationFee = 0;
 
     // TODO - Calculate storage fee (for arweave.org)
-    const storageFee = +TRANSACTION_FEE_STORAGE;
+    const storageFee = ashes(5);
 
-    const burnFee = +validatorFee * +TRANSACTION_FEE_BURN;
+    const burnFee = +instructionFee * +0.5;
 
     const fees = {
-      validatorFee,
+      instructionFee,
       storageFee,
       donationFee,
-      burnFee,
-      total: (+validatorFee + +donationFee + +storageFee + +burnFee) / +chars(1),
+      FeesBurntToAsh: burnFee,
+      total: +instructionFee + +donationFee + +storageFee + +burnFee,
     };
 
     return fees;

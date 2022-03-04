@@ -34,7 +34,7 @@ app.post('/transaction', (req, res) => {
   if (!to || !from || !amount || !type)
     return res.json({ success: false, message: 'Missing required fields' }).status(400);
 
-  if (type !== 'transaction' && type !== 'stake')
+  if (type !== 'transfer' && type !== 'stake')
     return res.json({ success: false, message: 'Invalid transaction type' }).status(400);
 
   const { success, message, transaction } = wallet.createTransaction(to, from, amount, type, blockchain);

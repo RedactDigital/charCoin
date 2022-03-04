@@ -12,25 +12,16 @@ const getNumOfChars = num => (+num * +oneChar).toFixed(toFixed);
 
 const validatorStakeRequirement = getNumOfChars(10);
 
-const transactionFeeMin = getNumOfAshes(10); // 10 ashs, Minimum transaction fee
-const transactionFeeMax = getNumOfAshes(100); // 100 ashs, Maximum transaction fee
-const transactionFeeValidator = +0.01; // 1% of the total amount
-const transactionFeeValidatorBonus = +0.025; // 2.5% of number of transactions
+// ------------------------------ Fees ------------------------------
 
-const transactionFeeBurn = +0.15; // 40% of the transaction fee
-const transactionFeeDonation = +0.35; // 18% of the transaction fee
+const transactionFeeBurn = +0.23; // 23% of the fee
 const transactionFeeStorage = getNumOfAshes(5);
+
+// ------------------------------------------------------------------
 
 TOTAL_COINS = totalCoins;
 TRANSACTION_THRESHOLD = transactionThreshold;
 VALIDATOR_STAKE_REQUIREMENT = validatorStakeRequirement;
-TRANSACTION_FEE_MIN = transactionFeeMin;
-TRANSACTION_FEE_MAX = transactionFeeMax;
-TRANSACTION_FEE_BURN = transactionFeeBurn;
-TRANSACTION_FEE_DONATION = transactionFeeDonation;
-TRANSACTION_FEE_STORAGE = transactionFeeStorage;
-TRANSACTION_FEE_VALIDATOR = transactionFeeValidator;
-TRANSACTION_FEE_VALIDATOR_BONUS = transactionFeeValidatorBonus;
 
 log = logger;
 ashes = getNumOfAshes;
@@ -40,3 +31,4 @@ fixed = toFixed;
 module.exports = {
   global,
 };
+250, 000, 000;
