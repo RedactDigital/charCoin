@@ -27,13 +27,13 @@ class Wallet {
     const transactionFee = this.calculateFee(totalAmount);
 
     // TODO - Calculate the donation fee
-    const donationFee = 0;
+    const donationFee = 1;
 
     // TODO - Calculate storage fee (for arweave.org)
-    const storageFee = 0;
+    const storageFee = 1;
 
     // TODO - Calculate the burn fee
-    const burnFee = 0;
+    const burnFee = 1;
 
     const fees = transactionFee + donationFee + storageFee + burnFee;
 
