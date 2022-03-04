@@ -21,12 +21,11 @@ class Account {
   }
 
   increment(to, amount) {
-    console.log(this.balance[to]);
-    this.balance[to] += num(amount);
+    this.balance[to] = num(this.balance[to]).plus(amount);
   }
 
   decrement(from, amount) {
-    this.balance[from] -= num(amount);
+    this.balance[to] = num(this.balance[to]).minus(amount);
   }
 
   getBalance(address) {
