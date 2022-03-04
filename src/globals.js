@@ -3,7 +3,7 @@ const BigNumber = require('bignumber.js');
 
 const { log: logger } = require('./middleware');
 const totalCoins = BigNumber('250000000');
-const oneAsh = '.11111111';
+const oneAsh = '.1';
 const transactionThreshold = 5;
 const validatorStakeRequirement = BigNumber('10');
 
