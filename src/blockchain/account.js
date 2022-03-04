@@ -25,7 +25,7 @@ class Account {
   }
 
   decrement(from, amount) {
-    this.balance[to] = num(this.balance[to]).minus(amount);
+    this.balance[from] = num(this.balance[from]).minus(amount);
   }
 
   getBalance(address) {
