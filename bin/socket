@@ -16,13 +16,14 @@ const { instrument } = require('@socket.io/admin-ui');
 const { getValidator } = require('../src/blockchain/validators');
 const { createBlock } = require('../src/blockchain/block');
 const { broadcastBlock, broadcastTransaction, syncPeers } = require('../src/middleware/socket');
+const { addTransactionToPool, thresholdReached } = require('../src/wallet/transactions');
 
 class Server {
-  constructor(blockchain, transactionPool, wallet) {
+  constructor(blockchain, transactions, wallet) {
     // An array of all the peers in the network.
     this.sockets = [];
     this.blockchain = blockchain;
-    this.transactionPool = transactionPool;
+    this.transactions = transactions;
     this.wallet = wallet;
 
     // Get port from environment and normalize it into a number, string, or false.
@@ -139,11 +140,11 @@ class Server {
 
           case 'transaction':
             if (!data.transaction) break;
-            if (!this.transactionPool.find(t => t.id === transaction.id)) {
-              this.transactionPool.push(data.transaction);
-              broadcastTransaction(data.transaction);
+            if (!this.transactions.find(t => t.id === data.transaction.id)) {
+              addTransactionToPool(data.transaction);
+              // broadcastTransaction(data.transaction);
             }
-            if (this.transactionPool.thresholdReached()) {
+            if (thresholdReached()) {
               // Verify the wallet exists on the blockchain as a validator
               // If the validator doesn't exist, the next validator will be the next in line
 
@@ -154,7 +155,7 @@ class Server {
                 log.info('Creating block');
                 const block = createBlock(
                   this.blockchain.chain[this.blockchain.chain.length - 1],
-                  this.transactionPool.transactions,
+                  this.transactions,
                   this.wallet
                 );
                 broadcastBlock(block);

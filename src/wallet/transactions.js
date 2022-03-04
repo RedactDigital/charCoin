@@ -46,4 +46,16 @@ class TransactionPool {
   }
 }
 
-module.exports = TransactionPool;
+// module.exports = TransactionPool;
+
+const transactions = [];
+
+module.exports = {
+  transactions,
+  thresholdReached: () => {
+    return this.transactions.length >= TRANSACTION_THRESHOLD;
+  },
+  addTransactionToPool: transaction => {
+    transactions.push(transaction);
+  },
+};
