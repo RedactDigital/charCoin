@@ -35,13 +35,13 @@ class Wallet {
     // TODO - calculate total fee
     const fee = transactionFee;
 
-    if (num(amount).toFixed(FIXED) + num(fee).toFixed(FIXED) < num(ONE_ASH).toFixed(FIXED)) {
+    if (num(amount).plus(fee).toFixed(FIXED) < num(ONE_ASH).toFixed(FIXED)) {
       return { success: false, message: 'Amount must be greater than 1 ASH' };
     }
 
     // Ensure sender has enough balance
-    if (num(amount).toFixed(FIXED) + num(fee).toFixed(FIXED) > num(this.balance).toFixed(FIXED)) {
-      log.error(`Insufficient balance: ${this.balance}`);
+    if (num(amount).plus(fee).toFixed(FIXED) > num(this.balance).toFixed(FIXED)) {
+      log.error(`${num(amount).plus(fee).toFixed(FIXED)} > ${num(this.balance).toFixed(FIXED)}`);
       return { success: false, message: 'Insufficient funds' };
     }
 
