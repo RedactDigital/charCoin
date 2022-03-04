@@ -76,7 +76,7 @@ const broadcastTransaction = transaction => {
     socket.emit(
       'message',
       JSON.stringify({
-        type: 'transaction',
+        type: 'transfer',
         transaction: transaction,
       })
     );
