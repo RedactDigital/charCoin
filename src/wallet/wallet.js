@@ -71,7 +71,7 @@ class Wallet {
     const donationFee = +amount * +TRANSACTION_FEE_DONATION;
 
     // TODO - Calculate storage fee (for arweave.org)
-    const storageFee = +amount * +TRANSACTION_FEE_STORAGE;
+    const storageFee = +TRANSACTION_FEE_STORAGE;
 
     // TODO - Calculate the burn fee
     const burnFee = +amount * +TRANSACTION_FEE_BURN;
