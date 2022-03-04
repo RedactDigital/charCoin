@@ -21,11 +21,6 @@ class Wallet {
 
   // Move to Transactions File
   createTransaction(to, from, amount, type) {
-    if (num(amount).toFixed(FIXED) < num(ONE_ASH).toFixed(FIXED)) {
-      log.error('Amount must be greater than 1 ASH');
-      return;
-    }
-
     this.balance = getBalance(from);
 
     // Calculate the transaction fee
@@ -40,10 +35,13 @@ class Wallet {
     // TODO - calculate total fee
     const fee = transactionFee;
 
+    if (num(amount).toFixed(FIXED) + num(fee).toFixed(FIXED) < num(ONE_ASH).toFixed(FIXED)) {
+      return { success: false, message: 'Amount must be greater than 1 ASH' };
+    }
+
     // Ensure sender has enough balance
     if (num(amount).toFixed(FIXED) + num(fee).toFixed(FIXED) > this.balance) {
-      log.info(`Amount : ${amount + fee} exceeds the balance of ${this.balance}`);
-      return;
+      return { success: false, message: 'Insufficient funds' };
     }
 
     // Create transaction object
@@ -69,7 +67,7 @@ class Wallet {
     // Sign the transaction
     transaction.input.signature = this.sign(ChainUtil.hash(transaction.output));
 
-    return transaction;
+    return { success: true, transaction };
   }
 
   calculateFee(amount) {
