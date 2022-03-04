@@ -4,7 +4,6 @@ module.exports = {
   genesisBlock: { id: 0, timestamp: 0, lastHash: '-----', hash: 'genesis', data: [], leader: [] },
 
   createBlock: (lastBlock, transactions, wallet) => {
-    console.log('newblock');
     const timestamp = Date.now();
     const lastHash = lastBlock.hash;
     const hash = ChainUtil.hash(`${timestamp}${lastHash}${transactions}`);
@@ -19,6 +18,7 @@ module.exports = {
       donation: 0, // TODO - calculate donation from adding all data.donationFee
       numOfTransactions: transactions.length,
     };
+    console.log(`Created block ${block.id}`);
     return block;
   },
 
