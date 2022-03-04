@@ -36,7 +36,7 @@ module.exports = {
   addBlock: block => {
     blockchain.blocks.push(block);
     broadcastChain(blockchain);
-    return block;
+    return void 0;
   },
 
   replaceChain: newChain => {
@@ -71,6 +71,8 @@ module.exports = {
 
   executeTransactions: block => {
     if (!block.transactions) return;
+
+    console.log(block);
 
     for (let i = 0; i < block.transactions.length; i++) {
       switch (block.transactions[i].type) {
