@@ -84,7 +84,7 @@ class Wallet {
     // TODO - Calculate the transaction fee
     // https://docs.solana.com/transaction_fees
     // https://docs.solana.com/implemented-proposals/transaction-fees#congestion-driven-fees
-    return amount * TRANSACTION_FEE_MIN * -1;
+    return TRANSACTION_FEE_MIN * -1;
   }
 
   getPublicKey() {
