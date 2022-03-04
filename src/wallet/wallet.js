@@ -24,7 +24,7 @@ class Wallet {
     this.balance = getBalance(from);
 
     // Calculate the transaction fee
-    const transactionFee = this.calculateFee(totalAmount);
+    const validatorFee = this.calculateFee(totalAmount);
 
     // TODO - Calculate the donation fee
     const donationFee = 1;
@@ -35,7 +35,7 @@ class Wallet {
     // TODO - Calculate the burn fee
     const burnFee = 1;
 
-    const fees = transactionFee + donationFee + storageFee + burnFee;
+    const fees = validatorFee + donationFee + storageFee + burnFee;
 
     if (+totalAmount + +fees < +ONE_ASH) {
       return { success: false, message: 'Amount must be greater than 1 ASH' };
@@ -60,7 +60,7 @@ class Wallet {
         totalAmount,
         sentAmount: totalAmount - fees,
         fees: {
-          transactionFee,
+          validatorFee,
           storageFee,
           donationFee,
           burnFee,
