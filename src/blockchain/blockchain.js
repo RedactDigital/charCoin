@@ -40,20 +40,20 @@ module.exports = {
   },
 
   replaceChain: newChain => {
-    if (newChain == undefined) return;
+    if (!newChain) return;
     // Check if the chain is valid
     // if (!isValidChain(newChain)) return;
 
     // Check if the chain is longer than the current chain
-    if (newChain.length <= this.chain.length) return;
+    if (newChain.length <= blockchain.blocks.length) return;
 
     // Replace the current chain with the new one
-    this.chain = newChain;
+    blockchain.blocks = newChain;
 
     // Broadcast the new chain to all the nodes
-    broadcastChain(this.chain);
+    broadcastChain(blockchain.blocks);
 
-    return this.chain;
+    return blockchain;
   },
 
   getLastBlock: () => {
