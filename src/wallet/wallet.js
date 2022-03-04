@@ -20,8 +20,11 @@ class Wallet {
   }
 
   // Move to Transactions File
-  createTransaction(to, from, totalAmount, type) {
+  createTransaction(to, from, amount, type) {
     this.balance = getBalance(from);
+
+    // Convert ashes to chars
+    let totalAmount = (+amount * chars(1)).toFixed(fixed);
 
     // Calculate the transaction fee
     const fees = this.calculateFee(totalAmount);
@@ -65,14 +68,14 @@ class Wallet {
     // https://docs.solana.com/implemented-proposals/transaction-fees#congestion-driven-fees
 
     // TODO - Figure out validator fees
-    const validatorFee = (+TRANSACTION_FEE_MIN / chars(1)).toFixed(fixed);
+    const validatorFee = (+TRANSACTION_FEE_MIN).toFixed(fixed);
 
-    const donationFee = ((+amount * +TRANSACTION_FEE_DONATION) / chars(1)).toFixed(fixed);
+    const donationFee = (+amount * +TRANSACTION_FEE_DONATION).toFixed(fixed);
 
     // TODO - Calculate storage fee (for arweave.org)
-    const storageFee = (+TRANSACTION_FEE_STORAGE / chars(1)).toFixed(fixed);
+    const storageFee = (+TRANSACTION_FEE_STORAGE).toFixed(fixed);
 
-    const burnFee = ((+amount * +TRANSACTION_FEE_BURN) / chars(1)).toFixed(fixed);
+    const burnFee = (+amount * +TRANSACTION_FEE_BURN).toFixed(fixed);
 
     const fees = {
       validatorFee,
