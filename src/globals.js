@@ -1,7 +1,6 @@
 /* eslint-disable */
 const { log: logger } = require('./middleware');
 
-const fixed = 7;
 const transactionThreshold = 5;
 
 const oneAsh = 1;
@@ -23,8 +22,6 @@ TRANSACTION_FEE_MIN = transactionFeeMin;
 TRANSACTION_FEE_MAX = transactionFeeMax;
 TRANSACTION_FEE_BURN = transactionFeeBurn;
 TRANSACTION_FEE_DONATION = transactionFeeDonation;
-ONE_ASH = oneAsh;
-FIXED = fixed;
 
 log = logger;
 

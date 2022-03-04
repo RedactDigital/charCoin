@@ -37,7 +37,7 @@ class Wallet {
 
     const fees = +validatorFee + +donationFee + +storageFee + +burnFee;
 
-    if (+totalAmount + +fees < +ONE_ASH) {
+    if (+totalAmount + +fees < ashes(1)) {
       return { success: false, message: 'Amount must be greater than 1 ASH' };
     }
 
