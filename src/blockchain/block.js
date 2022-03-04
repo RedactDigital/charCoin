@@ -16,9 +16,8 @@ module.exports = {
       leader: wallet.getPublicKey(),
       reward: 0, // TODO - calculate reward from adding all data.transactionFee
       donation: 0, // TODO - calculate donation from adding all data.donationFee
-      // numOfTransactions: data.transactions.length,
+      numOfTransactions: data.length,
     };
-    console.log(data);
     return block;
   },
 
