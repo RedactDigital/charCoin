@@ -67,7 +67,6 @@ class Blockchain {
     const lastBlock = this.chain[this.chain.length - 1];
 
     if (block.lastHash === lastBlock.hash && block.hash === blockHash(block) && verifyBlock(block)) {
-      console.log(this.findValidator());
       if (block.leader != this.findValidator().address) return false;
       log.info('Block valid');
       return true;
