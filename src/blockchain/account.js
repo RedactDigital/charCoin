@@ -2,7 +2,7 @@ class Account {
   constructor() {
     this.addresses = ['5aad9b5e21f63955e8840e8b954926c60e0e2d906fdbc0ce1e3afe249a67f614'];
     this.balance = {
-      '5aad9b5e21f63955e8840e8b954926c60e0e2d906fdbc0ce1e3afe249a67f614': TOTAL_COINS,
+      '5aad9b5e21f63955e8840e8b954926c60e0e2d906fdbc0ce1e3afe249a67f614': +TOTAL_COINS,
     };
   }
 
@@ -14,7 +14,7 @@ class Account {
   }
 
   transfer(from, to, amount, transactionFee, donationFee, burnFee) {
-    const total = num(amount).plus(transactionFee).plus(donationFee).plus(burnFee).toFixed(FIXED);
+    const total = +amount + +transactionFee + +donationFee + +burnFee;
     this.initialize(from);
     this.initialize(to);
     this.increment(to, amount);
@@ -22,11 +22,11 @@ class Account {
   }
 
   increment(to, amount) {
-    this.balance[to] = num(this.balance[to]).plus(amount).toFixed(FIXED);
+    this.balance[to] += +amount;
   }
 
   decrement(from, amount) {
-    this.balance[from] = num(this.balance[from]).minus(amount).toFixed(FIXED);
+    this.balance[from] += +amount;
   }
 
   getBalance(address) {
