@@ -18,6 +18,7 @@
     "log": true,
     "chars": true,
     "ashes": true,
+    "fixed": true,
     "TOTAL_COINS": true,
     "TRANSACTION_THRESHOLD": true,
     "VALIDATOR_FEE": true,

@@ -2,6 +2,7 @@
 const { log: logger } = require('./middleware');
 
 const transactionThreshold = 5;
+const toFixed = 7;
 
 const oneAsh = 1;
 const oneChar = 1000 * 1000;
@@ -28,6 +29,7 @@ TRANSACTION_FEE_STORAGE = transactionFeeStorage;
 log = logger;
 ashes = getNumOfAshes;
 chars = getNumOfChars;
+fixed = toFixed;
 
 module.exports = {
   global,

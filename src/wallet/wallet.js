@@ -46,8 +46,8 @@ class Wallet {
           from,
           to,
         },
-        totalAmount,
-        sentAmount: +totalAmount - +fees.total,
+        totalAmount: +totalAmount + +fees.total,
+        sentAmount: +totalAmount,
         fees,
         instructions: [type],
       },
@@ -66,22 +66,22 @@ class Wallet {
     // https://docs.solana.com/transaction_fees
     // https://docs.solana.com/implemented-proposals/transaction-fees#congestion-driven-fees
 
-    const validatorFee = TRANSACTION_FEE_MIN;
+    const validatorFee = TRANSACTION_FEE_MIN.toFixed(fixed);
 
-    const donationFee = +amount * +TRANSACTION_FEE_DONATION;
+    const donationFee = +amount * +TRANSACTION_FEE_DONATION.toFixed(fixed);
 
     // TODO - Calculate storage fee (for arweave.org)
-    const storageFee = +TRANSACTION_FEE_STORAGE;
+    const storageFee = +TRANSACTION_FEE_STORAGE.toFixed(fixed);
 
     // TODO - Calculate the burn fee
-    const burnFee = +amount * +TRANSACTION_FEE_BURN;
+    const burnFee = +amount * +TRANSACTION_FEE_BURN.toFixed(fixed);
 
     const fees = {
       validatorFee,
       storageFee,
       donationFee,
       burnFee,
-      total: +validatorFee + +donationFee + +storageFee + +burnFee,
+      total: (+validatorFee + +donationFee + +storageFee + +burnFee).toFixed(fixed),
     };
 
     return fees;
