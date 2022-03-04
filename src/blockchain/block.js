@@ -22,17 +22,21 @@ module.exports = {
   },
 
   blockHash: block => {
-    const { timestamp, lastHash, data } = block;
-    return ChainUtil.hash(`${timestamp}${lastHash}${data}`);
+    const { timestamp, lastHash, transactions } = block;
+    return ChainUtil.hash(`${timestamp}${lastHash}${transactions}`);
   },
 
   verifyBlock: block => {
-    const { timestamp, lastHash, data, validators } = block;
+    const { timestamp, lastHash, transactions, validators } = block;
 
     for (let i = 0; i < validators.length; i++) {
       const validator = validators[i];
       const { address, signature } = validator;
-      const valid = ChainUtil.verifySignature(address, signature, ChainUtil.hash(`${timestamp}${lastHash}${data}`));
+      const valid = ChainUtil.verifySignature(
+        address,
+        signature,
+        ChainUtil.hash(`${timestamp}${lastHash}${transactions}`)
+      );
       if (!valid) return false;
     }
 
