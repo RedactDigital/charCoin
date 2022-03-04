@@ -72,7 +72,7 @@ class Wallet {
     };
 
     // Sign the transaction
-    transaction.signatures.push(this.sign(ChainUtil.hash(transaction.data)));
+    transaction.signatures = this.sign(ChainUtil.hash(transaction.data));
 
     return { success: true, transaction };
   }
