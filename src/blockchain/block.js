@@ -1,5 +1,4 @@
 const ChainUtil = require('../chain-util');
-const blockchain = require('./blockchain');
 
 module.exports = {
   genesisBlock: { id: 0, timestamp: 0, lastHash: '-----', hash: 'genesis', data: [], leader: [] },
@@ -29,7 +28,7 @@ module.exports = {
 
   verifyBlock: block => {
     const { timestamp, lastHash, transactions, leader } = block;
-    console.log(blockchain);
+
     // const lastBlock = blockchain.getLastBlock();
 
     // Ensure hash is valid
