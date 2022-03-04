@@ -29,13 +29,14 @@ module.exports = {
 
   verifyBlock: block => {
     const { timestamp, lastHash, transactions, leader } = block;
-    const lastBlock = blockchain.getLastBlock();
+    console.log(blockchain);
+    // const lastBlock = blockchain.getLastBlock();
 
     // Ensure hash is valid
     if (ChainUtil.hash(`${timestamp}${lastHash}${transactions}`) !== block.hash) return false;
 
     // Ensure lastHash matches previous local block's hash
-    if (lastBlock.lastHash !== lastHash) return false;
+    // if (lastBlock.lastHash !== lastHash) return false;
 
     // Ensure the block is not too old
 
