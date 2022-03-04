@@ -24,7 +24,7 @@ ONE_ASH = oneAsh;
 FIXED = fixed;
 
 log = logger;
-num = BigNumber;
+num = new BigNumber();
 
 module.exports = {
   global,
