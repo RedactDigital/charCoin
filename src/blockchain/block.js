@@ -12,7 +12,7 @@ module.exports = {
     transactions.forEach(transaction => {
       donation += transaction.donationFee;
     });
-
+    console.log(transactions);
     const block = {
       id: lastBlock.id + 1,
       timestamp,
