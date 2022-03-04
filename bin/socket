@@ -22,6 +22,7 @@ const {
   transactionExists,
   removeTransactionsFromPool,
 } = require('../src/wallet/transactions');
+const { replaceChain } = require('../src/blockchain/blockchain');
 
 class Server {
   constructor(blockchain, transactions, wallet) {
@@ -140,7 +141,7 @@ class Server {
             break;
 
           case 'chain':
-            this.blockchain.replaceChain(data.chain);
+            replaceChain(data.blocks);
             break;
 
           case 'transaction':
