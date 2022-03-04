@@ -82,7 +82,7 @@ class Wallet {
       storageFee,
       donationFee,
       burnFee,
-      total: +validatorFee - +donationFee - +storageFee - +burnFee,
+      total: +validatorFee + +donationFee + +storageFee + +burnFee,
     };
 
     return fees;
