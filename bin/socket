@@ -141,7 +141,8 @@ class Server {
             break;
 
           case 'chain':
-            replaceChain(data.chain.blocks);
+            console.log(data);
+            replaceChain(data.chain);
             break;
 
           case 'transaction':
