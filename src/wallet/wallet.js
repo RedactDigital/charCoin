@@ -44,6 +44,7 @@ class Wallet {
     }
 
     // Create transaction object
+    // TODO - make this look like solona https://solscan.io/block/123348478
     const transaction = {
       id: ChainUtil.id(),
       type,

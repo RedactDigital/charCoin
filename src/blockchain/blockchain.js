@@ -68,7 +68,7 @@ class Blockchain {
 
     if (index == 0) validators = getTierThreeValidators();
 
-    return getValidatorWithMostStake(validators, this.accounts);
+    return validator;
   }
 
   initialize(address) {
