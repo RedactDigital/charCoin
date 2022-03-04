@@ -35,7 +35,7 @@ class Wallet {
     // TODO - Calculate the burn fee
     const burnFee = 1;
 
-    const fees = validatorFee + donationFee + storageFee + burnFee;
+    const fees = +validatorFee + +donationFee + +storageFee + +burnFee;
 
     if (+totalAmount + +fees < +ONE_ASH) {
       return { success: false, message: 'Amount must be greater than 1 ASH' };
@@ -58,7 +58,7 @@ class Wallet {
           to,
         },
         totalAmount,
-        sentAmount: totalAmount - fees,
+        sentAmount: +totalAmount - +fees,
         fees: {
           validatorFee,
           storageFee,

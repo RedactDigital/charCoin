@@ -11,8 +11,8 @@ module.exports = {
     let donation = 0;
     let reward = 0;
     transactions.forEach(transaction => {
-      donation += transaction.data.fees.donationFee;
-      reward += transaction.data.fees.validatorFee;
+      donation += +transaction.data.fees.donationFee;
+      reward += +transaction.data.fees.validatorFee;
     });
 
     const block = {
