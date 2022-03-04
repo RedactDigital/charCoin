@@ -6,7 +6,7 @@ module.exports = {
   createBlock: (lastBlock, transactions, wallet) => {
     const timestamp = Date.now();
     const lastHash = lastBlock.hash;
-    const hash = ChainUtil.hash(`${timestamp}${lastHash}${data}`);
+    const hash = ChainUtil.hash(`${timestamp}${lastHash}${transactions}`);
     const block = {
       id: lastBlock.id + 1,
       timestamp,
