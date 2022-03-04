@@ -27,7 +27,7 @@ module.exports = {
   },
 
   getTierThreeValidators: () => {
-    return validators.filter(validator => validator.blocks.length < 0);
+    return validators.filter(validator => validator.blocks.length > 0);
   },
 
   getValidatorWithMostStake: (validators, accounts) => {
