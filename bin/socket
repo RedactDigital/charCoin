@@ -141,7 +141,7 @@ class Server {
             break;
 
           case 'chain':
-            if (!data.chain.blocks) break;
+            if (!data.chain) break;
             replaceChain(data.chain);
             break;
 
