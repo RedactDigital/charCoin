@@ -145,7 +145,6 @@ class Server {
             break;
 
           case 'transfer':
-            console.log(data);
             if (!data.transaction) break;
             if (!transactionExists(data.transaction)) {
               addTransactionToPool(data.transaction);

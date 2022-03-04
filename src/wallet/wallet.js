@@ -38,6 +38,9 @@ class Wallet {
       return { success: false, message: 'Insufficient funds' };
     }
 
+    // Convert ASH to CHAR
+    totalAmount = (+totalAmount / chars(1)).toFixed(fixed);
+
     // Create transaction object
     const transaction = {
       id: ChainUtil.id(),
@@ -49,8 +52,8 @@ class Wallet {
           from,
           to,
         },
-        totalAmount: (+totalAmount + +fees.total).toFixed(fixed),
-        sentAmount: (+totalAmount).toFixed(fixed),
+        totalAmount: +totalAmount + +fees.total,
+        sentAmount: +totalAmount,
         fees,
         instructions: [instruction],
       },
