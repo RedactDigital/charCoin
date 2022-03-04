@@ -44,6 +44,7 @@ app.post('/ico/transaction', (req, res) => {
   addTransactionToPool(transaction);
   broadcastTransaction(transaction);
 
+  console.log(transactions);
   res.redirect('/ico/transactions');
 });
 

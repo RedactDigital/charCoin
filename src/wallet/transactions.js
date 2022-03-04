@@ -9,9 +9,7 @@ module.exports = {
     transactions.push(transaction);
   },
   removeTransactionsFromPool: () => {
-    console.log(transactions);
     transactions = [];
-    console.log(transactions);
   },
   transactionExists: transaction => {
     return transactions.find(t => t.id === transaction.id);
