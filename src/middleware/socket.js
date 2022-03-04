@@ -20,7 +20,7 @@ const connectToPeers = async blockchain => {
   });
   await socketsConnected;
   await broadcastPeers();
-  const newChain = await broadcastChain(blockchain.chain);
+  const newChain = await broadcastChain(blockchain.blocks);
   return newChain;
 };
 
