@@ -20,28 +20,27 @@ class Wallet {
   }
 
   // Move to Transactions File
-  createTransaction(to, from, amount, type) {
+  createTransaction(to, from, totalAmount, type) {
     this.balance = getBalance(from);
 
     // Calculate the transaction fee
-    const transactionFee = this.calculateFee(amount);
+    const transactionFee = this.calculateFee(totalAmount);
 
     // TODO - Calculate the donation fee
+    const donationFee = 0;
 
     // TODO - Calculate storage fee (for arweave.org)
+    const storageFee = 0;
 
     // TODO - Calculate the burn fee
+    const burnFee = 0;
 
-    // TODO - calculate total fee
-    const fee = transactionFee;
-
-    if (num(amount).plus(fee).toFixed(FIXED) < num(ONE_ASH).toFixed(FIXED)) {
+    if (+totalAmount + +fee < +ONE_ASH) {
       return { success: false, message: 'Amount must be greater than 1 ASH' };
     }
 
     // Ensure sender has enough balance
-    if (num(amount).plus(fee).toFixed(FIXED) > num(this.balance).toFixed(FIXED)) {
-      log.error(`${num(amount).plus(fee).toFixed(FIXED)} > ${num(this.balance).toFixed(FIXED)}`);
+    if (+totalAmount + +fee > +this.balance) {
       return { success: false, message: 'Insufficient funds' };
     }
 
@@ -49,24 +48,29 @@ class Wallet {
     // TODO - make this look like solana https://solscan.io/block/123348478
     const transaction = {
       id: ChainUtil.id(),
-      type,
-      input: {
-        timestamp: Date.now(),
-        from: this.publicKey,
-        signature: null,
+      timestamp: Date.now(),
+      blockHash: '',
+      data: {
+        addresses: {
+          from,
+          to,
+        },
+        totalAmount,
+        sentAmount: totalAmount - transactionFee - donationFee - storageFee - burnFee,
+        fees: {
+          transactionFee,
+          storageFee,
+          donationFee,
+          burnFee,
+        },
+        instructions: [type],
       },
-      output: {
-        to,
-        total: amount,
-        amount: amount - fee,
-        transactionFee,
-        donationFee: 0,
-        burnFee: 0,
-      },
+      signature: '',
+      status: '',
     };
 
     // Sign the transaction
-    transaction.input.signature = this.sign(ChainUtil.hash(transaction.output));
+    transaction.signatures.push(this.sign(ChainUtil.hash(transaction.data)));
 
     return { success: true, transaction };
   }

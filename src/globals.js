@@ -2,16 +2,17 @@
 const BigNumber = require('bignumber.js');
 
 const { log: logger } = require('./middleware');
-const totalCoins = BigNumber('250000000');
-const oneAsh = BigNumber('.0000001');
-const transactionThreshold = 5;
-const validatorStakeRequirement = BigNumber('10');
-const transactionFeeMin = BigNumber('.00001');
-const transactionFeeMax = BigNumber('.0001');
-const transactionFeeBurn = BigNumber('.4'); // 40%
-const transactionFeeDonation = BigNumber('.18'); // 18%
 
-const fixed = 8;
+const fixed = 7;
+
+const totalCoins = BigNumber('250000000').toFixed(fixed);
+const oneAsh = BigNumber('.0000001').toFixed(fixed);
+const transactionThreshold = 5;
+const validatorStakeRequirement = BigNumber('10').toFixed(fixed);
+const transactionFeeMin = BigNumber('.00001').toFixed(fixed);
+const transactionFeeMax = BigNumber('.0001').toFixed(fixed);
+const transactionFeeBurn = BigNumber('.4').toFixed(fixed); // 40%
+const transactionFeeDonation = BigNumber('.18').toFixed(fixed); // 18%
 
 TOTAL_COINS = totalCoins;
 TRANSACTION_THRESHOLD = transactionThreshold;

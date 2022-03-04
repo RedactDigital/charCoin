@@ -28,9 +28,8 @@ app.get('/ico/blocks', (req, res) => {
 
 app.post('/ico/transaction', (req, res) => {
   const { to, amount, type } = req.body;
-
-  // TODO - add from field to transaction
   const from = wallet.getPublicKey(wallet);
+
   if (!to || !amount || !type) return res.json({ success: false, message: 'Missing required fields' }).status(400);
 
   if (type != 'transaction' && type != 'stake')

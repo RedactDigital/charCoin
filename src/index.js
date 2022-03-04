@@ -1,6 +1,8 @@
 require('dotenv').config({ silent: true });
 require('./globals');
 
+// TODO - add endpoints https://docs.solana.com/developing/clients/jsonrpc-api#getblock
+
 const express = require('express');
 const { blockchain, getBalance } = require('./blockchain/blockchain');
 const bodyParser = require('body-parser');
@@ -27,22 +29,23 @@ app.get('/transactions', (req, res) => {
 });
 
 app.post('/transaction', (req, res) => {
-  const { to, amount, type } = req.body;
-  if (!to || !amount || !type) {
-    log.info('All fields are required');
-    return res.redirect('/transactions');
-  }
-  if (type !== 'transaction' || type !== 'stake') {
-    log.info('Invalid transaction type');
-    return res.redirect('/transactions');
-  }
-  const transaction = wallet.createTransaction(to, amount, type, blockchain);
+  const { to, from, amount, type } = req.body;
+
+  if (!to || !from || !amount || !type)
+    return res.json({ success: false, message: 'Missing required fields' }).status(400);
+
+  if (type !== 'transaction' && type !== 'stake')
+    return res.json({ success: false, message: 'Invalid transaction type' }).status(400);
+
+  const { success, message, transaction } = wallet.createTransaction(to, from, amount, type, blockchain);
+
+  if (!success) return res.json({ success, message: message }).status(400);
 
   // Add transaction to the pool
   addTransactionToPool(transaction);
   broadcastTransaction(transaction);
 
-  res.redirect('/transactions');
+  res.redirect('/ico/transactions');
 });
 
 app.get('/validators', (req, res) => {
