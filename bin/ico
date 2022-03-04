@@ -35,7 +35,7 @@ app.post('/ico/transaction', (req, res) => {
   if (type != 'transaction' && type != 'stake')
     return res.json({ success: false, message: 'Invalid transaction type' }).status(400);
 
-  const { success, message, transaction } = wallet.createTransaction(to, from, amount, type, blockchain);
+  const { success, message, transaction } = wallet.createTransaction(to, from, amount, type);
 
   if (!success) return res.json({ success, message: message }).status(400);
 

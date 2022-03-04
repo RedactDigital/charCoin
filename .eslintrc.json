@@ -16,8 +16,8 @@
   },
   "globals": {
     "log": true,
-    "num": true,
-    "FIXED": true,
+    "chars": true,
+    "ashes": true,
     "TOTAL_COINS": true,
     "TRANSACTION_THRESHOLD": true,
     "VALIDATOR_FEE": true,
@@ -25,7 +25,6 @@
     "TRANSACTION_FEE_MIN": true,
     "TRANSACTION_FEE_MAX": true,
     "TRANSACTION_FEE_BURN": true,
-    "TRANSACTION_FEE_DONATION": true,
-    "ONE_ASH": true
+    "TRANSACTION_FEE_DONATION": true
   }
 }
