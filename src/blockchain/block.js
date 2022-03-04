@@ -29,6 +29,8 @@ module.exports = {
   verifyBlock: block => {
     const { timestamp, lastHash, transactions, leader } = block;
 
+    console.log(block);
+
     // const lastBlock = blockchain.getLastBlock();
 
     // Ensure hash is valid
