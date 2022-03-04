@@ -22,11 +22,11 @@ class Account {
   }
 
   increment(to, amount) {
-    this.balance[to] += amount;
+    this.balance[to] += num(amount);
   }
 
   decrement(from, amount) {
-    this.balance[from] -= amount;
+    this.balance[from] -= num(amount);
   }
 
   getBalance(address) {
