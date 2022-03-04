@@ -20,7 +20,7 @@ class Wallet {
   }
 
   // Move to Transactions File
-  createTransaction(to, amount, type) {
+  createTransaction(to, from, amount, type) {
     if (num(amount).toFixed(FIXED) < num(ONE_ASH).toFixed(FIXED)) {
       log.error('Amount must be greater than 1 ASH');
       return;

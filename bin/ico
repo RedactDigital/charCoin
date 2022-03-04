@@ -30,13 +30,13 @@ app.post('/ico/transaction', (req, res) => {
   const { to, amount, type } = req.body;
 
   // TODO - add from field to transaction
-  const from = wallet.getPublicKey();
+  const from = wallet.getPublicKey(wallet);
   if (!to || !amount || !type) return res.json({ success: false, message: 'Missing required fields' }).status(400);
 
   if (type != 'transaction' && type != 'stake')
     return res.json({ success: false, message: 'Invalid transaction type' }).status(400);
 
-  const transaction = wallet.createTransaction(to, amount, type, blockchain);
+  const transaction = wallet.createTransaction(to, from, amount, type, blockchain);
 
   // Add transaction to the pool
   addTransactionToPool(transaction);
