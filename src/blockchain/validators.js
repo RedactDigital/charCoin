@@ -35,7 +35,7 @@ module.exports = {
     //   }
     // }
     // return chosenValidator;
-    let chosenValidator = validators[0];
+    let chosenValidator = undefined;
     for (let i = 0; i < validators.length; i++) {
       if (accounts.getBalance(validators[i].address) > accounts.getBalance(chosenValidator.address)) {
         chosenValidator = validators[i];
