@@ -1,8 +1,8 @@
-const { id } = require('../util/chain-util');
+const { id } = require('../chain-util');
 const { getBalance } = require('../blockchain/blockchain');
 
 class Transaction {
-  constructor(from, to, amount, instructions) {
+  constructor(sender, recipient, amount, instructions) {
     // Convert amount to ASH
     const ashes = (+amount * chars(1)).toFixed(fixed);
 
@@ -10,10 +10,10 @@ class Transaction {
     const fees = this._calculateFee(ashes, instructions);
 
     // Ensure the minimum amount is met
-    if (!this._meetsMinimumAmount()) return { success: false, message: 'Minimum amount not met' };
+    if (!this._meetsMinimumAmount(ashes, fees.total)) return { success: false, message: 'Minimum amount not met' };
 
     // Ensure sender has enough balance
-    if (!this._hasSufficientBalance()) return { success: false, message: 'Insufficient funds' };
+    if (this._hasSufficientBalance(ashes, fees.total, sender)) return { success: false, message: 'Insufficient funds' };
 
     // Create transaction object
     this.id = id();
@@ -22,8 +22,8 @@ class Transaction {
     this.status = '';
     this.data = {
       addresses: {
-        from,
-        to,
+        sender,
+        recipient,
       },
       senderAmount: +amount + +fees.total,
       recipientAmount: +amount,
@@ -31,6 +31,8 @@ class Transaction {
       instructions,
     };
     this.signature = '';
+
+    return { success: true, transaction: this };
   }
 
   _calculateFee(amount, instructions) {
@@ -61,13 +63,13 @@ class Transaction {
     return fees;
   }
 
-  _meetsMinimumAmount(ashes, fees) {
-    return +ashes + +fees > ashes(1);
+  _meetsMinimumAmount(amount, fees) {
+    return +amount + +fees > ashes(1);
   }
 
-  _hasSufficientBalance() {
-    const walletBalance = getBalance(this.data.addresses.from);
-    return +ashes + +fees < +walletBalance;
+  _hasSufficientBalance(amount, fees, sender) {
+    const walletBalance = getBalance(sender);
+    return +amount + +fees < +walletBalance;
   }
 }
 
