@@ -10,7 +10,7 @@ const { connectToPeers, broadcastTransaction } = require('../src/middleware/sock
 const Server = require('../bin/socket');
 const Wallet = require('./wallet/wallet');
 const { getValidators } = require('./blockchain/validators');
-const TransactionPool = require('./transactions/transactionPool');
+const TransactionPool = require('./transactions/TransactionPool');
 const Transaction = require('./transactions/Transaction');
 const { sign } = require('./chain-util');
 
