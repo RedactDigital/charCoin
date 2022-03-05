@@ -10,27 +10,28 @@ module.exports = {
 
     let donation = 0;
     let reward = 0;
-    transactions.forEach(transaction => {
-      donation += +transaction.data.fees.donation;
-      reward += +transaction.data.fees.instructionsFee - +transaction.data.fees.feesBurntToAsh;
-    });
+    console.log(transactions);
+    // transactions.forEach(transaction => {
+    //   donation += +transaction.data.fees.donation;
+    //   reward += +transaction.data.fees.instructionsFee - +transaction.data.fees.feesBurntToAsh;
+    // });
 
-    const block = {
-      id: lastBlock.id + 1,
-      timestamp,
-      lastHash,
-      hash,
-      leader: wallet.getPublicKey(),
-      reward,
-      donation,
-      numOfTransactions: transactions.length,
-      transactions,
-    };
+    // const block = {
+    //   id: lastBlock.id + 1,
+    //   timestamp,
+    //   lastHash,
+    //   hash,
+    //   leader: wallet.getPublicKey(),
+    //   reward,
+    //   donation,
+    //   numOfTransactions: transactions.length,
+    //   transactions,
+    // };
 
-    // TODO - Create a transaction to pay the validator
-    // ! - Don't forget to subtract the burn fee from the reward
+    // // TODO - Create a transaction to pay the validator
+    // // ! - Don't forget to subtract the burn fee from the reward
 
-    return block;
+    // return block;
   },
 
   blockHash: block => {
