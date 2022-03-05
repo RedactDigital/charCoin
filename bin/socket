@@ -170,7 +170,7 @@ class Server {
             if (verifyBlock(data.block)) {
               addBlock(data.block);
               executeTransactions(data.block);
-              this.transactions.removeTransactionsFromPool(data.block.transactions);
+              this.transactions.removeTransactions(data.block.transactions);
               // TODO - Create a transaction to pay the validator
             }
 
