@@ -18,7 +18,7 @@ const app = express();
 
 app.use(bodyParser.json());
 
-const wallet = new Wallet(Date.now().toString());
+const wallet = new Wallet(process.env.NODE_ENV !== 'production' ? 'I love lucy' : Date.now().toString());
 const transactionPool = new TransactionPool();
 
 connectToPeers(blockchain);
