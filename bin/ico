@@ -6,7 +6,7 @@ const { blockchain, getBalance } = require('../src/blockchain/blockchain');
 const { connectToPeers, broadcastTransaction } = require('../src/middleware/socket');
 const Server = require('./socket');
 const Wallet = require('../src/wallet/wallet');
-const TransactionPool = require('../src/transactions/transactionPool');
+const TransactionPool = require('../src/transactions/TransactionPool');
 const Transaction = require('../src/transactions/Transaction');
 const { sign } = require('../src/chain-util');
 
@@ -22,7 +22,7 @@ const transactionPool = new TransactionPool();
 connectToPeers(blockchain);
 
 app.get('/ico/transactions', (req, res) => {
-  res.json(transactions.length);
+  res.json(transactionPool.transactions);
 });
 
 app.get('/ico/blocks', (req, res) => {
@@ -70,4 +70,4 @@ app.listen(HTTP_PORT, () => {
 });
 
 // Initialize WebSocket server
-new Server(blockchain, transactions, wallet);
+new Server(blockchain, transactionPool.transactions, wallet);

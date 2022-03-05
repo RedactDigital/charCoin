@@ -69,7 +69,7 @@ class Transaction {
 
   _hasSufficientBalance(amount, fees, sender) {
     const walletBalance = getBalance(sender);
-    return +amount + +fees < +walletBalance;
+    return +amount + +fees > +walletBalance;
   }
 }
 

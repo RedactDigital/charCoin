@@ -10,15 +10,16 @@ const { connectToPeers, broadcastTransaction } = require('../src/middleware/sock
 const Server = require('../bin/socket');
 const Wallet = require('./wallet/wallet');
 const { getValidators } = require('./blockchain/validators');
-const TransactionPool = require('../src/transactions/transactionPool');
-const Transaction = require('../src/transactions/Transaction');
-const { sign } = require('../src/chain-util');
+const TransactionPool = require('./transactions/transactionPool');
+const Transaction = require('./transactions/Transaction');
+const { sign } = require('./chain-util');
 
 const app = express();
 
 app.use(bodyParser.json());
 
 const wallet = new Wallet(Date.now().toString());
+const transactionPool = new TransactionPool();
 
 connectToPeers(blockchain);
 
@@ -27,16 +28,16 @@ app.get('/blocks', (req, res) => {
 });
 
 app.get('/transactions', (req, res) => {
-  res.json(transactions);
+  res.json(transactionPool.transactions);
 });
 
 app.post('/transaction', (req, res) => {
-  const { to, from, amount, type } = req.body;
+  const { to, from, amount, instructions } = req.body;
 
-  if (!to || !from || !amount || !type)
+  if (!to || !from || !amount || !instructions)
     return res.json({ success: false, message: 'Missing required fields' }).status(400);
 
-  if (type !== 'transfer' && type !== 'stake')
+  if (instructions !== 'transfer' && instructions !== 'stake')
     return res.json({ success: false, message: 'Invalid transaction type' }).status(400);
 
   const { transaction, success, message } = new Transaction(to, from, amount, instructions);
@@ -73,4 +74,4 @@ app.post('/balance', (req, res) => {
 module.exports = app;
 
 // Initialize WebSocket server
-new Server(blockchain, transactions, wallet);
+new Server(blockchain, transactionPool.transactions, wallet);
