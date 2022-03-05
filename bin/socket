@@ -155,7 +155,7 @@ class Server {
                 log.info('Creating block');
                 const block = createBlock(
                   this.blockchain.blocks[this.blockchain.blocks.length - 1],
-                  this.transactions,
+                  this.transactions.transactions,
                   this.wallet
                 );
                 broadcastBlock(block);
