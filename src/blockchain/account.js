@@ -32,7 +32,7 @@ class Account {
 
   getBalance(address) {
     this.initialize(address);
-    return +this.balance[address];
+    return (+this.balance[address]).toFixed(fixed);
   }
 
   // update(transaction) {
