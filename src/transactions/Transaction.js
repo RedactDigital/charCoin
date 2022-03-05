@@ -13,7 +13,8 @@ class Transaction {
     if (!this._meetsMinimumAmount(ashes, fees.total)) return { success: false, message: 'Minimum amount not met' };
 
     // Ensure sender has enough balance
-    if (this._hasSufficientBalance(ashes, fees.total, sender)) return { success: false, message: 'Insufficient funds' };
+    if (!this._hasSufficientBalance(ashes, fees.total, sender))
+      return { success: false, message: 'Insufficient funds' };
 
     // Create transaction object
     this.id = id();
