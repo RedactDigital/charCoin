@@ -33,7 +33,7 @@ app.post('/ico/transaction', (req, res) => {
   const { recipient, amount, instructions } = req.body;
   const sender = wallet.getPublicKey(wallet);
 
-  if (!to || !amount || !instructions)
+  if (!recipient || !amount || !instructions)
     return res.json({ success: false, message: 'Missing required fields' }).status(400);
 
   if (instructions != 'transfer' && instructions != 'stake')
