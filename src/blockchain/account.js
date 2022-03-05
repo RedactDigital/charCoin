@@ -1,3 +1,5 @@
+require('../globals');
+
 class Account {
   constructor() {
     this.addresses = ['5aad9b5e21f63955e8840e8b954926c60e0e2d906fdbc0ce1e3afe249a67f614'];
@@ -28,6 +30,7 @@ class Account {
   decrement(from, amount) {
     // (this.balance[from] += +amount).toFixed(fixed);
     this.balance[from] = (+this.balance[from] + +amount).toFixed(fixed);
+    console.log(+this.balance[from] + +amount).toFixed(fixed);
   }
 
   getBalance(address) {
