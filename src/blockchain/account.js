@@ -23,7 +23,8 @@ class Account {
   }
 
   increment(to, amount) {
-    this.balance[to] += amount.toFixed(fixed);
+    console.log(+this.balance[to]);
+    this.balance[to] += +amount.toFixed(fixed);
   }
 
   decrement(from, amount) {
