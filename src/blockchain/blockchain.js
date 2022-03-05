@@ -76,7 +76,7 @@ module.exports = {
 
       switch (instructions) {
         case 'transfer':
-          blockchain.accounts.transfer(addresses.from, addresses.to, senderAmount, recipientAmount);
+          blockchain.accounts.transfer(addresses.sender, addresses.recipient, senderAmount, recipientAmount);
           break;
 
         case 'stake':
