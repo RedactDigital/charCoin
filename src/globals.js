@@ -2,7 +2,7 @@
 const { log: logger } = require('./middleware');
 
 const transactionThreshold = 5;
-const toFixed = 5;
+const toFixed = 6;
 
 const oneAsh = 1;
 const oneChar = 1000 * 1000;
