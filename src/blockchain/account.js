@@ -23,11 +23,11 @@ class Account {
   }
 
   increment(to, amount) {
-    (this.balance[to] += +amount).toFixed(fixed);
+    this.balance[to] += amount.toFixed(fixed);
   }
 
   decrement(from, amount) {
-    (this.balance[from] += +amount).toFixed(fixed);
+    this.balance[from] += amount.toFixed(fixed);
   }
 
   getBalance(address) {
