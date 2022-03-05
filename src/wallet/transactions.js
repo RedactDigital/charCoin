@@ -5,12 +5,12 @@ module.exports = {
   thresholdReached: () => {
     return transactions.length >= TRANSACTION_THRESHOLD;
   },
-  addTransactionToPool: transaction => {
-    transactions.push(transaction);
-  },
-  removeTransactionsFromPool: () => {
-    transactions = [];
-  },
+  // addTransactionToPool: transaction => {
+  //   transactions.push(transaction);
+  // },
+  // removeTransactionsFromPool: () => {
+  //   transactions = [];
+  // },
   transactionExists: transaction => {
     return transactions.find(t => t.id === transaction.id);
   },
@@ -36,3 +36,31 @@ module.exports = {
 //     return transaction;
 //   });
 // }
+
+const { id } = require('../util/chain-util');
+
+class Transactions {
+  constructor() {
+    this.transactions = [];
+  }
+
+  addTransaction(transaction) {
+    this.transactions.push(transaction);
+  }
+
+  removeTransactions(transactions) {
+    transactions.forEach(transaction => {
+      this.transactions = this.transactions.filter(t => t.id !== transaction.id);
+    });
+  }
+
+  transactionExists(transaction) {
+    return this.transactions.find(t => t.id === transaction.id);
+  }
+
+  thresholdReached() {
+    return this.transactions.length >= TRANSACTION_THRESHOLD;
+  }
+}
+
+module.exports = Transactions;

@@ -10,6 +10,10 @@ class ChainUtil {
     return eddsa.keyFromSecret(secret);
   }
 
+  static sign(secret, data) {
+    return ChainUtil.genKeyPair(secret).sign(data).toHex();
+  }
+
   static id() {
     return uuidV1();
   }

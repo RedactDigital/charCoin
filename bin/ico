@@ -7,6 +7,7 @@ const { connectToPeers, broadcastTransaction } = require('../src/middleware/sock
 const Server = require('./socket');
 const Wallet = require('../src/wallet/wallet');
 const { transactions, addTransactionToPool } = require('../src/wallet/transactions');
+const { sign } = require('../src/chain-util');
 
 const HTTP_PORT = 3005;
 
@@ -19,8 +20,7 @@ const wallet = new Wallet('i am the first leader');
 connectToPeers(blockchain);
 
 app.get('/ico/transactions', (req, res) => {
-  console.log(transactions);
-  res.json(transactions);
+  res.json(transactions.length);
 });
 
 app.get('/ico/blocks', (req, res) => {
@@ -40,6 +40,9 @@ app.post('/ico/transaction', (req, res) => {
   const { success, message, transaction } = wallet.createTransaction(to, from, amount, instructions);
 
   if (!success) return res.json({ success, message: message }).status(400);
+
+  // Sign transaction
+  transaction.signature = sign(wallet.getPrivateKey(wallet), transaction);
 
   // Add transaction to the pool
   addTransactionToPool(transaction);
