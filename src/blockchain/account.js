@@ -14,7 +14,6 @@ class Account {
   }
 
   transfer(from, to, recipientAmount, senderAmount) {
-    console.log('transfer', from, to, recipientAmount, senderAmount);
     this.initialize(from);
     this.initialize(to);
     this.increment(to, recipientAmount);
@@ -22,11 +21,11 @@ class Account {
   }
 
   increment(to, amount) {
-    this.balance[to] += +amount;
+    this.balance[to] += (+amount).toFixed(fixed);
   }
 
   decrement(from, amount) {
-    this.balance[from] += +amount;
+    this.balance[from] += (+amount).toFixed(fixed);
   }
 
   getBalance(address) {
