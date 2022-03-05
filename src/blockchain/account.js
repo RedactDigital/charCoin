@@ -24,12 +24,12 @@ class Account {
 
   increment(to, amount) {
     // (this.balance[to] += +amount).toFixed(fixed);
-    this.balance[to] = (+this.balance[to] + +amount).toFixed(fixed);
+    this.balance[to] = +this.balance[to] + +amount;
   }
 
   decrement(from, amount) {
     // (this.balance[from] += +amount).toFixed(fixed);
-    this.balance[from] = (+this.balance[from] + +amount).toFixed(fixed);
+    this.balance[from] = +this.balance[from] + +amount;
     console.log(this.balance[from]);
   }
 
