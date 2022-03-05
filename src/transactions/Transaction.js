@@ -11,7 +11,7 @@ class Transaction {
 
     // Ensure the minimum amount is met
     if (!this._meetsMinimumAmount(ashes, fees.total)) return { success: false, message: 'Minimum amount not met' };
-
+    console.log(sender);
     // Ensure sender has enough balance
     if (!this._hasSufficientBalance(ashes, fees.total, sender))
       return { success: false, message: 'Insufficient funds' };

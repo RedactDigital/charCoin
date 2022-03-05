@@ -32,15 +32,15 @@ app.get('/transactions', (req, res) => {
 });
 
 app.post('/transaction', (req, res) => {
-  const { to, from, amount, instructions } = req.body;
+  const { recipient, sender, amount, instructions } = req.body;
 
-  if (!to || !from || !amount || !instructions)
+  if (!recipient || !sender || !amount || !instructions)
     return res.json({ success: false, message: 'Missing required fields' }).status(400);
 
   if (instructions !== 'transfer' && instructions !== 'stake')
     return res.json({ success: false, message: 'Invalid transaction type' }).status(400);
 
-  const { transaction, success, message } = new Transaction(to, from, amount, instructions);
+  const { transaction, success, message } = new Transaction(sender, recipient, amount, instructions);
 
   if (!success) return res.json({ success, message }).status(400);
 
