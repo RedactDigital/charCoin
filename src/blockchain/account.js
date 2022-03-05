@@ -14,6 +14,7 @@ class Account {
   }
 
   transfer(from, to, recipientAmount, senderAmount) {
+    console.log('transfer', from, to, recipientAmount, senderAmount);
     this.initialize(from);
     this.initialize(to);
     this.increment(to, recipientAmount);
